@@ -41,6 +41,8 @@ def main(filename):
 
         print("Previous moves:", ''.join(moves))
         print("Remaining moves:", max_moves - len(moves))
+        print("Points:", points)
+
         moveset = re.sub(r'[^FfBbLlRr]', '', input("Enter moves: "))  # Only accept valid moves
 
         ## TO DO: Update error messages
@@ -49,24 +51,26 @@ def main(filename):
             continue
 
         for move in moveset:
-            snapshots = roll(level_state, move)
+            moves.append(move_to_arrow(move))
+            snapshots, points_earned = roll(level_state, moves, max_moves)
             for snapshot in snapshots:
                 clear_screen()
                 for row in snapshot:
                     print(''.join(row))  # Print each row as a string
                 time.sleep(0.5)
-            moves.append(move_to_arrow(move))
+            points += points_earned
 
         if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
-            display_final_state(max_moves, moves)
+            display_final_state(max_moves, moves, points)
             return
 
     if len(moves) == max_moves:
-        display_final_state(max_moves, moves)
+        display_final_state(max_moves, moves, points)
 
-def display_final_state(max_moves, moves):
+def display_final_state(max_moves, moves, points):
         print("Played moves:", ''.join(moves))
         print("Remaining moves:", max_moves - len(moves))
+        print("Points:", points)
 
 def read_level(filename):
     # Check if file exists; send error message if the file does not exist
