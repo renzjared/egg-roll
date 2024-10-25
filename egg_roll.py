@@ -58,12 +58,15 @@ def main(filename):
             moves.append(move_to_arrow(move))
 
         if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
-            print("Played moves:", ''.join(moves))
-            print("Remaining moves:", max_moves - len(moves))
+            display_final_state(max_moves, moves)
             return
 
     if len(moves) == max_moves:
-        print("[!] You ran out of moves.")
+        display_final_state(max_moves, moves)
+
+def display_final_state(max_moves, moves):
+        print("Played moves:", ''.join(moves))
+        print("Remaining moves:", max_moves - len(moves))
 
 def read_level(filename):
     # Check if file exists; send error message if the file does not exist
