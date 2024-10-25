@@ -112,7 +112,7 @@ def take_moves(remaining_moves):
     """Prompts the user for moves and validates the input.
 
     Args:
-        max_moves (int): The remaining number of moves allowed.
+        remaining_moves (int): The remaining number of moves allowed.
     Returns:
         str: A string of valid moves entered by the user, truncated
              if it exceeds the allowed number of remaining moves.
@@ -124,7 +124,8 @@ def take_moves(remaining_moves):
     """
     moveset = re.sub(r'[^FfBbLlRr]', '', input("Enter moves: "))  # Only accept valid moves
     if len(moveset) > remaining_moves:   # Remove excess moves if number exceeds maximum
-        moveset = moveset[:remaining_moves-1]
+        moveset = moveset[:remaining_moves]
+    print(moveset)
     return moveset
 
 if __name__ == "__main__":
