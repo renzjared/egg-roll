@@ -44,6 +44,7 @@ def main(filename):
         print("Remaining moves:", max_moves - len(moves))
         moveset = input("Enter moves: ") 
 
+        ## TO DO: Update error messages
         if not all(move in VALID_MOVES for move in moveset):
             print('Error: Invalid move sequence')
             continue
@@ -60,11 +61,9 @@ def main(filename):
                 time.sleep(0.5)
             moves.append(move_to_arrow(move))
 
-        if not is_present(level_state[:], '🥚') and is_present(level_state[:], '🪹'):
-            print("Eggs cooked")
-            return
-        elif not is_present(level_state[:], '🥚'):
-            print("win state")
+        if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
+            print("Played moves:", ''.join(moves))
+            print("Remaining moves:", max_moves - len(moves))
             return
 
     if len(moves) == max_moves:
