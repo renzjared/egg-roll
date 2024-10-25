@@ -113,7 +113,7 @@ def move_eggs(grid, direction, moves, max_moves):
                 grid[new_r][new_c] = '🪺'                    # Fill empty nest with egg
                 eggs.remove((r, c))
                 bonus_points = (max_moves - len(moves[1:]))  # Earn bonus points equal to the remaining moves left (counting the current move)
-                points_earned += 10 +  bonus_points          # Earn a minimum of 10 points when an egg reaches a nest
+                points_earned += 10 + bonus_points           # Earn a minimum of 10 points when an egg reaches a nest
                 updated = True
             elif grid[new_r][new_c] == '🟩' and (new_r, new_c) not in eggs:           # Roll to empty space
                 grid[new_r][new_c] = '🥚'
