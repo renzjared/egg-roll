@@ -22,7 +22,11 @@ import subprocess
 import sys
 import time
 
+from enum import Enum
 from game_utils import move_to_arrow, is_present, roll
+
+class GameState(Enum):
+    RESTART = "restart"
 
 def main(filename):
     """Main function to run the egg roll game.
@@ -56,6 +60,9 @@ def main(filename):
         print("Points:", points)
 
         moveset = take_moves(remaining_moves)
+        if isinstance(moveset, GameState):    # Checks if the player entered a special command instead of a moveset
+            update_game(moveset, filename)
+            return
         for move in moveset:
             moves.append(move_to_arrow(move))
             snapshots, points_earned = roll(level_state, moves, max_moves)
@@ -80,16 +87,36 @@ def clear_screen():
     subprocess.run([clear_cmd])
 
 def display_final_state(max_moves, moves, points, filename):
-    """Displays the final game statistics after all moves are made or when there are no more eggs to roll.
+    """Displays the final game statistics after all moves are made or when
+       there are no more eggs to roll, and asks if the player wants to
+       play again.
 
     Args:
         max_moves (int): The maximum number of moves allowed.
         moves (list): A list of moves made by the player.
         points (int): The total points earned by the player.
+        filename (str): The path to the level file.
     """
     print("Played moves:", ''.join(moves))
     print("Remaining moves:", max_moves - len(moves))
     print("Points:", points)
+
+    # Ask if player wants to play again
+    prompt = 1
+    while(prompt > 0):      # Ask again until the player responds with a valid answer: [y,Y,n,N]
+        if prompt > 1:
+            clear_screen()
+        response = input("Play again? [Y/N] ")
+        if response.upper() == 'Y':
+            prompt = 0
+            main(filename)
+        elif response.upper() == 'N':
+            prompt = 0
+            return
+
+def update_game(gamestate, filename):
+    if gamestate == GameState.RESTART:
+        main(filename)
 
 def read_level(filename):
     """Reads the game level from a specified file.
@@ -110,6 +137,7 @@ def read_level(filename):
 
 def validate_moves(moveset, remaining_moves):
     """Validates the player's input for moves.
+       Also checks if the player has called for a restart
 
     Args:
         moveset (str): The string of moves entered by the player
@@ -117,14 +145,17 @@ def validate_moves(moveset, remaining_moves):
     Returns:
         str: A string of valid moves entered by the user, truncated
              if it exceeds the allowed number of remaining moves.
+        GameState: A special case for when the player has called for a game restart
 
     The function ensures that only valid move characters ('F', 'f', 
     'B', 'b', 'L', 'l', 'R', 'r') are accepted. If the user enters 
     more moves than can be accommodated within the remaining 
     available moves, the excess moves are truncated.
     """
-    if remaining_moves <= 0:    # Return empty string if the number of remaining moves
-        return ""               # is zero or a negative integer
+    if moveset.lower() == 'restart':
+        return GameState.RESTART
+    elif remaining_moves <= 0:    # Return empty string if the number of remaining moves
+        return ""                 # is zero or a negative integer
 
     moveset = re.sub(r'[^FfBbLlRr]', '', moveset)   # Only accept valid moves
     if len(moveset) > remaining_moves:              # Remove excess moves if number exceeds maximum

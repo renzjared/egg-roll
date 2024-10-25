@@ -19,6 +19,8 @@ You may obtain a copy of the License at
 import unittest
 import egg_roll, game_utils
 
+from egg_roll import GameState
+
 class TestEggRoll(unittest.TestCase):
 
     def test_validate_moves(self):
@@ -70,6 +72,14 @@ class TestEggRoll(unittest.TestCase):
         self.assertEqual(egg_roll.validate_moves('LFRBxyz', 3), 'LFR')
         self.assertEqual(egg_roll.validate_moves('fgsdasdrhyRbadfadr@355345', 3), 'frR')
         self.assertEqual(egg_roll.validate_moves('lawsdas463@dasdasrds^#Q$adwda^#&&#slwadvh345253r', 4), 'lrlr')
+
+    def test_restart(self):
+        """Tests for when a user intends to restart the game"""
+        self.assertEqual(egg_roll.validate_moves('restart', 1), GameState.RESTART)
+        self.assertEqual(egg_roll.validate_moves('restart', 99), GameState.RESTART)
+        self.assertEqual(egg_roll.validate_moves('RESTART', -54456), GameState.RESTART)
+        self.assertEqual(egg_roll.validate_moves('ReStArT', 1), GameState.RESTART)
+        self.assertEqual(egg_roll.validate_moves('reSTART', 942475674567878987), GameState.RESTART)
 
     # We can guarantee that this function would not take invalid inputs because the moves have already been validated (test cases above)
     def test_move_to_arrow(self):
