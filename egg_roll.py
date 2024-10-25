@@ -115,6 +115,7 @@ def display_final_state(max_moves, moves, points, filename):
             return
 
 def update_game(gamestate, filename):
+    """Update the game based on the player's input"""
     if gamestate == GameState.RESTART:
         main(filename)
 
@@ -147,8 +148,8 @@ def validate_moves(moveset, remaining_moves):
              if it exceeds the allowed number of remaining moves.
         GameState: A special case for when the player has called for a game restart
 
-    The function ensures that only valid move characters ('F', 'f', 
-    'B', 'b', 'L', 'l', 'R', 'r') are accepted. If the user enters 
+    The function ensures that besides 'restart', only valid move characters
+    ('F', 'f', 'B', 'b', 'L', 'l', 'R', 'r') are accepted. If the user enters 
     more moves than can be accommodated within the remaining 
     available moves, the excess moves are truncated.
     """
@@ -170,6 +171,7 @@ def take_moves(remaining_moves):
     Returns:
         str: A string of valid moves entered by the user, truncated
              if it exceeds the allowed number of remaining moves.
+        GameState: A special case for when the player has called for a game restart
 
     The function prompts the player to enter their moves, then uses the `validate_moves`
     function to ensure that only valid characters are accepted and that the number of moves
