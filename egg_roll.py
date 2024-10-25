@@ -50,11 +50,12 @@ def main(filename):
             for row in level_state:
                 print(''.join(row))
 
+        remaining_moves = max_moves - len(moves)
         print("Previous moves:", ''.join(moves))
-        print("Remaining moves:", max_moves - len(moves))
+        print("Remaining moves:", remaining_moves)
         print("Points:", points)
 
-        moveset = take_moves(max_moves)
+        moveset = take_moves(remaining_moves)
         for move in moveset:
             moves.append(move_to_arrow(move))
             snapshots, points_earned = roll(level_state, moves, max_moves)
@@ -107,11 +108,11 @@ def read_level(filename):
     except Exception as e:
         print(e)
 
-def take_moves(max_moves):
+def take_moves(remaining_moves):
     """Prompts the user for moves and validates the input.
 
     Args:
-        max_moves (int): The maximum number of moves allowed.
+        max_moves (int): The remaining number of moves allowed.
     Returns:
         str: A string of valid moves entered by the user, truncated
              if it exceeds the allowed number of remaining moves.
@@ -122,8 +123,8 @@ def take_moves(max_moves):
     available moves, the excess moves are truncated.
     """
     moveset = re.sub(r'[^FfBbLlRr]', '', input("Enter moves: "))  # Only accept valid moves
-    if len(moveset) > max_moves - len(moves):   # Remove excess moves if number exceeds maximum
-        moveset = moveset[:max_moves-1]
+    if len(moveset) > remaining_moves:   # Remove excess moves if number exceeds maximum
+        moveset = moveset[:remaining_moves-1]
     return moveset
 
 if __name__ == "__main__":
