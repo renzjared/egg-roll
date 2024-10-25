@@ -24,6 +24,7 @@ import time
 
 from enum import Enum
 from game_utils import move_to_arrow, is_present, roll
+from main_menu import display_main_menu
 
 class GameState(Enum):
     RESTART = "restart"
@@ -110,7 +111,7 @@ def display_final_state(max_moves, moves, points, filename):
             main(filename)
         elif response.upper() == 'N':
             prompt = False
-            main_menu()     # Go back to main menu
+            display_main_menu()     # Go back to main menu
 
 def update_game(gamestate, filename):
     """Update the game based on the player's input"""
@@ -178,41 +179,6 @@ def take_moves(remaining_moves):
     moveset = input("Enter moves or command: ")      # Get player input
     return validate_moves(moveset, remaining_moves)
 
-def main_menu():
-    """Displays the main menu and processes user input to start the game, 
-    view instructions, or exit.
-    """
-    while True:
-        clear_screen()
-        print("Welcome to Egg Roll!")
-        print("1. Start Game")
-        print("2. Instructions")
-        print("3. Exit")
-        
-        choice = input("Select an option (1-3): ")
-
-        if choice == '1':
-            filename = input("Enter the level filename: ")
-            main(filename)  # Start the game
-        elif choice == '2':
-            display_instructions()  # Show instructions
-        elif choice == '3':
-            print("Exiting the game. Goodbye!")
-            sys.exit()
-        else:
-            print("Invalid choice. Please try again.")
-            time.sleep(1)
-
-def display_instructions():
-    """Displays the game instructions to the player."""
-    clear_screen()
-    print("Instructions:")
-    print("1. You will be asked to enter a series of moves.")
-    print("2. Valid moves are: F (forward), B (backward), L (left), R (right).")
-    print("3. Type 'restart' at any time to start over.")
-    print("4. Try to collect as many points as you can before your moves run out.")
-    input("Press Enter to return to the main menu...")
-
 if __name__ == "__main__":
     # Check if the player included a level filename argument
     # If not, the main menu is displayed
@@ -220,4 +186,4 @@ if __name__ == "__main__":
         filename = str(sys.argv[1])
         main(filename)
     else:
-        main_menu()
+        display_main_menu()
