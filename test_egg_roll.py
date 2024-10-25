@@ -73,13 +73,23 @@ class TestEggRoll(unittest.TestCase):
         self.assertEqual(egg_roll.validate_moves('fgsdasdrhyRbadfadr@355345', 3), 'frR')
         self.assertEqual(egg_roll.validate_moves('lawsdas463@dasdasrds^#Q$adwda^#&&#slwadvh345253r', 4), 'lrlr')
 
-    def test_restart(self):
+    def test_update_game_states(self):
         """Tests for when a user intends to restart the game"""
         self.assertEqual(egg_roll.validate_moves('restart', 1), GameState.RESTART)
         self.assertEqual(egg_roll.validate_moves('restart', 99), GameState.RESTART)
         self.assertEqual(egg_roll.validate_moves('RESTART', -54456), GameState.RESTART)
         self.assertEqual(egg_roll.validate_moves('ReStArT', 1), GameState.RESTART)
         self.assertEqual(egg_roll.validate_moves('reSTART', 942475674567878987), GameState.RESTART)
+        self.assertEqual(egg_roll.validate_moves('return', 1), GameState.RETURN)
+        self.assertEqual(egg_roll.validate_moves('menu', 99), GameState.RETURN)
+        self.assertEqual(egg_roll.validate_moves('RETURN', -54456), GameState.RETURN)
+        self.assertEqual(egg_roll.validate_moves('mEnU', 1), GameState.RETURN)
+        self.assertEqual(egg_roll.validate_moves('reTURN', 942475674567878987), GameState.RETURN)
+        self.assertEqual(egg_roll.validate_moves('terminate', 1), GameState.TERMINATE)
+        self.assertEqual(egg_roll.validate_moves('exit', 99), GameState.TERMINATE)
+        self.assertEqual(egg_roll.validate_moves('tErMINatE', -54456), GameState.TERMINATE)
+        self.assertEqual(egg_roll.validate_moves('TERMINATE', 1), GameState.TERMINATE)
+        self.assertEqual(egg_roll.validate_moves('ExIt', 942475674567878987), GameState.TERMINATE)
 
     # We can guarantee that this function would not take invalid inputs because the moves have already been validated (test cases above)
     def test_move_to_arrow(self):

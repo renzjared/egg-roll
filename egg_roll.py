@@ -28,6 +28,8 @@ from main_menu import display_main_menu
 
 class GameState(Enum):
     RESTART = "restart"
+    RETURN = "return"
+    TERMINATE = "terminate"
 
 def main(filename):
     """Main function to run the egg roll game.
@@ -117,6 +119,10 @@ def update_game(gamestate, filename):
     """Update the game based on the player's input"""
     if gamestate == GameState.RESTART:
         main(filename)
+    elif gamestate == GameState.RETURN:
+        display_main_menu()
+    elif gamestate == GameState.TERMINATE:
+        sys.exit()
 
 def read_level(filename):
     """Reads the game level from a specified file.
@@ -145,15 +151,20 @@ def validate_moves(moveset, remaining_moves):
     Returns:
         str: A string of valid moves entered by the user, truncated
              if it exceeds the allowed number of remaining moves.
-        GameState: A special case for when the player has called for a game restart
+        GameState: A special case for when the player has called
+             for a game restart, termination, or return to main menu
 
     The function ensures that besides 'restart', only valid move characters
     ('F', 'f', 'B', 'b', 'L', 'l', 'R', 'r') are accepted. If the user enters 
     more moves than can be accommodated within the remaining 
     available moves, the excess moves are truncated.
     """
-    if moveset.lower() == 'restart':
+    if moveset.strip().lower() == 'restart':
         return GameState.RESTART
+    elif moveset.strip().lower() in ['menu', 'return']:
+        return GameState.RETURN
+    elif moveset.strip().lower() in ['exit', 'terminate']:
+        return GameState.TERMINATE
     elif remaining_moves <= 0:    # Return empty string if the number of remaining moves
         return ""                 # is zero or a negative integer
 
@@ -163,19 +174,7 @@ def validate_moves(moveset, remaining_moves):
     return moveset
 
 def take_moves(remaining_moves):
-    """Prompts the player for moves and passes it through the validator
-
-    Args:
-        remaining_moves (int): The remaining number of moves allowed.
-    Returns:
-        str: A string of valid moves entered by the user, truncated
-             if it exceeds the allowed number of remaining moves.
-        GameState: A special case for when the player has called for a game restart
-
-    The function prompts the player to enter their moves, then uses the `validate_moves`
-    function to ensure that only valid characters are accepted and that the number of moves
-    does not exceed the remaining allowed moves.
-    """
+    """Prompts the player for moves or commands and passes it through the validator"""
     moveset = input("Enter moves or command: ")      # Get player input
     return validate_moves(moveset, remaining_moves)
 
