@@ -66,12 +66,12 @@ def main(filename):
                 time.sleep(0.5)
             points += points_earned           # Update point counter
 
-        if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
-            display_final_state(max_moves, moves, points)
-            return
+            if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
+                display_final_state(max_moves, moves, points, filename)
+                return
 
     if len(moves) == max_moves:
-        display_final_state(max_moves, moves, points)
+        display_final_state(max_moves, moves, points, filename)
 
 def clear_screen():
     """Clears the terminal screen, if any"""
@@ -79,7 +79,7 @@ def clear_screen():
         clear_cmd = 'cls' if os.name == 'nt' else 'clear'
     subprocess.run([clear_cmd])
 
-def display_final_state(max_moves, moves, points):
+def display_final_state(max_moves, moves, points, filename):
     """Displays the final game statistics after all moves are made or when there are no more eggs to roll.
 
     Args:
