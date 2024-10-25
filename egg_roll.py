@@ -41,7 +41,7 @@ def main(filename):
     moves = []  # initialize move history
     points = 0  # initialize number of points
 
-    level_state = [list(l) for l in level[2:]]  
+    level_state = [list(l) for l in level[2:]] # Convert strings into a list of characters
 
     # Display game prompt until the maximum number of moves is reached
     while len(moves) < max_moves:
@@ -54,22 +54,16 @@ def main(filename):
         print("Remaining moves:", max_moves - len(moves))
         print("Points:", points)
 
-        moveset = re.sub(r'[^FfBbLlRr]', '', input("Enter moves: "))  # Only accept valid moves
-
-        ## TO DO: Update error messages
-        if len(moveset) > max_moves - len(moves):
-            print("Max moves error")
-            continue
-
+        moveset = take_moves(max_moves)
         for move in moveset:
             moves.append(move_to_arrow(move))
             snapshots, points_earned = roll(level_state, moves, max_moves)
-            for snapshot in snapshots:   # Print each snapshot with a 0.5s delay
-                clear_screen()           # Clear the screen in between snapshots
+            for snapshot in snapshots:        # Print each snapshot with a 0.5s delay
+                clear_screen()                # Clear the screen in between snapshots
                 for row in snapshot:
-                    print(''.join(row))  # Print each row as a string
+                    print(''.join(row))
                 time.sleep(0.5)
-            points += points_earned
+            points += points_earned           # Update point counter
 
         if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
             display_final_state(max_moves, moves, points)
@@ -112,6 +106,25 @@ def read_level(filename):
             return level
     except Exception as e:
         print(e)
+
+def take_moves(max_moves):
+    """Prompts the user for moves and validates the input.
+
+    Args:
+        max_moves (int): The maximum number of moves allowed.
+    Returns:
+        str: A string of valid moves entered by the user, truncated
+             if it exceeds the allowed number of remaining moves.
+
+    The function ensures that only valid move characters ('F', 'f', 
+    'B', 'b', 'L', 'l', 'R', 'r') are accepted. If the user enters 
+    more moves than can be accommodated within the remaining 
+    available moves, the excess moves are truncated.
+    """
+    moveset = re.sub(r'[^FfBbLlRr]', '', input("Enter moves: "))  # Only accept valid moves
+    if len(moveset) > max_moves - len(moves):   # Remove excess moves if number exceeds maximum
+        moveset = moveset[:max_moves-1]
+    return moveset
 
 if __name__ == "__main__":
     # Check first if the user included a level filename argument
