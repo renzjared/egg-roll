@@ -20,8 +20,6 @@ import os
 import subprocess
 import sys
 
-
-
 rows = 0
 cols = 0
 
@@ -40,6 +38,20 @@ def clear_screen():
     if sys.stdout.isatty():
         clear_cmd = 'cls' if os.name == 'nt' else 'clear'
     subprocess.run([clear_cmd])
+    pass
+
+def is_present(grid, element):
+    return any(element in row for row in grid)
+
+def move_to_arrow(move):
+    if move.lower() == "f":         # forward
+        return '↑'
+    elif move.lower() == "b":       # backward
+        return '↓'
+    elif move.lower() == "l":       # left
+        return '←'
+    elif move.lower() == "r":       # right
+        return '→'
 
 def roll(grid, move):
     global rows
@@ -55,10 +67,6 @@ def roll(grid, move):
         prev_state = [row[:] for row in grid]  # Deep copy of grid
         snapshots.append([row[:] for row in grid]) 
         move_eggs(grid, dx, dy)
-
-    # for snapshot in snapshots:
-    #     for row in snapshot:
-    #         print(''.join(row))  # Print each row as a string
     return snapshots
 
 def move_eggs(grid, dx, dy):
@@ -79,33 +87,23 @@ def place_eggs(grid, eggs, dx, dy):
             new_r = r + dy
             new_c = c + dx
 
-            if grid[r+dy][c+dx] == '🪹':             # If adjacent to empty nest, 
-                grid[r+dy][c+dx] = '🪺'              # fill empty nest with egg
+            if grid[new_r][new_c] == '🪹':             # If adjacent to empty nest, 
+                grid[new_r][new_c] = '🪺'              # Fill empty nest with egg
                 eggs.remove((r, c))
                 updated = True
-            elif grid[r+dy][c+dx] == '🟩':           # Roll to empty space
-                grid[r+dy][c+dx] = '🥚'
+            elif grid[new_r][new_c] == '🟩' and (new_r, new_c) not in eggs:           # Roll to empty space
+                grid[new_r][new_c] = '🥚'
                 eggs.remove((r, c))
                 updated = True
-            elif grid[r+dy][c+dx] == '🍳':           # Egg gets cooked
+            elif grid[new_r][new_c] == '🍳':           # Egg gets cooked
                 eggs.remove((r, c))
                 updated = True
-            elif grid[r+dy][c+dx] in ['🪺', '🧱']:  # These act as permanent barriers
-                grid[r][c] = '🥚'
+            elif grid[new_r][new_c] in ['🪺', '🧱']:   # These act as permanent barriers
+                grid[r][c] = '🥚'                      # Reset original position
                 eggs.remove((r, c))
                 updated = True
 
         if not updated:
             for (r, c) in eggs[:]:
-                grid[r][c] = '🥚'
+                grid[r][c] = '🥚'                    # Restore eggs that couldn't be moved
             break
-
-
-# grid = [
-#     list('🧱🧱🧱🧱🧱🧱🧱🧱'),
-#     list('🧱🪹🪹🟩🟩🥚🥚🧱'),
-#     list('🧱🟩🟩🟩🟩🟩🍳🧱'),
-#     list('🧱🧱🧱🧱🧱🧱🧱🧱')
-# ]
-# move = 'l'
-# roll(grid, move)
