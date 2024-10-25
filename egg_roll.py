@@ -108,10 +108,11 @@ def read_level(filename):
     except Exception as e:
         print(e)
 
-def take_moves(remaining_moves):
-    """Prompts the user for moves and validates the input.
+def validate_moves(moveset, remaining_moves):
+    """Validates the player's input for moves.
 
     Args:
+        moveset (str): The string of moves entered by the player
         remaining_moves (int): The remaining number of moves allowed.
     Returns:
         str: A string of valid moves entered by the user, truncated
@@ -122,14 +123,30 @@ def take_moves(remaining_moves):
     more moves than can be accommodated within the remaining 
     available moves, the excess moves are truncated.
     """
-    moveset = re.sub(r'[^FfBbLlRr]', '', input("Enter moves: "))  # Only accept valid moves
-    if len(moveset) > remaining_moves:   # Remove excess moves if number exceeds maximum
+    moveset = re.sub(r'[^FfBbLlRr]', '', moveset)   # Only accept valid moves
+    if len(moveset) > remaining_moves:              # Remove excess moves if number exceeds maximum
         moveset = moveset[:remaining_moves]
-    print(moveset)
     return moveset
 
+def take_moves(remaining_moves):
+    """Prompts the player for moves and passes it through the validator
+
+    Args:
+        remaining_moves (int): The remaining number of moves allowed.
+    Returns:
+        str: A string of valid moves entered by the user, truncated
+             if it exceeds the allowed number of remaining moves.
+
+    The function prompts the player to enter their moves, then uses the `validate_moves`
+    function to ensure that only valid characters are accepted and that the number of moves
+    does not exceed the remaining allowed moves.
+    """
+    moveset = input("Enter moves: ")                # Get player input
+    return validate_moves(moveset, remaining_moves)
+
+
 if __name__ == "__main__":
-    # Check first if the user included a level filename argument
+    # Check first if the player included a level filename argument
     if len(sys.argv) > 1:
         filename = str(sys.argv[1])
         main(filename)
