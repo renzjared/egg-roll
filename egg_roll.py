@@ -16,12 +16,11 @@ You may obtain a copy of the License at
  @author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
+import re
 import sys
 import time
 
 from game_utils import clear_screen, move_to_arrow, is_present, roll
-
-VALID_MOVES = ["F", "f", "B", "b", "L", "l", "R", "r"]
 
 def main(filename):
     # Read game level file, and take the number of rows and number of maximum moves 
@@ -42,13 +41,10 @@ def main(filename):
 
         print("Previous moves:", ''.join(moves))
         print("Remaining moves:", max_moves - len(moves))
-        moveset = input("Enter moves: ") 
+        moveset = re.sub(r'[^FfBbLlRr]', '', input("Enter moves: "))  # Only accept valid moves
 
         ## TO DO: Update error messages
-        if not all(move in VALID_MOVES for move in moveset):
-            print('Error: Invalid move sequence')
-            continue
-        elif len(moveset) > max_moves - len(moves):
+        if len(moveset) > max_moves - len(moves):
             print("Max moves error")
             continue
 
