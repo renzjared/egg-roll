@@ -21,6 +21,24 @@ import sys
 rows = 0
 cols = 0
 
+
+def move_to_arrow(move):
+    """Convert a single-character move command to an arrow symbol.
+
+    Args:
+        move (str): A single character representing a move ('f', 'b', 'l', 'r').
+    Returns:
+        str: The corresponding arrow symbol ('↑', '↓', '←', '→').
+    """
+    if move.lower() == "f":         # forward
+        return '↑'
+    elif move.lower() == "b":       # backward
+        return '↓'
+    elif move.lower() == "l":       # left
+        return '←'
+    elif move.lower() == "r":       # right
+        return '→'
+
 def directions(move):
     """Converts a directional move symbol to a coordinate change.
 
@@ -41,23 +59,6 @@ def directions(move):
 def is_present(grid, element):
     """Checks if an element is present in the grid"""
     return any(element in row for row in grid)
-
-def move_to_arrow(move):
-    """Convert a single-character move command to an arrow symbol.
-
-    Args:
-        move (str): A single character representing a move ('f', 'b', 'l', 'r').
-    Returns:
-        str: The corresponding arrow symbol ('↑', '↓', '←', '→').
-    """
-    if move.lower() == "f":         # forward
-        return '↑'
-    elif move.lower() == "b":       # backward
-        return '↓'
-    elif move.lower() == "l":       # left
-        return '←'
-    elif move.lower() == "r":       # right
-        return '→'
 
 def roll(grid, moves, max_moves):
     """Simulates rolling eggs on the grid based on the provided move

@@ -123,6 +123,9 @@ def validate_moves(moveset, remaining_moves):
     more moves than can be accommodated within the remaining 
     available moves, the excess moves are truncated.
     """
+    if remaining_moves <= 0:    # Return empty string if the number of remaining moves
+        return ""               # is zero or a negative integer
+
     moveset = re.sub(r'[^FfBbLlRr]', '', moveset)   # Only accept valid moves
     if len(moveset) > remaining_moves:              # Remove excess moves if number exceeds maximum
         moveset = moveset[:remaining_moves]
@@ -143,7 +146,6 @@ def take_moves(remaining_moves):
     """
     moveset = input("Enter moves: ")                # Get player input
     return validate_moves(moveset, remaining_moves)
-
 
 if __name__ == "__main__":
     # Check first if the player included a level filename argument
