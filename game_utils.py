@@ -16,14 +16,19 @@ You may obtain a copy of the License at
  @author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
-import os
-import subprocess
 import sys
 
 rows = 0
 cols = 0
 
 def directions(move):
+    """Converts a directional move symbol to a coordinate change.
+
+    Args:
+        move (str): A string representing a move direction ('↑', '↓', '←', '→').
+    Returns:
+        tuple: A tuple representing the change in coordinates (row_change, col_change).
+    """
     if move.lower() == "↑":         # forward
         return (-1, 0)
     elif move.lower() == "↓":       # backward
@@ -33,16 +38,18 @@ def directions(move):
     elif move.lower() == "→":       # right
         return (0, 1)
 
-def clear_screen():
-    """Clears the terminal screen, if any"""
-    if sys.stdout.isatty():
-        clear_cmd = 'cls' if os.name == 'nt' else 'clear'
-    subprocess.run([clear_cmd])
-
 def is_present(grid, element):
+    """Checks if an element is present in the grid"""
     return any(element in row for row in grid)
 
 def move_to_arrow(move):
+    """Convert a single-character move command to an arrow symbol.
+
+    Args:
+        move (str): A single character representing a move ('f', 'b', 'l', 'r').
+    Returns:
+        str: The corresponding arrow symbol ('↑', '↓', '←', '→').
+    """
     if move.lower() == "f":         # forward
         return '↑'
     elif move.lower() == "b":       # backward
@@ -53,6 +60,15 @@ def move_to_arrow(move):
         return '→'
 
 def roll(grid, moves, max_moves):
+    """Simulates rolling eggs on the grid based on the provided move
+
+    Args:
+        grid (list): A 2D list representing the grid.
+        moves (list): A list of all moves performed, including the move to be performed.
+        max_moves (int): The maximum number of moves allowed.
+    Returns:
+        tuple: A list of snapshots of the grid after the move, and the total points earned.
+    """
     global rows
     global cols
     rows = len(grid)
@@ -60,28 +76,31 @@ def roll(grid, moves, max_moves):
 
     snapshots = []
     prev_state = []
-    move = moves[len(moves)-1]       # Take the last move
+    move = moves[len(moves)-1]       # The move to be performed is the last move added
     points_earned = 0
 
     while grid != prev_state:
-        prev_state = [row[:] for row in grid]               # Deep copy of grid
+        prev_state = [row[:] for row in grid]                                     # Deep copy of grid
         snapshots.append([row[:] for row in grid]) 
         points_earned += move_eggs(grid, directions(move), moves, max_moves)      # place_eggs returns number of points earned per snapshot
     return snapshots, points_earned
 
 def move_eggs(grid, direction, moves, max_moves):
+    """Moves eggs on the grid toward the specified direction.
+
+    Args:
+        grid (list): A 2D list representing the grid.
+        direction (tuple): A tuple representing the direction to move eggs (row_change, col_change).
+        moves (list): A list of all moves performed, including the move to be performed.
+        max_moves (int): The maximum number of moves allowed.
+    Returns:
+        int: The total points earned (or lost) for the particular snapshot.
+    """
+
     eggs = [(r, c) for r in range(rows) for c in range(cols) if grid[r][c] == '🥚']      # Save position of eggs  
-    clear_grid(grid)                                                                    # Temporarily remove eggs
-    return place_eggs(grid, eggs, direction, moves, max_moves)# Returns the number of points earned
+    clear_grid(grid)                                                                     # Temporarily remove eggs
 
-def clear_grid(grid):
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] == '🥚':
-                grid[r][c] = '🟩'                          # Replace eggs with grass
-
-def place_eggs(grid, eggs, direction, moves, max_moves):
-    points_earned = 0
+    points_earned = 0      # Initialize points
 
     while eggs:
         updated = False
@@ -110,7 +129,13 @@ def place_eggs(grid, eggs, direction, moves, max_moves):
 
         if not updated:
             for (r, c) in eggs[:]:
-                grid[r][c] = '🥚'                    # Restore eggs that couldn't be moved
+                grid[r][c] = '🥚'                           # Restore eggs that couldn't be moved
             break
-
     return points_earned
+
+def clear_grid(grid):
+    """Clear eggs from the grid by replacing them with grass."""
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == '🥚':
+                grid[r][c] = '🟩'
