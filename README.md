@@ -1,4 +1,9 @@
 # egg-roll
+[![Issues](https://img.shields.io/github/issues/renzjared/egg-roll)](https://github.com/renzjared/egg-roll/issues)
+[![License](https://img.shields.io/github/license/renzjared/egg-roll)](https://github.com/renzjared/egg-roll/blob/master/LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/renzjared/egg-roll/badge)](https://www.codefactor.io/repository/github/renzjared/egg-roll)
+![Static Badge](https://img.shields.io/badge/Unibersidad_ng-Pilipinas-maroon)
+
 A simple terminal-based game developed in Python for the course CS 11, University of the Philippines Diliman.
 
 <h2>Game Description</h2>
