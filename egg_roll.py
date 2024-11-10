@@ -26,6 +26,7 @@ from enum import Enum
 from game_utils import move_to_arrow, is_present, roll
 from main_menu import display_main_menu
 
+
 class GameState(Enum):
     """Enumeration for special game commands that control game flow.
 
@@ -37,6 +38,7 @@ class GameState(Enum):
     RESTART = "restart"
     RETURN = "return"
     TERMINATE = "terminate"
+
 
 def main(filename):
     """Main function to run the egg roll game.
@@ -89,11 +91,13 @@ def main(filename):
     if len(moves) == max_moves:
         display_final_state(max_moves, moves, points, filename)
 
+
 def clear_screen():
     """Clears the terminal screen, if any"""
     if sys.stdout.isatty():
         clear_cmd = 'cls' if os.name == 'nt' else 'clear'
     subprocess.run([clear_cmd])
+
 
 def display_final_state(max_moves, moves, points, filename):
     """Displays the final game statistics after all moves are made or when
@@ -121,6 +125,7 @@ def display_final_state(max_moves, moves, points, filename):
             prompt = False
             display_main_menu()     # Go back to main menu
 
+
 def update_game(gamestate, filename):
     """Update the game based on the player's input"""
     if gamestate == GameState.RESTART:
@@ -129,6 +134,7 @@ def update_game(gamestate, filename):
         display_main_menu()
     elif gamestate == GameState.TERMINATE:
         sys.exit()
+
 
 def read_level(filename):
     """Reads the game level from a specified file.
@@ -147,6 +153,7 @@ def read_level(filename):
     except Exception as e:
         print(e)
         return
+
 
 def validate_moves(moveset, remaining_moves):
     """Validates the player's input for moves.
@@ -179,6 +186,7 @@ def validate_moves(moveset, remaining_moves):
     if len(moveset) > remaining_moves:              # Remove excess moves if number exceeds maximum
         moveset = moveset[:remaining_moves]
     return moveset
+
 
 def take_moves(remaining_moves):
     """Prompts the player for moves or commands and passes it through the validator"""

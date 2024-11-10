@@ -21,31 +21,22 @@ import sys
 def move_to_arrow(move):
     """Convert a single-character move command to an arrow symbol."""
     arrows = {'f': '↑', 'b': '↓', 'l': '←', 'r': '→'}
-    return arrows.get(move.lower(), '')
+    return arrows[move.lower()]
+
 
 def directions(move):
-    """Converts a directional move symbol to a coordinate change.
+    """Convert a move symbol to a tuple representing coordinate change (d_row, d_col)."""
+    coord_change = {"↑": (-1, 0), "↓": (1, 0), "←": (0, -1), "→": (0, 1),}
+    return coord_change[move]
 
-    Args:
-        move (str): A string representing a move direction ('↑', '↓', '←', '→').
-    Returns:
-        tuple: A tuple representing the change in coordinates (row_change, col_change).
-    """
-    if move.lower() == "↑":         # forward
-        return (-1, 0)
-    elif move.lower() == "↓":       # backward
-        return (1, 0)
-    elif move.lower() == "←":       # left
-        return (0, -1)
-    elif move.lower() == "→":       # right
-        return (0, 1)
 
 def is_present(grid, element):
-    """Checks if an element is present in the grid"""
+    """Check if an element is present in the grid"""
     return any(element in row for row in grid)
 
+
 def roll(grid, moves, max_moves):
-    """Simulates rolling eggs on the grid based on the provided move
+    """Simulate rolling eggs on the grid based on the provided move
 
     Args:
         grid (list): A 2D list representing the grid.
@@ -55,8 +46,8 @@ def roll(grid, moves, max_moves):
         tuple: A list of snapshots of the grid after the move, and the total points earned.
     """
     snapshots = []
-    move = moves[-1]       # The move to be performed is the last move added
-    points_earned = 0
+    move = moves[-1]        # The move to be performed is the last move added
+    points_earned = 0       # Initialize points
     direction = directions(move)
 
     while True:
@@ -66,6 +57,7 @@ def roll(grid, moves, max_moves):
         if not moved:
             break
     return snapshots, points_earned
+
 
 def apply_move(grid, direction, max_moves, moves):
     """Apply a single move to all eggs on the grid."""
@@ -92,6 +84,7 @@ def apply_move(grid, direction, max_moves, moves):
 
     return points_earned, moved
 
+
 def find_eggs(grid):
     """Find all egg positions in the grid."""
     return [(r, c) for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == '🥚']
@@ -104,8 +97,18 @@ def clear_eggs(grid):
             if cell == '🥚':
                 grid[r][c] = '🟩'
 
+
 def calculate_new_position(grid, pos, direction):
-    """Calculate the outcome of moving an egg in a specific direction."""
+    """
+    Calculate the outcome of moving an egg in a specific direction.
+
+    Args:
+        grid (list): A 2D list representing the grid.
+        pos (tuple): A tuple representing the position of the egg to be moved (row, column).
+        direction (tuple): A tuple representing the change in coordinates (row_change, col_change).
+    Returns:
+        tuple: A string representing the outcome of the movement, and a tuple representing the position of the egg (row, column).
+    """
     r, c = pos
     dr, dc = direction
     new_r, new_c = r + dr, c + dc
@@ -117,12 +120,13 @@ def calculate_new_position(grid, pos, direction):
     target = grid[new_r][new_c]
     if target == '🪹':
         return "fill_nest", (new_r, new_c)
-    elif target == '🟩':
+    if target == '🟩':
         return "move", (new_r, new_c)
-    elif target == '🍳':
+    if target == '🍳':
         return "fry", pos
-    elif target in ['🪺', '🧱']:
+    if target in ['🪺', '🧱']:
         return "reset", pos
+
 
 def calculate_points(max_moves, moves):
     """Calculate points based on moves left and other conditions."""
