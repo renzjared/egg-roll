@@ -20,6 +20,8 @@ import os
 import subprocess
 import sys
 
+sys.path.append("termcolor")
+from termcolor import colored
 
 def clear_screen():
     """Clears the terminal screen, if any"""
@@ -48,4 +50,4 @@ def center_text(text, pad_right = True):
 def print_center(text):
     """Prints the given text in the center of the terminal."""
     centered_text = center_text(text)
-    print(centered_text)
+    print(colored(centered_text, "green"))
