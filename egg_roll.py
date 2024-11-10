@@ -25,6 +25,7 @@ import time
 from enum import Enum
 from game_utils import move_to_arrow, is_present, roll
 from main_menu import display_main_menu
+from terminal_utils import clear_screen
 
 
 class GameState(Enum):
@@ -90,13 +91,6 @@ def main(filename):
 
     if len(moves) == max_moves:
         display_final_state(max_moves, moves, points, filename)
-
-
-def clear_screen():
-    """Clears the terminal screen, if any"""
-    if sys.stdout.isatty():
-        clear_cmd = 'cls' if os.name == 'nt' else 'clear'
-    subprocess.run([clear_cmd])
 
 
 def display_final_state(max_moves, moves, points, filename):

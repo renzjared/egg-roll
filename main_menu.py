@@ -19,6 +19,9 @@ You may obtain a copy of the License at
 import sys
 import time
 
+from terminal_utils import center_text, print_center
+
+
 def display_main_menu():
     """Displays the main menu and processes user input to start the game, 
     view instructions, or exit.
@@ -27,6 +30,8 @@ def display_main_menu():
         from egg_roll import clear_screen       # Use local import to avoid circular imports
         clear_screen()
         header = """
+
+
 
 
        ███████╗ ██████╗  ██████╗     ██████╗  ██████╗ ██╗     ██╗         
@@ -39,13 +44,13 @@ def display_main_menu():
 
 
         """
-        print(header)
-        print("Welcome to Egg Roll!")
-        print("1. Start Game")
-        print("2. Instructions")
-        print("3. Exit")
-        
-        choice = input("Select an option (1-3): ")
+        menu_options = ["Start Game", "Instructions", "Exit"]
+        menu = '\n'.join(str(num) + ". " + option for num, option in enumerate(menu_options, 1))
+        print_center(header)
+        print_center("Welcome to Egg Roll!\n")
+        print_center(menu + "\n")
+
+        choice = input(center_text("Select an option (1-3): "))
 
         if choice.strip() == '1':
             filename = input("Enter the level filename: ")
@@ -59,6 +64,7 @@ def display_main_menu():
         else:
             print("Invalid choice. Please try again.")
             time.sleep(1)
+
 
 def display_instructions():
     """Displays the game instructions to the player."""
