@@ -20,19 +20,28 @@ import os
 import subprocess
 import sys
 
+# Extend system path to access termcolor folder
+# Termcolor is installed locally due to importing issues (may be fixed later)
 sys.path.append("termcolor")
 from termcolor import colored
 
+
 def clear_screen():
-    """Clears the terminal screen, if any"""
+    """Clear the terminal screen, if any"""
     if sys.stdout.isatty():
         clear_cmd = 'cls' if os.name == 'nt' else 'clear'
     subprocess.run([clear_cmd])
 
 
+def terminal_dimensions():
+    """Return a tuple representing the of the terminal"""
+    height = os.get_terminal_size().lines
+    width = os.get_terminal_size().columns
+    return height, width
+
 def center_text(text, pad_right = True):
-    """Centers the given text"""
-    terminal_width = os.get_terminal_size().columns
+    """Centers the given text horizontally"""
+    terminal_width = terminal_dimensions()[1]
     text_width = max([len(line) for line in text.split("\n")])
     padding_width = (terminal_width - text_width) // 2
     padding = " " * padding_width
@@ -48,14 +57,14 @@ def center_text(text, pad_right = True):
 
 
 def color_text(text, *args):
-    """Uses the termcolor library to format colored text"""
+    """Use the termcolor library to format colored text"""
     return colored(text, *args)
 
 
 def print_format(text, is_centered, *args):
-    """Prints the given text, formatted in a certain way."""
-    if is_centered:                 # Center the text first, if needed, because using colors
-        text = center_text(text)    # add additional characters that offset the centering
+    """Print the given text, formatted in a certain way."""
+    if is_centered:                 # Center the text horizontally first, if needed, because using
+        text = center_text(text)    # colors add additional characters that offset the centering
     if args:
         text = color_text(text, *args)
     print(text)
