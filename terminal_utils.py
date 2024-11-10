@@ -47,7 +47,15 @@ def center_text(text, pad_right = True):
     return '\n'.join(centered_text)
 
 
-def print_center(text):
-    """Prints the given text in the center of the terminal."""
-    centered_text = center_text(text)
-    print(colored(centered_text, "green"))
+def color_text(text, *args):
+    """Uses the termcolor library to format colored text"""
+    return colored(text, *args)
+
+
+def print_format(text, is_centered, *args):
+    """Prints the given text, formatted in a certain way."""
+    if is_centered:                 # Center the text first, if needed, because using colors
+        text = center_text(text)    # add additional characters that offset the centering
+    if args:
+        text = color_text(text, *args)
+    print(text)

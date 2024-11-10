@@ -19,7 +19,7 @@ You may obtain a copy of the License at
 import sys
 import time
 
-from terminal_utils import center_text, print_center
+from terminal_utils import center_text, clear_screen, print_format
 
 
 def display_main_menu():
@@ -27,7 +27,6 @@ def display_main_menu():
     view instructions, or exit.
     """
     while True:
-        from egg_roll import clear_screen       # Use local import to avoid circular imports
         clear_screen()
         header = """
 
@@ -46,9 +45,9 @@ def display_main_menu():
         """
         menu_options = ["Start Game", "Instructions", "Exit"]
         menu = '\n'.join(str(num) + ". " + option for num, option in enumerate(menu_options, 1))
-        print_center(header)
-        print_center("Welcome to Egg Roll!\n")
-        print_center(menu + "\n")
+        print_format(header, True, "green")
+        print_format("Welcome to Egg Roll!\n", True, 'yellow', None, ['bold'])
+        print_format(menu + "\n", True)
 
         choice = input(center_text("Select an option (1-3): ", False))
 
@@ -68,7 +67,6 @@ def display_main_menu():
 
 def display_instructions():
     """Displays the game instructions to the player."""
-    from egg_roll import clear_screen           # Use local import to avoid circular imports
     clear_screen()
     print("Instructions:")
     print("1. You will be asked to enter a series of moves.")
