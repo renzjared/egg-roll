@@ -23,21 +23,9 @@ cols = 0
 
 
 def move_to_arrow(move):
-    """Convert a single-character move command to an arrow symbol.
-
-    Args:
-        move (str): A single character representing a move ('f', 'b', 'l', 'r').
-    Returns:
-        str: The corresponding arrow symbol ('↑', '↓', '←', '→').
-    """
-    if move.lower() == "f":         # forward
-        return '↑'
-    elif move.lower() == "b":       # backward
-        return '↓'
-    elif move.lower() == "l":       # left
-        return '←'
-    elif move.lower() == "r":       # right
-        return '→'
+    """Convert a single-character move command to an arrow symbol."""
+    arrows = {'f': '↑', 'b': '↓', 'l': '←', 'r': '→'}
+    return arrows.get(move.lower(), '')
 
 def directions(move):
     """Converts a directional move symbol to a coordinate change.
@@ -77,7 +65,7 @@ def roll(grid, moves, max_moves):
 
     snapshots = []
     prev_state = []
-    move = moves[len(moves)-1]       # The move to be performed is the last move added
+    move = moves[-1]       # The move to be performed is the last move added
     points_earned = 0
 
     while grid != prev_state:
@@ -133,6 +121,10 @@ def move_eggs(grid, direction, moves, max_moves):
                 grid[r][c] = '🥚'                           # Restore eggs that couldn't be moved
             break
     return points_earned
+
+def find_eggs(grid):
+    """Find all egg positions in the grid."""
+    return [(r, c) for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == '🥚']
 
 def clear_grid(grid):
     """Clear eggs from the grid by replacing them with grass."""

@@ -27,6 +27,13 @@ from game_utils import move_to_arrow, is_present, roll
 from main_menu import display_main_menu
 
 class GameState(Enum):
+    """Enumeration for special game commands that control game flow.
+
+    Attributes:
+        RESTART (str): Command to restart the game.
+        RETURN (str): Command to return to the main menu.
+        TERMINATE (str): Command to terminate the game session.
+    """
     RESTART = "restart"
     RETURN = "return"
     TERMINATE = "terminate"
@@ -43,7 +50,6 @@ def main(filename):
     """
     # Read game level file, and take the number of rows and number of maximum moves 
     level = read_level(filename)
-    rows = int(level[0])
     max_moves = int(level[1])
     moves = []  # initialize move history
     points = 0  # initialize number of points
@@ -63,8 +69,8 @@ def main(filename):
         print("Points:", points)
 
         moveset = take_moves(remaining_moves)
-        if isinstance(moveset, GameState):    # Checks if the player entered a special command instead of a moveset
-            update_game(moveset, filename)
+        if isinstance(moveset, GameState):    # Checks if the player entered a special command
+            update_game(moveset, filename)    # instead of a moveset
             return
         for move in moveset:
             moves.append(move_to_arrow(move))
@@ -106,7 +112,7 @@ def display_final_state(max_moves, moves, points, filename):
 
     # Ask if player wants to play again
     prompt = True
-    while(prompt):      # Ask again until the player responds with a valid answer: [y,Y,n,N]
+    while prompt:      # Ask again until the player responds with a valid answer: [y,Y,n,N]
         response = input("Play again? [Y/N] ")
         if response.upper() == 'Y':
             prompt = False
@@ -140,6 +146,7 @@ def read_level(filename):
             return level
     except Exception as e:
         print(e)
+        return
 
 def validate_moves(moveset, remaining_moves):
     """Validates the player's input for moves.
@@ -161,11 +168,11 @@ def validate_moves(moveset, remaining_moves):
     """
     if moveset.strip().lower() == 'restart':
         return GameState.RESTART
-    elif moveset.strip().lower() in ['menu', 'return']:
+    if moveset.strip().lower() in ['menu', 'return']:
         return GameState.RETURN
-    elif moveset.strip().lower() in ['exit', 'terminate']:
+    if moveset.strip().lower() in ['exit', 'terminate']:
         return GameState.TERMINATE
-    elif remaining_moves <= 0:    # Return empty string if the number of remaining moves
+    if remaining_moves <= 0:    # Return empty string if the number of remaining moves
         return ""                 # is zero or a negative integer
 
     moveset = re.sub(r'[^FfBbLlRr]', '', moveset)   # Only accept valid moves
