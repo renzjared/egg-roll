@@ -16,9 +16,9 @@ You may obtain a copy of the License at
  @author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
-import pathlib
 import sys
 import time
+from pathlib import Path
 
 from terminal_utils import center_text, clear_screen, print_format, terminal_dimensions
 
@@ -57,31 +57,32 @@ def display_main_menu():
 
         """
         print_format(header, True, "green")
-        print_format("Welcome to Egg Roll!\n", True, 'yellow', None, ['bold'])
+        print_format("Welcome to Egg Roll!", True, 'yellow', None, ['bold'])
 
         menu_options = ["Start Game", "Instructions", "Exit"]
         menu = '\n'.join(str(num) + ". " + option for num, option in enumerate(menu_options, 1))
-        print_format(menu + "\n ", True)
+        print_format("\n" + menu + "\n ", True)
 
         choice = input(center_text("Select an option (1-3): ", False))
 
         # Load the game level
         if choice.strip() == '1':
             width = terminal_dimensions()[1]
-            print_format("\n" + "=" * width + "\n", False, "dark_grey")
-            filename = input("Enter the level filename: ")
-
-            if Path(filename).
-            try:
-            except:
-
-            from egg_roll import main           # Use local import to avoid circular imports
-            main(filename)                      # Start the game
+            print_format("\n" + "=" * width, False, "dark_grey")
+            take_input = True
+            while take_input:
+                filename = input("\nEnter the level filename: ")
+                if Path(filename).is_file():
+                    take_input = False
+                    from egg_roll import main      # Use local import to avoid circular imports
+                    main(filename)                 # Start the game
+                else:
+                    print_format(f"\n[Error] {filename} is an invalid file path. Please try again.", True, "red")
 
         # Show game instructions
         elif choice.strip() == '2':
             display_instructions()              # Show instructions
-        
+    
         # Exit game
         elif choice.strip() == '3':
             print_format("\nExiting the game. Goodbye!\n", True, 'magenta', None, ['bold'])
