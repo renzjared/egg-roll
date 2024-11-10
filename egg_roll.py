@@ -16,9 +16,7 @@ You may obtain a copy of the License at
  @author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
-import os
 import re
-import subprocess
 import sys
 import time
 

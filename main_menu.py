@@ -50,7 +50,7 @@ def display_main_menu():
         print_center("Welcome to Egg Roll!\n")
         print_center(menu + "\n")
 
-        choice = input(center_text("Select an option (1-3): "))
+        choice = input(center_text("Select an option (1-3): ", False))
 
         if choice.strip() == '1':
             filename = input("Enter the level filename: ")

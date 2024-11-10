@@ -28,7 +28,7 @@ def clear_screen():
     subprocess.run([clear_cmd])
 
 
-def center_text(text):
+def center_text(text, pad_right = True):
     """Centers the given text"""
     terminal_width = os.get_terminal_size().columns
     text_width = max([len(line) for line in text.split("\n")])
@@ -37,7 +37,10 @@ def center_text(text):
 
     centered_text = []
     for line in text.split("\n"):
-        centered_text.append(padding + line + padding)
+        if pad_right:
+            centered_text.append(padding + line + padding)
+        else:
+            centered_text.append(padding + line)
 
     return '\n'.join(centered_text)
 
