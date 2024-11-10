@@ -18,10 +18,6 @@ You may obtain a copy of the License at
 
 import sys
 
-rows = 0
-cols = 0
-
-
 def move_to_arrow(move):
     """Convert a single-character move command to an arrow symbol."""
     arrows = {'f': '↑', 'b': '↓', 'l': '←', 'r': '→'}
@@ -58,77 +54,83 @@ def roll(grid, moves, max_moves):
     Returns:
         tuple: A list of snapshots of the grid after the move, and the total points earned.
     """
-    global rows
-    global cols
-    rows = len(grid)
-    cols = len(grid[0])
-
     snapshots = []
-    prev_state = []
     move = moves[-1]       # The move to be performed is the last move added
     points_earned = 0
+    direction = directions(move)
 
-    while grid != prev_state:
-        prev_state = [row[:] for row in grid]                                     # Deep copy of grid
-        snapshots.append([row[:] for row in grid]) 
-        points_earned += move_eggs(grid, directions(move), moves, max_moves)      # place_eggs returns number of points earned per snapshot
+    while True:
+        snapshots.append([row[:] for row in grid])  # Capture the grid's state
+        points_change, moved = apply_move(grid, direction, max_moves, moves)
+        points_earned += points_change
+        if not moved:
+            break
     return snapshots, points_earned
 
-def move_eggs(grid, direction, moves, max_moves):
-    """Moves eggs on the grid toward the specified direction.
+def apply_move(grid, direction, max_moves, moves):
+    """Apply a single move to all eggs on the grid."""
+    eggs = find_eggs(grid)
+    points_earned = 0
+    moved = False
 
-    Args:
-        grid (list): A 2D list representing the grid.
-        direction (tuple): A tuple representing the direction to move eggs (row_change, col_change).
-        moves (list): A list of all moves performed, including the move to be performed.
-        max_moves (int): The maximum number of moves allowed.
-    Returns:
-        int: The total points earned (or lost) for the particular snapshot.
-    """
+    clear_eggs(grid)
 
-    eggs = [(r, c) for r in range(rows) for c in range(cols) if grid[r][c] == '🥚']      # Save position of eggs  
-    clear_grid(grid)                                                                     # Temporarily remove eggs
+    for egg in eggs:
+        outcome, new_pos = calculate_new_position(grid, egg, direction)
+        if outcome == "move":
+            set_position(grid, new_pos, '🥚')
+            moved = True
+        elif outcome == "fill_nest":
+            set_position(grid, new_pos, '🪺')
+            points_earned += calculate_points(max_moves, moves)
+            moved = True
+        elif outcome == "fry":
+            points_earned -= 5
+            moved = True
+        elif outcome == "reset":
+            set_position(grid, egg, '🥚')
 
-    points_earned = 0      # Initialize points
-
-    while eggs:
-        updated = False
-        for (r, c) in eggs[:]:
-            new_r = r + direction[0]
-            new_c = c + direction[1]
-
-            if grid[new_r][new_c] == '🪹':                   # If adjacent to empty nest, 
-                grid[new_r][new_c] = '🪺'                    # Fill empty nest with egg
-                eggs.remove((r, c))
-                bonus_points = (max_moves - len(moves[1:]))  # Earn bonus points equal to the remaining moves left (counting the current move)
-                points_earned += 10 + bonus_points           # Earn a minimum of 10 points when an egg reaches a nest
-                updated = True
-            elif grid[new_r][new_c] == '🟩' and (new_r, new_c) not in eggs:           # Roll to empty space
-                grid[new_r][new_c] = '🥚'
-                eggs.remove((r, c))
-                updated = True
-            elif grid[new_r][new_c] == '🍳':                 # Egg gets cooked
-                eggs.remove((r, c))
-                points_earned += -5                          # Lose 5 points when an egg falls into a frying pan
-                updated = True
-            elif grid[new_r][new_c] in ['🪺', '🧱']:        # These act as permanent barriers
-                grid[r][c] = '🥚'                            # Reset original position
-                eggs.remove((r, c))
-                updated = True
-
-        if not updated:
-            for (r, c) in eggs[:]:
-                grid[r][c] = '🥚'                           # Restore eggs that couldn't be moved
-            break
-    return points_earned
+    return points_earned, moved
 
 def find_eggs(grid):
     """Find all egg positions in the grid."""
     return [(r, c) for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == '🥚']
 
-def clear_grid(grid):
+
+def clear_eggs(grid):
     """Clear eggs from the grid by replacing them with grass."""
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] == '🥚':
+    for r, row in enumerate(grid):
+        for c, cell in enumerate(row):
+            if cell == '🥚':
                 grid[r][c] = '🟩'
+
+def calculate_new_position(grid, pos, direction):
+    """Calculate the outcome of moving an egg in a specific direction."""
+    r, c = pos
+    dr, dc = direction
+    new_r, new_c = r + dr, c + dc
+
+    # Check grid boundaries
+    if not (0 <= new_r < len(grid) and 0 <= new_c < len(grid[0])):
+        return "reset", pos
+
+    target = grid[new_r][new_c]
+    if target == '🪹':
+        return "fill_nest", (new_r, new_c)
+    elif target == '🟩':
+        return "move", (new_r, new_c)
+    elif target == '🍳':
+        return "fry", pos
+    elif target in ['🪺', '🧱']:
+        return "reset", pos
+
+def calculate_points(max_moves, moves):
+    """Calculate points based on moves left and other conditions."""
+    remaining_moves = max_moves - len(moves[1:])
+    return 10 + remaining_moves
+
+
+def set_position(grid, pos, value):
+    """Set a specific position in the grid to a given value."""
+    r, c = pos
+    grid[r][c] = value
