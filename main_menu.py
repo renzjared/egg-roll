@@ -16,6 +16,7 @@ You may obtain a copy of the License at
  @author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
+import pathlib
 import sys
 import time
 
@@ -60,7 +61,7 @@ def display_main_menu():
 
         menu_options = ["Start Game", "Instructions", "Exit"]
         menu = '\n'.join(str(num) + ". " + option for num, option in enumerate(menu_options, 1))
-        print_format(menu + "\n", True)
+        print_format(menu + "\n ", True)
 
         choice = input(center_text("Select an option (1-3): ", False))
 
@@ -69,6 +70,11 @@ def display_main_menu():
             width = terminal_dimensions()[1]
             print_format("\n" + "=" * width + "\n", False, "dark_grey")
             filename = input("Enter the level filename: ")
+
+            if Path(filename).
+            try:
+            except:
+
             from egg_roll import main           # Use local import to avoid circular imports
             main(filename)                      # Start the game
 

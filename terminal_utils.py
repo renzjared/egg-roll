@@ -34,37 +34,60 @@ def clear_screen():
 
 
 def terminal_dimensions():
-    """Return a tuple representing the of the terminal"""
-    height = os.get_terminal_size().lines
-    width = os.get_terminal_size().columns
-    return height, width
+    """Return the terminal's current dimensions as (height, width)."""
+    terminal = os.get_terminal_size()
+    return terminal.lines, terminal.columns
+
 
 def center_text(text, pad_right = True):
-    """Centers the given text horizontally"""
-    terminal_width = terminal_dimensions()[1]
-    text_width = max([len(line) for line in text.split("\n")])
+    """Center the given text horizontally within the terminal.
+
+    Args:
+        text (str): The text to be centered.
+        pad_right (bool): Whether to pad on both sides or only on the left.
+
+    Returns:
+        str: The horizontally-centered text.
+    """
+    _, terminal_width = terminal_dimensions()
+    text_width = max(len(line) for line in text.splitlines())
     padding_width = (terminal_width - text_width) // 2
     padding = " " * padding_width
+    rpadding = padding if pad_right else '' # Add padding to the right, if needed
 
-    centered_text = []
-    for line in text.split("\n"):
-        if pad_right:
-            centered_text.append(padding + line + padding)
-        else:
-            centered_text.append(padding + line)
-
-    return '\n'.join(centered_text)
+    # Apply padding to each line of the text
+    return '\n'.join(
+        f"{padding}{line}{rpadding}" for line in text.splitlines()
+    ) 
 
 
 def color_text(text, *args):
-    """Use the termcolor library to format colored text"""
+    """Apply color and styling to text using the termcolor library.
+
+    Args:
+        text (str): The text to format.
+        *args: Arguments for color and style (e.g., "green").
+
+    Returns:
+        str: The colored and styled text.
+    """
     return colored(text, *args)
 
 
 def print_format(text, is_centered, *args):
-    """Print the given text, formatted in a certain way."""
-    if is_centered:                 # Center the text horizontally first, if needed, because using
-        text = center_text(text)    # colors add additional characters that offset the centering
+    """Print text in a specified format, with optional centering and color.
+
+    Args:
+        text (str): The text to format and print.
+        is_centered (bool): Whether to center the text horizontally.
+        *args: Optional color/styling arguments for termcolor.
+    """
+    # Center the text horizontally first, if needed, because
+    # using colors add ANSI escape sequences that offset the centering
+    if is_centered:
+        text = center_text(text)
+
+    # Apply color formatting if arguments are provided
     if args:
         text = color_text(text, *args)
     print(text)
