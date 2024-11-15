@@ -58,7 +58,7 @@ def main(filename):
 
     level_states = []
     level_state = [list(line) for line in level[2:]] # Convert strings into a list of characters
-    level_states.append(copy.deepcopy(level_state), 0)
+    level_states.append((copy.deepcopy(level_state), 0))
 
     # Display game prompt until the maximum number of moves is reached
     while len(moves) < max_moves:
@@ -76,22 +76,31 @@ def main(filename):
         if isinstance(moveset, GameState):    # Checks if the player entered a special command
             update_game(moveset, filename)    # instead of a moveset
             return
-
-
-        for move in moveset:
-            moves.append(move_to_arrow(move))
-            snapshots, points_earned = roll(level_state, moves, max_moves)
-            for snapshot in snapshots:        # Print each snapshot with a 0.5s delay
-                clear_screen()                # Clear the screen in between snapshots
-                for row in snapshot:
+        if moveset == "u":                    # Undo latest move
+            if len(moves) > 0:
+                moves = moves[:-1]
+                level_states = level_states[:-1]
+                level_state, points = level_states[-1]
+                clear_screen()
+                for row in level_state:
                     print(''.join(row))
-                time.sleep(0.5)
-            points += points_earned           # Update point counter
-            level_states.append(copy.deepcopy(snapshots[-1]), points)
+        else:
+            for move in moveset:
+                moves.append(move_to_arrow(move))
+                snapshots, points_earned = roll(level_state, moves, max_moves)
+                for snapshot in snapshots:     # Print each snapshot with a 0.5s delay
+                    clear_screen()             # Clear the screen in between snapshots
+                    for row in snapshot:
+                        print(''.join(row))
+                    time.sleep(0.5)
+                points += points_earned        # Update point counter
 
-            if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
-                display_final_state(max_moves, moves, points, filename)
-                return
+                # Keep track of level states and cumulative points per move played
+                level_states.append((copy.deepcopy(snapshots[-1]), points))
+
+                if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
+                    display_final_state(max_moves, moves, points, filename)
+                    return
 
     if len(moves) == max_moves:
         display_final_state(max_moves, moves, points, filename)
