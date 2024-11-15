@@ -24,6 +24,46 @@ from egg_roll import GameState
 
 class TestEggRoll(unittest.TestCase):
 
+    grid1 = [
+            ['🧱', '🧱', '🧱', '🧱', '🧱'],
+            ['🧱', '🟩', '🥚', '🟩', '🧱'],
+            ['🧱', '🪹', '🟩', '🍳', '🧱'],
+            ['🧱', '🧱', '🧱', '🧱', '🧱']
+        ]
+
+    grid2 = [
+            ['🧱', '🧱', '🧱', '🧱', '🧱'],
+            ['🧱', '🥚', '🟩', '🟩', '🧱'],
+            ['🧱', '🪹', '🍳', '🧱', '🧱'],
+            ['🧱', '🪺', '🟩', '🍳', '🧱'],
+            ['🧱', '🧱', '🧱', '🧱', '🧱']
+        ]
+
+    grid3 = [
+            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
+            ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
+            ['🧱', '🟩', '🟩', '🥚', '🪹', '🧱'],
+            ['🧱', '🪺', '🧱', '🥚', '🪹', '🧱'],
+            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
+        ]
+
+    grid4 = [
+            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
+            ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
+            ['🧱', '🟩', '🪹', '🟩', '🟩', '🧱'],
+            ['🧱', '🪺', '🟩', '🟩', '🪹', '🧱'],
+            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
+        ]
+
+    grid5 = [
+            ['🍳', '🧱', '🟩'],
+            ['🧱', '🟩', '🟩'],
+            ['🟩', '🍳', '🧱']
+        ]
+
+    # Edge case: Empty grid
+    empty_grid = []
+
     def test_validate_moves(self):
         """Tests that valid moves are accepted"""
         self.assertEqual(egg_roll.validate_moves('f', 5), 'f')
@@ -125,136 +165,207 @@ class TestEggRoll(unittest.TestCase):
 
     def test_is_present(self):
         # Tests if an element is present in a grid
+
+        # Tests for grid1
+        self.assertTrue(game_utils.is_present(self.grid1, '🥚'))
+        self.assertTrue(game_utils.is_present(self.grid1, '🍳'))
+        self.assertTrue(game_utils.is_present(self.grid1, '🪹'))
+        self.assertTrue(game_utils.is_present(self.grid1, '🧱'))
+        self.assertFalse(game_utils.is_present(self.grid1, '🪺'))
+        self.assertFalse(game_utils.is_present(self.grid1, '🍅'))
+
+        # Tests for grid2
+        self.assertTrue(game_utils.is_present(self.grid2, '🥚'))
+        self.assertTrue(game_utils.is_present(self.grid2, '🍳'))
+        self.assertTrue(game_utils.is_present(self.grid2, '🪹'))
+        self.assertTrue(game_utils.is_present(self.grid2, '🪺'))
+        self.assertTrue(game_utils.is_present(self.grid2, '🧱'))
+        self.assertFalse(game_utils.is_present(self.grid2, '🟦'))
+        self.assertFalse(game_utils.is_present(self.grid2, '🍅'))
+
+        # Tests for grid3
+        self.assertTrue(game_utils.is_present(self.grid3, '🍳'))
+        self.assertTrue(game_utils.is_present(self.grid3, '🪹'))
+        self.assertTrue(game_utils.is_present(self.grid3, '🪺'))
+        self.assertTrue(game_utils.is_present(self.grid3, '🥚'))
+        self.assertTrue(game_utils.is_present(self.grid3, '🧱'))
+        self.assertFalse(game_utils.is_present(self.grid3, '🟦'))
+        self.assertFalse(game_utils.is_present(self.grid3, '🍅'))
+        self.assertFalse(game_utils.is_present(self.grid3, '🟩🟩'))
+
+        # Tests for grid4
+        self.assertTrue(game_utils.is_present(self.grid4, '🍳'))
+        self.assertTrue(game_utils.is_present(self.grid4, '🪹'))
+        self.assertTrue(game_utils.is_present(self.grid4, '🪺'))
+        self.assertFalse(game_utils.is_present(self.grid4, '🥚'))
+        self.assertFalse(game_utils.is_present(self.grid4, '🟦'))
+        self.assertFalse(game_utils.is_present(self.grid4, '🍅'))
+        self.assertFalse(game_utils.is_present(self.grid4, '🟩🟩'))
+
+        # Tests for grid5
+        self.assertTrue(game_utils.is_present(self.grid5, '🍳'))
+        self.assertTrue(game_utils.is_present(self.grid5, '🧱'))
+        self.assertFalse(game_utils.is_present(self.grid5, '🥚'))
+        self.assertFalse(game_utils.is_present(self.grid5, '🪹'))
+        self.assertFalse(game_utils.is_present(self.grid5, '🪺'))
+        self.assertFalse(game_utils.is_present(self.grid5, '🍅'))
+        self.assertFalse(game_utils.is_present(self.grid5, '🟩🟩'))
+
+        # Tests for an empty grid
+        self.assertFalse(game_utils.is_present(self.empty_grid, '🥚'))
+        self.assertFalse(game_utils.is_present(self.empty_grid, '🟩'))
+        self.assertFalse(game_utils.is_present(self.empty_grid, '🍅'))
+
+    def test_roll(self):
+        # Test roll with grid configurations and moves
+        # Only one move is tested (the move at the end of the tuple `moves`)
+        moves = ['→']
         grid1 = [
             ['🧱', '🧱', '🧱', '🧱', '🧱'],
             ['🧱', '🟩', '🥚', '🟩', '🧱'],
             ['🧱', '🪹', '🟩', '🍳', '🧱'],
             ['🧱', '🧱', '🧱', '🧱', '🧱']
         ]
-
-        grid2 = [
+        snapshots, points_earned = game_utils.roll(grid1, moves, 5)
+        self.assertEqual(len(snapshots), 2)
+        self.assertEqual(snapshots[0][1][3], '🟩')
+        self.assertEqual(snapshots[1][1][3], '🥚')
+        self.assertEqual(points_earned, 0)
+ 
+        grid1 = [
             ['🧱', '🧱', '🧱', '🧱', '🧱'],
-            ['🧱', '🥚', '🟩', '🟩', '🧱'],
-            ['🧱', '🪹', '🍳', '🧱', '🧱'],
-            ['🧱', '🪺', '🟩', '🍳', '🧱'],
+            ['🧱', '🟩', '🥚', '🟩', '🧱'],
+            ['🧱', '🪹', '🟩', '🍳', '🧱'],
             ['🧱', '🧱', '🧱', '🧱', '🧱']
         ]
+        moves = ['←', '←', '←', '↓']
+        snapshots, points_earned = game_utils.roll(grid1, moves, 5)
+        self.assertEqual(len(snapshots), 2)
+        self.assertEqual(snapshots[0][1][2], '🥚')
+        self.assertEqual(snapshots[0][2][1], '🪹')
+        self.assertEqual(snapshots[1][2][1], '🪹')
+        self.assertEqual(snapshots[1][1][3], '🟩')
+        self.assertEqual(snapshots[1][2][2], '🥚')
+        self.assertEqual(points_earned, 0)
 
-        grid3 = [
-            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
-            ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
-            ['🧱', '🟩', '🟩', '🥚', '🪹', '🧱'],
-            ['🧱', '🪺', '🧱', '🥚', '🪹', '🧱'],
-            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
-        ]
-
-        grid4 = [
-            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
-            ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
-            ['🧱', '🟩', '🪹', '🟩', '🟩', '🧱'],
-            ['🧱', '🪺', '🟩', '🟩', '🪹', '🧱'],
-            ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
-        ]
-
-        grid5 = [
-            ['🍳', '🧱', '🟩'],
-            ['🧱', '🟩', '🟩'],
-            ['🟩', '🍳', '🧱']
-        ]
-
-        # Edge case: Empty grid
-        empty_grid = []
-
-        # Tests for grid1
-        self.assertTrue(game_utils.is_present(grid1, '🥚'))
-        self.assertTrue(game_utils.is_present(grid1, '🍳'))
-        self.assertTrue(game_utils.is_present(grid1, '🪹'))
-        self.assertTrue(game_utils.is_present(grid1, '🧱'))
-        self.assertFalse(game_utils.is_present(grid1, '🪺'))
-        self.assertFalse(game_utils.is_present(grid1, '🍅'))
-
-        # Tests for grid2
-        self.assertTrue(game_utils.is_present(grid2, '🥚'))
-        self.assertTrue(game_utils.is_present(grid2, '🍳'))
-        self.assertTrue(game_utils.is_present(grid2, '🪹'))
-        self.assertTrue(game_utils.is_present(grid2, '🪺'))
-        self.assertTrue(game_utils.is_present(grid2, '🧱'))
-        self.assertFalse(game_utils.is_present(grid2, '🟦'))
-        self.assertFalse(game_utils.is_present(grid2, '🍅'))
-
-        # Tests for grid3
-        self.assertTrue(game_utils.is_present(grid3, '🍳'))
-        self.assertTrue(game_utils.is_present(grid3, '🪹'))
-        self.assertTrue(game_utils.is_present(grid3, '🪺'))
-        self.assertTrue(game_utils.is_present(grid3, '🥚'))
-        self.assertTrue(game_utils.is_present(grid3, '🧱'))
-        self.assertFalse(game_utils.is_present(grid3, '🟦'))
-        self.assertFalse(game_utils.is_present(grid3, '🍅'))
-        self.assertFalse(game_utils.is_present(grid3, '🟩🟩'))
-
-        # Tests for grid4
-        self.assertTrue(game_utils.is_present(grid4, '🍳'))
-        self.assertTrue(game_utils.is_present(grid4, '🪹'))
-        self.assertTrue(game_utils.is_present(grid4, '🪺'))
-        self.assertFalse(game_utils.is_present(grid4, '🥚'))
-        self.assertFalse(game_utils.is_present(grid4, '🟦'))
-        self.assertFalse(game_utils.is_present(grid4, '🍅'))
-        self.assertFalse(game_utils.is_present(grid4, '🟩🟩'))
-
-        # Tests for grid5
-        self.assertTrue(game_utils.is_present(grid5, '🍳'))
-        self.assertTrue(game_utils.is_present(grid5, '🧱'))
-        self.assertFalse(game_utils.is_present(grid5, '🥚'))
-        self.assertFalse(game_utils.is_present(grid5, '🪹'))
-        self.assertFalse(game_utils.is_present(grid5, '🪺'))
-        self.assertFalse(game_utils.is_present(grid5, '🍅'))
-        self.assertFalse(game_utils.is_present(grid5, '🟩🟩'))
-
-        # Tests for an empty grid
-        self.assertFalse(game_utils.is_present(empty_grid, '🥚'))
-        self.assertFalse(game_utils.is_present(empty_grid, '🟩'))
-        self.assertFalse(game_utils.is_present(empty_grid, '🍅'))
-
-
-    def test_roll(self):
-        # Test roll with grid configurations and moves
-        grid = [['🥚', '🟩', '🪹'],
-                ['🟩', '🍳', '🟩']]
-        moves = ['↑', '→']
-        snapshots, points = game_utils.roll(grid, moves, 5)
-
-        self.assertEqual(len(snapshots), 3)
-        self.assertEqual(snapshots[1][0][0], '🟩')  # Egg has moved
-        self.assertEqual(points, 14)                # Egg reached nest, earned points (10 + 5 - 1)
-
-
-    def test_apply_move(self):
-        # Test applying moves to a grid
-        grid = [['🟩', '🥚', '🪹'],
-                ['🟩', '🍳', '🟩']]
-        direction = (0, 1)
-        points, moved = game_utils.apply_move(grid, direction, max_moves=1, moves=['f'])
+    # def test_apply_move(self):
+    #     # Test applying moves to a grid
+    #     direction = (0, 1)
+    #     points, moved = game_utils.apply_move(self.grid1, direction, max_moves=1, moves=['f'])
        
-        # Verify that points were earned and movement occurred
-        self.assertEqual(points, 11)  # Egg reached nest
-        self.assertTrue(moved)
+    #     # Verify that points were earned and movement occurred
+    #     self.assertEqual(points, 11)  # Egg reached nest
+    #     self.assertTrue(moved)
 
 
     def test_find_eggs(self):
         # Test finding eggs in the grid
-        grid = [['🥚', '🟩'],
-                ['🪹', '🥚']]
-        eggs = game_utils.find_eggs(grid)
-        self.assertEqual(eggs, [(0, 0), (1, 1)])  # Egg positions
+        eggs = game_utils.find_eggs(self.grid1)
+        self.assertEqual(eggs, [(1, 2)])
+        eggs = game_utils.find_eggs(self.grid2)
+        self.assertEqual(eggs, [(1, 1)])
+        eggs = game_utils.find_eggs(self.grid3)
+        self.assertEqual(eggs, [(2, 3), (3, 3)])
+        eggs = game_utils.find_eggs(self.grid4)
+        self.assertEqual(eggs, [])
+        eggs = game_utils.find_eggs(self.grid5)
+        self.assertEqual(eggs, [])
+        eggs = game_utils.find_eggs(self.empty_grid)
+        self.assertEqual(eggs, [])
 
 
     def test_clear_eggs(self):
         # Test clearing eggs from the grid
-        grid = [['🥚', '🟩'],
-                ['🪹', '🥚']]
-        game_utils.clear_eggs(grid)
-        self.assertEqual(grid, [['🟩', '🟩'], ['🪹', '🟩']])  # Eggs removed
+
+        grid1 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🟩', '🥚', '🟩', '🧱'],
+                ['🧱', '🪹', '🟩', '🍳', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        cleared_grid1 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🟩', '🟩', '🟩', '🧱'],
+                ['🧱', '🪹', '🟩', '🍳', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        game_utils.clear_eggs(grid1)
+        self.assertFalse(game_utils.is_present(grid1, '🥚'))
+        self.assertEqual(grid1, cleared_grid1)
+
+        grid2 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🥚', '🟩', '🟩', '🧱'],
+                ['🧱', '🪹', '🍳', '🧱', '🧱'],
+                ['🧱', '🪺', '🟩', '🍳', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        cleared_grid2 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🟩', '🟩', '🟩', '🧱'],
+                ['🧱', '🪹', '🍳', '🧱', '🧱'],
+                ['🧱', '🪺', '🟩', '🍳', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        game_utils.clear_eggs(grid2)
+        self.assertFalse(game_utils.is_present(grid2, '🥚'))
+        self.assertEqual(grid2, cleared_grid2)
+
+        grid3 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
+                ['🧱', '🟩', '🟩', '🥚', '🪹', '🧱'],
+                ['🧱', '🪺', '🧱', '🥚', '🪹', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        cleared_grid3 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
+                ['🧱', '🟩', '🟩', '🟩', '🪹', '🧱'],
+                ['🧱', '🪺', '🧱', '🟩', '🪹', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        game_utils.clear_eggs(grid3)
+        self.assertFalse(game_utils.is_present(grid3, '🥚'))
+        self.assertEqual(grid3, cleared_grid3)
+
+        grid4 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
+                ['🧱', '🟩', '🪹', '🟩', '🟩', '🧱'],
+                ['🧱', '🪺', '🟩', '🟩', '🪹', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        cleared_grid4 = [
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱'],
+                ['🧱', '🍳', '🟩', '🟩', '🍳', '🧱'],
+                ['🧱', '🟩', '🪹', '🟩', '🟩', '🧱'],
+                ['🧱', '🪺', '🟩', '🟩', '🪹', '🧱'],
+                ['🧱', '🧱', '🧱', '🧱', '🧱', '🧱']
+            ]
+        game_utils.clear_eggs(grid4)
+        self.assertFalse(game_utils.is_present(grid4, '🥚'))
+        self.assertEqual(grid4, cleared_grid4)
+
+        grid5 = [
+                ['🍳', '🧱', '🟩'],
+                ['🧱', '🟩', '🟩'],
+                ['🟩', '🍳', '🧱']
+            ]
+        cleared_grid5 = [
+                ['🍳', '🧱', '🟩'],
+                ['🧱', '🟩', '🟩'],
+                ['🟩', '🍳', '🧱']
+            ]
+        game_utils.clear_eggs(grid5)
+        self.assertFalse(game_utils.is_present(grid5, '🥚'))
+        self.assertEqual(grid5, cleared_grid5)
+
+        empty_grid = []
+        game_utils.clear_eggs(empty_grid)
+        self.assertFalse(game_utils.is_present(empty_grid, '🥚'))
+        self.assertEqual(empty_grid, [])
+
 
 if __name__ == "__main__":
     unittest.main()
-

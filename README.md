@@ -12,12 +12,12 @@ Egg Roll is a 2D puzzle game where players tilt a grid to guide eggs into their 
 <h3>Blocks</h3>
 Throughout gameplay, players will encounter the following blocks:<br/>
 
- * 🧱 **Wall**<br/>
- * 🥚 **Egg**<br/>
- * 🟩 **Grass**<br/>
- * 🪹 **Empty nest**<br/>
- * 🪺 **Full nest**<br/>
- * 🍳 **Frying pan**<br/>
+ * 🧱 **Wall** - A solid barrier that cannot be passed through.<br/>
+ * 🥚 **Egg** - The primary object to be moved. Players must roll the eggs to their destination while avoiding frying pans and other obstacles.<br/>
+ * 🟩 **Grass** - Open and traversable space where eggs can roll freely.<br/>
+ * 🪹 **Empty nest** - When an egg reaches an empty nest, it fills the nest, converting it to a full nest, and points are awarded.<br/>
+ * 🪺 **Full nest** - Indicates a successfully filled nest. This also acts as a solid barrier.<br/>
+ * 🍳 **Frying pan** - A hazardous block that fries any egg that lands on it, causing a point deduction.<br/>
 
 
 <h2>How to Play</h2>
@@ -41,9 +41,19 @@ Wrong: `n`<br/>
 <br/>
  Invalid moves are simply ignored by the program.<br/>
 
+<h3>Game Commands</h3>
+Players may also enter these commands at any point of the game.<br/>
+
+ * `RESTART` - Restarts the current game level. All progress in the current level will be reset, allowing players to start over.<br/>
+ * `RETURN` - Exits the current game session and returns the player to the main menu.<br/>
+ * `TERMINATE` - Ends the current game session and closes the game.<br/>
+
 <h2>How it Works</h2>
 *To be updated*
 
 <h2>Bonus Points</h2>
-We have included the following bonus features:  
+We have included the following bonus features:<br/>
+ * **A Main Menu**
+ * **Restart. Return, and Terminate Commands**
+ * **Formatted Text Displays**
 *To be updated*
