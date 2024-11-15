@@ -65,11 +65,8 @@ def main(filename):
         if len(moves) == 0:
             display_grid(level_state, filename)
 
-        # display_grid(level_state, filename)
+        display_state(max_moves, moves, points)
         remaining_moves = max_moves - len(moves)
-        print("Previous moves:", ''.join(moves))
-        print("Remaining moves:", remaining_moves)
-        print("Points:", points)
 
         moveset = take_moves(remaining_moves)
         if isinstance(moveset, GameState):    # Checks if the player entered a special command
@@ -110,12 +107,12 @@ def display_grid(level_state, filename):
     print_format(div + "\n\n", is_centered=True)
 
     grid = "\n".join(''.join(row) for row in level_state)
-    print_format(grid, is_centered=True)
-
+    print_format(grid + "\n ", is_centered=True)
+    print_format(div, is_centered=True)
 
 def display_state(max_moves, moves, points):
-    _, cols = terminal_dimensions()
     remaining_moves = max_moves - len(moves)
+
     print("Previous moves:", ''.join(moves))
     print("Remaining moves:", remaining_moves)
     print("Points:", points)
