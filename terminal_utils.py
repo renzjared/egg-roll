@@ -17,6 +17,8 @@ You may obtain a copy of the License at
 """
 
 import os
+import re
+import shutil
 import subprocess
 import sys
 
@@ -50,15 +52,26 @@ def center_text(text, pad_right = True):
         str: The horizontally-centered text.
     """
     _, terminal_width = terminal_dimensions()
-    text_width = max(len(line) for line in text.splitlines())
+
+
+    # Check if the text is purely composed of these emojis
+    # Emojis are twice as wide as alphanumeric characters.
+    # This is considered so that emojis are centerede properly.
+    emojis = {"🧱","🥚","🟩","🪹","🪺","🍳"}
+    cleaned = set(text.replace('\n', '').replace(' ', ''))
+    if cleaned.issubset(emojis):
+        text_width = max(len(line) for line in text.splitlines())
+        text_width *= 2     # Doubled to account for emoji width
+    else:
+        text_width = max(len(line) for line in text.splitlines())
+
     padding_width = (terminal_width - text_width) // 2
     padding = " " * padding_width
     rpadding = padding if pad_right else '' # Add padding to the right, if needed
 
     # Apply padding to each line of the text
     return '\n'.join(
-        f"{padding}{line}{rpadding}" for line in text.splitlines()
-    ) 
+        f"{padding}{line}{rpadding}" for line in text.splitlines()) 
 
 
 def color_text(text, *args):

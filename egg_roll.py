@@ -24,7 +24,7 @@ import time
 from enum import Enum
 from game_utils import move_to_arrow, is_present, roll
 from main_menu import display_main_menu
-from terminal_utils import clear_screen
+from terminal_utils import clear_screen, terminal_dimensions, color_text, print_format
 
 
 class GameState(Enum):
@@ -63,10 +63,9 @@ def main(filename):
     # Display game prompt until the maximum number of moves is reached
     while len(moves) < max_moves:
         if len(moves) == 0:
-            clear_screen()
-            for row in level_state:
-                print(''.join(row))
+            display_grid(level_state, filename)
 
+        # display_grid(level_state, filename)
         remaining_moves = max_moves - len(moves)
         print("Previous moves:", ''.join(moves))
         print("Remaining moves:", remaining_moves)
@@ -81,17 +80,13 @@ def main(filename):
                 moves = moves[:-1]
                 level_states = level_states[:-1]
                 level_state, points = level_states[-1]
-                clear_screen()
-                for row in level_state:
-                    print(''.join(row))
+                display_grid(level_state, filename)
         else:
             for move in moveset:
                 moves.append(move_to_arrow(move))
                 snapshots, points_earned = roll(level_state, moves, max_moves)
                 for snapshot in snapshots:     # Print each snapshot with a 0.5s delay
-                    clear_screen()             # Clear the screen in between snapshots
-                    for row in snapshot:
-                        print(''.join(row))
+                    display_grid(snapshot, filename)
                     time.sleep(0.5)
                 points += points_earned        # Update point counter
 
@@ -104,6 +99,26 @@ def main(filename):
 
     if len(moves) == max_moves:
         display_final_state(max_moves, moves, points, filename)
+
+
+def display_grid(level_state, filename):
+    _, cols = terminal_dimensions()
+    div = "=" * cols
+    clear_screen()
+    print_format(div, is_centered=True)
+    print_format(" Level: " + filename, False, "green")
+    print_format(div + "\n\n", is_centered=True)
+
+    grid = "\n".join(''.join(row) for row in level_state)
+    print_format(grid, is_centered=True)
+
+
+def display_state(max_moves, moves, points):
+    _, cols = terminal_dimensions()
+    remaining_moves = max_moves - len(moves)
+    print("Previous moves:", ''.join(moves))
+    print("Remaining moves:", remaining_moves)
+    print("Points:", points)
 
 
 def display_final_state(max_moves, moves, points, filename):
