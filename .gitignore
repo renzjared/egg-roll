@@ -1,2 +1,5 @@
 **/__pycache__/ 
+build/
+dist/
 test.in
+egg_roll.spec
