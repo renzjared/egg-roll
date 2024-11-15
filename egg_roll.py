@@ -16,6 +16,7 @@ You may obtain a copy of the License at
  @author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
+import copy
 import re
 import sys
 import time
@@ -55,7 +56,9 @@ def main(filename):
     moves = []  # initialize move history
     points = 0  # initialize number of points
 
+    level_states = []
     level_state = [list(line) for line in level[2:]] # Convert strings into a list of characters
+    level_states.append(copy.deepcopy(level_state), 0)
 
     # Display game prompt until the maximum number of moves is reached
     while len(moves) < max_moves:
@@ -73,6 +76,8 @@ def main(filename):
         if isinstance(moveset, GameState):    # Checks if the player entered a special command
             update_game(moveset, filename)    # instead of a moveset
             return
+
+
         for move in moveset:
             moves.append(move_to_arrow(move))
             snapshots, points_earned = roll(level_state, moves, max_moves)
@@ -82,6 +87,7 @@ def main(filename):
                     print(''.join(row))
                 time.sleep(0.5)
             points += points_earned           # Update point counter
+            level_states.append(copy.deepcopy(snapshots[-1]), points)
 
             if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
                 display_final_state(max_moves, moves, points, filename)
@@ -171,8 +177,10 @@ def validate_moves(moveset, remaining_moves):
         return GameState.RETURN
     if moveset.strip().lower() in ['exit', 'terminate']:
         return GameState.TERMINATE
+    if moveset.strip().lower() in ['u', 'undo']:
+        return "u"
     if remaining_moves <= 0:    # Return empty string if the number of remaining moves
-        return ""                 # is zero or a negative integer
+        return ""               # is zero or a negative integer
 
     moveset = re.sub(r'[^FfBbLlRr]', '', moveset)   # Only accept valid moves
     if len(moveset) > remaining_moves:              # Remove excess moves if number exceeds maximum
