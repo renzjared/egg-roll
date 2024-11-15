@@ -53,7 +53,8 @@ Players may also enter these commands at any point of the game.<br/>
 
 <h2>Bonus Points</h2>
 We have included the following bonus features:<br/>
- * **A Main Menu**
- * **Restart. Return, and Terminate Commands**
- * **Formatted Text Displays**
+
+ * **A Main Menu**<br/>
+ * **Restart. Return, and Terminate Commands**<br/>
+ * **Formatted Text Displays**<br/>
 *To be updated*
