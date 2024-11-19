@@ -19,14 +19,43 @@ Throughout gameplay, players will encounter the following blocks:<br/>
  * 🪺 **Full nest** - Indicates a successfully filled nest. This also acts as a solid barrier.<br/>
  * 🍳 **Frying pan** - A hazardous block that fries any egg that lands on it, causing a point deduction.<br/>
 
+<h2>Downloading and Installing the Game</h2>
+<h3>Prerequisites</h3>
+
+ * Ensure that you have Python installed on your system. *Egg-roll* is compatible with Python 3.x versions. You can download Python from [python.org](https://www.python.org/). <br/>
+
+<h3>Downloading the ZIP File</h3>
+
+ `1.` On the right side of this repository, click the green "Code" button and select "Download ZIP."<br/>
+ `2.` Extract the ZIP file once the download is complete.<br/>
+
+<h3>Installation</h3>
+
+ `1.` Open your terminal or command propmpt.<br/>
+ `2.` Navigate to the directory where you extracted the downloaded ZIP file.<br/>
+
+```sh
+cd path/to/extracted/egg-roll
+```
+ 
+*You may now proceed to the following step (Loading a Level)*
 
 <h2>How to Play</h2>
 <h3>Loading a Level</h3>
 
-To load a level, call: `python3.12 egg_roll.py [filename]`.
-Make sure that the level file is located in the same directory as the Python file.
+To load a level, use the following terminal command: `python3.12 egg_roll.py [filename]`.
+Make sure that the level file is located in the same directory as the Python file.<br/>
+
+**Example**<br/>
+
+To load `level1.in`, run:
+
+```sh
+python3.12 egg_roll.py level1.in
+```
 
 <h3>Game Controls</h3>
+
 The player can tilt the grid forward, backward, to the left, or to the right. Each tilt constitutes as a move. When prompted for an input, the player must enter moves either one at a time or several in sequence. The list of valid moves are:<br/>
 
  * `l` or `L`: Tilt the grid to the left.<br/>
