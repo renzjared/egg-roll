@@ -19,6 +19,14 @@ Throughout gameplay, players will encounter the following blocks:<br/>
  * 🪺 **Full nest** - Indicates a successfully filled nest. This also acts as a solid barrier.<br/>
  * 🍳 **Frying pan** - A hazardous block that fries any egg that lands on it, causing a point deduction.<br/>
 
+<h3>Earning Points</h3>
+The primary objective of the player is to earn the most points possible.<br/>
+
+ * **[+10 Points + BONUS]** For each egg that manages to reach an empty nest.<br>
+ * The number of BONUS points earned is equivalent to the number of remaining moves (including the current move).<br>
+   
+ * **[-5 Points]** For each egg that lands on a frying pan.<br>
+
 <h2>Downloading and Installing the Game</h2>
 <h3>Prerequisites</h3>
 
@@ -56,6 +64,8 @@ python3.12 egg_roll.py level1.in
 
 <h3>Game Controls</h3>
 
+The grid can be controlled (tilted) by inputting characters in the terminal when prompted.
+
 The player can tilt the grid forward, backward, to the left, or to the right. Each tilt constitutes as a move. When prompted for an input, the player must enter moves either one at a time or several in sequence. The list of valid moves are:<br/>
 
  * `l` or `L`: Tilt the grid to the left.<br/>
@@ -63,11 +73,10 @@ The player can tilt the grid forward, backward, to the left, or to the right. Ea
  * `f` or `F`: Tilt the grid forwards (away from you).<br/>
  * `b` or `B`: Tilt the grid backwards (towards you).<br/>
 
-**Sample**<br/>
-Correct: `l`<br/>
-Correct: `lblf`<br/>
-Wrong: `n`<br/>
-<br/>
+Players also have the option to undo their previous move.<br/>
+
+ * `u` or `U`: Undo the previous move.<br/>
+
  Invalid moves are simply ignored by the program.<br/>
 
 <h3>Game Commands</h3>
@@ -84,6 +93,8 @@ Players may also enter these commands at any point of the game.<br/>
 We have included the following bonus features:<br/>
 
  * **A Main Menu**<br/>
- * **Restart. Return, and Terminate Commands**<br/>
+ * **A Fancier User Interface**<br/>
+ * **Restart, Return, and Terminate Commands**<br/>
  * **Formatted Text Displays**<br/>
+ * **Ability to Undo Moves**<br/>
 *To be updated*
