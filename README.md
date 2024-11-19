@@ -12,12 +12,12 @@ Egg Roll is a 2D puzzle game where players tilt a grid to guide eggs into their 
 <h3>Blocks</h3>
 Throughout gameplay, players will encounter the following blocks:<br/>
 
- * 🧱 **Wall** - A solid barrier that cannot be passed through.<br/>
- * 🥚 **Egg** - The primary object to be moved. Players must roll the eggs to their destination while avoiding frying pans and other obstacles.<br/>
- * 🟩 **Grass** - Open and traversable space where eggs can roll freely.<br/>
- * 🪹 **Empty nest** - When an egg reaches an empty nest, it fills the nest, converting it to a full nest, and points are awarded.<br/>
- * 🪺 **Full nest** - Indicates a successfully filled nest. This also acts as a solid barrier.<br/>
- * 🍳 **Frying pan** - A hazardous block that fries any egg that lands on it, causing a point deduction.<br/>
+ * 🧱 **Wall** - A solid barrier that cannot be passed through.
+ * 🥚 **Egg** - The primary object to be moved. Players must roll the eggs to their destination while avoiding frying pans and other obstacles.
+ * 🟩 **Grass** - Open and traversable space where eggs can roll freely.
+ * 🪹 **Empty nest** - When an egg reaches an empty nest, it fills the nest, converting it to a full nest, and points are awarded.
+ * 🪺 **Full nest** - Indicates a successfully filled nest. This also acts as a solid barrier.
+ * 🍳 **Frying pan** - A hazardous block that fries any egg that lands on it, causing a point deduction.
 
 <h3>Earning Points</h3>
 The primary objective of the player is to earn the most points possible.<br/>
@@ -30,7 +30,7 @@ The primary objective of the player is to earn the most points possible.<br/>
 <h2>Downloading and Installing the Game</h2>
 <h3>Prerequisites</h3>
 
- * Ensure that you have Python installed on your system. *Egg-roll* is compatible with Python 3.x versions. You can download Python from [python.org](https://www.python.org/). <br/>
+ * Ensure that you have Python installed on your system. *Egg-roll* is compatible with Python 3.x versions. You can download Python from [python.org](https://www.python.org/).
 
 <h3>Downloading the ZIP File</h3>
 
@@ -68,33 +68,58 @@ The grid can be controlled (tilted) by inputting characters in the terminal when
 
 The player can tilt the grid forward, backward, to the left, or to the right. Each tilt constitutes as a move. When prompted for an input, the player must enter moves either one at a time or several in sequence. The list of valid moves are:<br/>
 
- * `l` or `L`: Tilt the grid to the left.<br/>
- * `r` or `R`: Tilt the grid to the right.<br/>
- * `f` or `F`: Tilt the grid forwards (away from you).<br/>
- * `b` or `B`: Tilt the grid backwards (towards you).<br/>
+ * `l` or `L`: Tilt the grid to the left.
+ * `r` or `R`: Tilt the grid to the right.
+ * `f` or `F`: Tilt the grid forwards (away from you).
+ * `b` or `B`: Tilt the grid backwards (towards you).
 
 Players also have the option to undo their previous move.<br/>
 
- * `u` or `U`: Undo the previous move.<br/>
+ * `u` or `U`: Undo the previous move.
 
  Invalid moves are simply ignored by the program.<br/>
 
 <h3>Game Commands</h3>
 Players may also enter these commands at any point of the game.<br/>
 
- * `RESTART` - Restarts the current game level. All progress in the current level will be reset, allowing players to start over.<br/>
- * `RETURN` - Exits the current game session and returns the player to the main menu.<br/>
- * `TERMINATE` - Ends the current game session and closes the game.<br/>
+ * `RESTART` - Restarts the current game level. All progress in the current level will be reset, allowing players to start over.
+ * `RETURN` - Exits the current game session and returns the player to the main menu.
+ * `TERMINATE` - Ends the current game session and closes the game.
 
-<h2>How it Works</h2>
-*To be updated*
+<h2>How the Game Works</h2>
+This Egg Roll game is specifically designed to be modular and easy to understand. It consists of four (4) Python scripts (plus an additional script for tests). This also makes testing easier.<br>
+
+<h3>Key Files</h3>
+
+ * `egg_roll.py` - The main entry point of the game. This is the script that is launched by the user to start the game. It initializes the game, processes user inputs, updates the game state, and displays the results.<br/>
+ * `game_utils.py` - This script provides core game functionalities and algorithms, including functions for moving eggs, calculating egg positions, and checking game conditions.<br/>
+ * `main_menu.py` - Manages the main menu screen, including the options displayed and handling user selections.<br/>
+ * `terminal_utils.py` - Contains utility functions for handling terminal operations such as clearing the screen, getting terminal dimensions, and text formatting.<br>
+
+<h3>Game Flow</h3>
+<h4>Initialization</h4>
+
+ `1.` The game starts when `egg_roll.py` is called by the user-player. There are two possible scenarios.<br/>
+ * If a level filename argument (such as `level1.in`) is provided by the user, the level is launched.
+ * If no level filename argument is provided, the game launches the main menu.
+   * From the main menu, the player can then launch a level by providing a level filename to play that particular level.
+
+ `2.` Main Game Loop<br/>
+ The game loop continues as long as there are eggs left in the grid **AND** there are still moves to be made.
+ * At each loop, the game presents the current state of the level grid and prompts the player for moves.
+ * `validate_moves(moveset, remaining_moves` sanitizes the player's input and removes excess moves.
+ * The `roll(grid, moves, max_moves)` function then processes each move *individually*, updates the grid and calculates the points gained or lost.
+
+ `3.` End of the Game<br/>
+ * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, the final state of the grid and final game statistics is presented to the player.
+ * The player is then given the option to play again, return to the main menu, or exit the game.
 
 <h2>Bonus Points</h2>
 We have included the following bonus features:<br/>
 
- * **A Main Menu**<br/>
- * **A Fancier User Interface**<br/>
- * **Restart, Return, and Terminate Commands**<br/>
- * **Formatted Text Displays**<br/>
- * **Ability to Undo Moves**<br/>
+ * **A Main Menu**
+ * **A Fancier User Interface**
+ * **Restart, Return, and Terminate Commands**
+ * **Formatted Text Displays**
+ * **Ability to Undo Moves**
 *To be updated*
