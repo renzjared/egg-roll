@@ -97,20 +97,20 @@ This Egg Roll game is specifically designed to be modular and easy to understand
  * `terminal_utils.py` - Contains utility functions for handling terminal operations such as clearing the screen, getting terminal dimensions, and text formatting.<br>
 
 <h3>Game Flow</h3>
-<h4>Initialization</h4>
 
- `1.` The game starts when `egg_roll.py` is called by the user-player. There are two possible scenarios.<br/>
+ `1.` **Initialization**<br/>
+ The game starts when `egg_roll.py` is called by the user-player. There are two possible scenarios.<br/>
  * If a level filename argument (such as `level1.in`) is provided by the user, the level is launched.
  * If no level filename argument is provided, the game launches the main menu.
    * From the main menu, the player can then launch a level by providing a level filename to play that particular level.
 
- `2.` Main Game Loop<br/>
+ `2.` **Main Game Loop**<br/>
  The game loop continues as long as there are eggs left in the grid **AND** there are still moves to be made.
  * At each loop, the game presents the current state of the level grid and prompts the player for moves.
  * `validate_moves(moveset, remaining_moves` sanitizes the player's input and removes excess moves.
  * The `roll(grid, moves, max_moves)` function then processes each move *individually*, updates the grid and calculates the points gained or lost.
 
- `3.` End of the Game<br/>
+ `3.` **End of the Game**<br/>
  * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, the final state of the grid and final game statistics is presented to the player.
  * The player is then given the option to play again, return to the main menu, or exit the game.
 
