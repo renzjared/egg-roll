@@ -99,23 +99,39 @@ def main(filename):
 
 
 def display_grid(level_state, filename):
+    """
+    Displays the current state of the game grid on the terminal.
+
+    Args:
+        level_state (list): A 2D list representing the current state of the grid.
+        filename (str): The name of the level file being played.
+    """
     _, cols = terminal_dimensions()
     div = "=" * cols
     clear_screen()
     print_format(div, is_centered=True)
-    print_format(" Level: " + filename, False, "green")
+    print_format(" Level: " + filename, is_centered=False, args=["green"])
     print_format(div + "\n\n", is_centered=True)
 
     grid = "\n".join(''.join(row) for row in level_state)
     print_format(grid + "\n ", is_centered=True)
     print_format(div, is_centered=True)
 
-def display_state(max_moves, moves, points):
-    remaining_moves = max_moves - len(moves)
 
-    print("Previous moves:", ''.join(moves))
-    print("Remaining moves:", remaining_moves)
-    print("Points:", points)
+def display_state(max_moves, moves, points):
+    """
+    Displays the current game statistics, including the previous moves, 
+    remaining moves, and the total points.
+
+    Args:
+        max_moves (int): The maximum number of moves allowed in the game.
+        moves (list): A list of moves made by the player.
+        points (int): The total points earned by the player.
+    """
+    remaining_moves = str(max_moves - len(moves))
+    print_format("Previous moves: " + ''.join(moves), is_centered=False, args=["light_yellow"])
+    print_format("Remaining moves: " + remaining_moves, is_centered=False, args=["light_yellow"])
+    print_format("Points: " + str(points), is_centered=False, args=["light_yellow"])
 
 
 def display_final_state(max_moves, moves, points, filename):
@@ -129,10 +145,8 @@ def display_final_state(max_moves, moves, points, filename):
         points (int): The total points earned by the player.
         filename (str): The path to the level file.
     """
-    print("Played moves:", ''.join(moves))
-    print("Remaining moves:", max_moves - len(moves))
-    print("Points:", points)
-
+    display_state(max_moves, moves, points)
+    
     # Ask if player wants to play again
     prompt = True
     while prompt:      # Ask again until the player responds with a valid answer: [y,Y,n,N]

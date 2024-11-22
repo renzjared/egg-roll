@@ -61,7 +61,7 @@ def center_text(text, pad_right = True):
     cleaned = set(text.replace('\n', '').replace(' ', ''))
     if cleaned.issubset(emojis):
         text_width = max(len(line) for line in text.splitlines())
-        text_width *= 2     # Doubled to account for emoji width
+        text_width *= 2 # Doubled to account for emoji width
     else:
         text_width = max(len(line) for line in text.splitlines())
 
@@ -74,12 +74,12 @@ def center_text(text, pad_right = True):
         f"{padding}{line}{rpadding}" for line in text.splitlines()) 
 
 
-def color_text(text, *args):
+def color_text(text, args):
     """Apply color and styling to text using the termcolor library.
 
     Args:
         text (str): The text to format.
-        *args: Arguments for color and style (e.g., "green").
+        args (list): A list containing arguments for color and style (e.g., "green").
 
     Returns:
         str: The colored and styled text.
@@ -87,13 +87,13 @@ def color_text(text, *args):
     return colored(text, *args)
 
 
-def print_format(text, is_centered, *args):
+def print_format(text, is_centered=False, args=None):
     """Print text in a specified format, with optional centering and color.
 
     Args:
         text (str): The text to format and print.
         is_centered (bool): Whether to center the text horizontally.
-        *args: Optional color/styling arguments for termcolor.
+        args (list): A list containing arguments for color and style (e.g., "green").
     """
     # Center the text horizontally first, if needed, because
     # using colors add ANSI escape sequences that offset the centering
@@ -102,5 +102,5 @@ def print_format(text, is_centered, *args):
 
     # Apply color formatting if arguments are provided
     if args:
-        text = color_text(text, *args)
+        text = color_text(text, args)
     print(text)
