@@ -87,14 +87,15 @@ Players may also enter these commands at any point of the game.<br/>
  * `TERMINATE` - Ends the current game session and closes the game.
 
 <h2>How the Game Works</h2>
-This Egg Roll game is specifically designed to be modular and easy to understand. It consists of four (4) Python scripts (plus an additional script for tests). This also makes testing easier.<br>
+This Egg Roll game is specifically designed to be modular and easy to understand. It consists of five (5) Python scripts (plus an additional script for tests). This also makes testing easier.<br>
 
 <h3>Key Files</h3>
 
  * `egg_roll.py` - The main entry point of the game. This is the script that is launched by the user to start the game. It initializes the game, processes user inputs, updates the game state, and displays the results.<br/>
  * `game_utils.py` - This script provides core game functionalities and algorithms, including functions for moving eggs, calculating egg positions, and checking game conditions.<br/>
  * `main_menu.py` - Manages the main menu screen, including the options displayed and handling user selections.<br/>
- * `terminal_utils.py` - Contains utility functions for handling terminal operations such as clearing the screen, getting terminal dimensions, and text formatting.<br>
+ * `terminal_utils.py` - Contains utility functions for handling terminal operations such as clearing the screen, getting terminal dimensions, and text formatting.<br/>
+ * `leaderboard_utils.py` - Contains utility functions for reading and updating the leaderboards.<br/>
 
 <h3>Game Flow</h3>
 
@@ -127,7 +128,10 @@ We have included the following bonus features:<br/>
  * **Level Selector**
     * Upon selecting option `1` (Start Game) from the main menu, the level selector will be displayed.
     * In the main menu, the player is presented with a numbered table of game levels showing the level name, size (`rows` × `columns`), and maximum moves allowed.
-    * The player can play a level by (any of the following): entering the number of the level or entering the name of the level 
+    * The player can play a level by (any of the following): entering the number of the level or entering the name of the level
+ * **Persistent Game Leaderboard**
+    * The player will be asked for their name after playing a game level. If their score is high enough, their score will be recorded in the leaderboard for that particular level.
+    * The Top 10 scores of each game level is stored in a JSON file. This allows for a persistent leaderboard, meaning that the high scores are still available for the next time the game is run.
  * **A Fancier User Interface**
     * The display interface of the game levels itself was also improved. For instance, the name of the game level is displayed on the header row. Horizontal dividers also separate different sections of the game screen.
  * **Formatted Text Displays**
