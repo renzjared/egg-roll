@@ -22,10 +22,10 @@ Throughout gameplay, players will encounter the following blocks:<br/>
 <h3>Earning Points</h3>
 The primary objective of the player is to earn the most points possible.<br/>
 
- * **[+10 Points + BONUS]** For each egg that manages to reach an empty nest.<br>
- * The number of BONUS points earned is equivalent to the number of remaining moves (including the current move).<br>
-   
- * **[-5 Points]** For each egg that lands on a frying pan.<br>
+ * **$`10\ Points`$** is awarded for each egg that manages to reach an empty nest.
+    * `BONUS` points equivalent to the number of remaining moves (including the current move) is also added to the moves earned.
+    * Mathematically, this is equivalent to $10 + (Max\ moves - Number\ of\ moves\ performed)$ points.
+ * **$`5\ Points`$** is deducted for each egg that lands on a frying pan.<br>
 
 <h2>Downloading and Installing the Game</h2>
 <h3>Prerequisites</h3>
