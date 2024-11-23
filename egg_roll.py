@@ -24,7 +24,8 @@ import time
 from enum import Enum
 from game_utils import move_to_arrow, is_present, roll
 from main_menu import display_main_menu
-from terminal_utils import clear_screen, terminal_dimensions, color_text, print_format
+from terminal_utils import center_text, clear_screen, terminal_dimensions, color_text, print_format
+from leaderboard_utils import update_leaderboard, display_leaderboard
 
 
 class GameState(Enum):
@@ -146,6 +147,15 @@ def display_final_state(max_moves, moves, points, filename):
         filename (str): The path to the level file.
     """
     display_state(max_moves, moves, points)
+
+    # Save points for the leaderboard
+    name = input(center_text("Enter your name for the leaderboard: ", pad_right=False))
+    update_leaderboard(name, points, filename)
+
+    # Display the leaderboard
+    clear_screen()
+    display_leaderboard(filename)
+
     # Ask if player wants to play again
     prompt = True
     while prompt:      # Ask again until the player responds with a valid answer: [y,Y,n,N]
