@@ -52,23 +52,41 @@ def display_levels():
         print_format("\nPress Enter to return to the main menu...", args=["yellow", None, "blink"])
         input()
         return None
-    else:
-        menu = '\n'.join(str(num) + ". " + level_path for num, level_path in enumerate(levels, 1))
-        print_format("\n" + menu + "\n ", True)
-        choice = input(center_text("Enter level file name or number (1-{}): ".format(len(levels)), False))
 
-        try:
-            level_index = int(choice) - 1
-            if 0 <= level_index < len(levels):
-                return levels[level_index]
-            else:
-                raise ValueError
-        except ValueError:
-            if choice in levels:
-                return choice
-            print_format(f"\nInvalid choice: ({choice}). Please try again.", True, args=["red"])
-            time.sleep(1.5)
-            return display_levels()
+    # If levels are found:
+    col_widths = [4, 20, 22, 10] 
+    col_formats = [f"{{:<{w}}}" for w in col_widths]
+
+    table = []      # Add table rows to a list so that we can center the table properly
+    header = """
+┌─────┬─────────────────────┬───────────────────────┬───────────┐ 
+| #   | Level Name          | Size (Rows x Columns) | Max Moves |
+├─────┼─────────────────────┼───────────────────────┼───────────┤"""
+    footer = "└─────┴─────────────────────┴───────────────────────┴───────────┘"
+
+    table.append(header)
+    for idx, level in enumerate(levels, 1):
+        rows, columns, moves_allowed = parse_level(level)
+        table.append(
+        "| " + "| ".join(fmt.format(val) for fmt, val in zip(col_formats, [idx, Path(level).name, f"{rows} x {columns}", moves_allowed])) + "|"
+        ) # Formatted rows of table items (levels)
+    table.append(footer)
+    print_format('\n'.join(table), is_centered=True)
+
+    choice = input(center_text("\nEnter level file name or number (1-{}): ".format(len(levels)), False))
+
+    try:
+        level_index = int(choice) - 1
+        if 0 <= level_index < len(levels):
+            return levels[level_index]
+        else:
+            raise ValueError
+    except ValueError:
+        if choice in levels:    # Check if the player entered a valid level file name
+            return choice
+        print_format(f"\nInvalid choice: ({choice}). Please try again.", True, args=["red"])
+        time.sleep(1.5)
+        return display_levels()
 
 
 def display_main_menu():
@@ -132,3 +150,20 @@ def display_main_menu():
         else:
             print_format("\nInvalid choice. Please try again.", True, args=["red"])
             time.sleep(1.5)
+
+def parse_level(level_path):
+    """
+    Parses the level file to extract the dimensions of the grid and the number of moves allowed.
+
+    Args:
+        level_path (str): The path to the level file.
+
+    Returns:
+        tuple: A tuple containing the dimensions (rows, columns) and the number of moves allowed.
+    """
+    with open(level_path, 'r') as file:
+        lines = file.readlines()
+        rows = len(lines) - 2            # Exclude the first two lines (metadata)
+        columns = len(lines[2].strip())  # Assume all rows have the same number of columns
+        moves_allowed = int(lines[1].strip())
+    return (rows, columns, moves_allowed)
