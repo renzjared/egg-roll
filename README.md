@@ -114,12 +114,35 @@ This Egg Roll game is specifically designed to be modular and easy to understand
  * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, the final state of the grid and final game statistics is presented to the player.
  * The player is then given the option to play again, return to the main menu, or exit the game.
 
+<h2>Test Cases</h2>
+
+*To be updated*<br/>
+
 <h2>Bonus Points</h2>
 We have included the following bonus features:<br/>
 
  * **A Main Menu**
+    * The game launches on the main menu screen if no filename argument is provided by the player.
+    * From the main menu, the player can (1) start the game, (2) read game instructions, (3) see game credits, and (4) terminate the game session.
+ * **Level Selector**
+    * Upon selecting option `1` (Start Game) from the main menu, the level selector will be displayed.
+    * In the main menu, the player is presented with a numbered table of game levels showing the level name, size (`rows` × `columns`), and maximum moves allowed.
+    * The player can play a level by (any of the following): entering the number of the level or entering the name of the level 
  * **A Fancier User Interface**
- * **Restart, Return, and Terminate Commands**
+    * The display interface of the game levels itself was also improved. For instance, the name of the game level is displayed on the header row. Horizontal dividers also separate different sections of the game screen.
  * **Formatted Text Displays**
+    * Text coloring and styling is applied on various menus of the game using the [`termcolor`](https://github.com/termcolor/termcolor) library.
+    * Some texts are also centered horizontally to enhance formatting and readability (makes use of terminal dimensions).
+ * **Restart, Return, and Terminate Commands**
+    * Players may enter these commands at any point of the game.
+    * `RESTART` - Restarts the current game level. All progress in the current level will be reset, allowing players to start over.
+    * `RETURN` - Exits the current game session and returns the player to the main menu.
+    * `TERMINATE` - Ends the current game session and closes the game.
+ * **Replayable Levels**
+    * At the end of each level (when a player runs out of moves or eggs to move), an option to replay the level is presented.
+    * Replaying the level restarts the current game level, allowing the player to start over.
  * **Ability to Undo Moves**
+    * Aside from the four (4) directional moves, the player can also choose to undo a move When prompted for an input by entering `u` or `U`.
+    * By repeatedly entering `u` or `U`, the player can undo all performed moves.
+<br/>
 *To be updated*
