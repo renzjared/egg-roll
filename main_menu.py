@@ -35,6 +35,42 @@ def display_instructions():
     input()
 
 
+def display_levels():
+    """Displays the list of available levels and allows the player to select one."""
+    clear_screen()
+    levels_dir = Path("")
+    levels = sorted(str(level) for level in levels_dir.glob("*.in"))
+
+    _, cols = terminal_dimensions()
+    div = "=" * cols
+    print_format(div, is_centered=True)
+    print_format("Level Selector", is_centered=True, args=["light_yellow"])
+    print_format(div + "\n\n", is_centered=True)
+
+    if not levels:
+        print_format("No levels available. Please add level files (.in) to the directory.", is_centered=True, args=["red"])
+        print_format("\nPress Enter to return to the main menu...", args=["yellow", None, "blink"])
+        input()
+        return None
+    else:
+        menu = '\n'.join(str(num) + ". " + level_path for num, level_path in enumerate(levels, 1))
+        print_format("\n" + menu + "\n ", True)
+        choice = input(center_text("Enter level file name or number (1-{}): ".format(len(levels)), False))
+
+        try:
+            level_index = int(choice) - 1
+            if 0 <= level_index < len(levels):
+                return levels[level_index]
+            else:
+                raise ValueError
+        except ValueError:
+            if choice in levels:
+                return choice
+            print_format(f"\nInvalid choice: ({choice}). Please try again.", True, args=["red"])
+            time.sleep(1.5)
+            return display_levels()
+
+
 def display_main_menu():
     """Displays the main menu and processes user input to start the game, 
     view instructions, or exit.
@@ -67,17 +103,10 @@ def display_main_menu():
 
         # Load the game level
         if choice.strip() == '1':
-            width = terminal_dimensions()[1]
-            print_format("\n" + "=" * width, args=["dark_grey"])
-            take_input = True
-            while take_input:
-                filename = input("\nEnter the level filename: ")
-                if Path(filename).is_file():
-                    take_input = False
-                    from egg_roll import main      # Use local import to avoid circular imports
-                    main(filename)                 # Start the game
-                else:
-                    print_format(f"\n[Error] {filename} is an invalid file path. Please try again.", True, args=["red"])
+            level_file = display_levels()
+            if level_file:
+                from egg_roll import main      # Use local import to avoid circular imports
+                main(level_file) 
 
         # Show game instructions
         elif choice.strip() == '2':

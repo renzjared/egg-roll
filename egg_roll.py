@@ -146,7 +146,6 @@ def display_final_state(max_moves, moves, points, filename):
         filename (str): The path to the level file.
     """
     display_state(max_moves, moves, points)
-    
     # Ask if player wants to play again
     prompt = True
     while prompt:      # Ask again until the player responds with a valid answer: [y,Y,n,N]
