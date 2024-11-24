@@ -124,7 +124,7 @@ We have included the following bonus features:<br/>
 
  * **A Main Menu**
     * The game launches on the main menu screen if no filename argument is provided by the player.
-    * From the main menu, the player can (1) start the game, (2) read game instructions, (3) see game credits, and (4) terminate the game session.
+    * From the main menu, the player can (1) start the game, (2) read game instructions, (3) change language, (4) see game credits, and (5) terminate the game session.
  * **Level Selector**
     * Upon selecting option `1` (Start Game) from the main menu, the level selector will be displayed.
     * In the main menu, the player is presented with a numbered table of game levels showing the level name, size (`rows` × `columns`), and maximum moves allowed.
@@ -148,5 +148,8 @@ We have included the following bonus features:<br/>
  * **Ability to Undo Moves**
     * Aside from the four (4) directional moves, the player can also choose to undo a move When prompted for an input by entering `u` or `U`.
     * By repeatedly entering `u` or `U`, the player can undo all performed moves.
+ * **Tagalog Localization**
+    * Egg-roll is now available in Filipino (Tagalog)!
+    * The game language can be switched from English to Tagalog (and vice-versa) by selecting option `3` from the main menu.
 <br/>
 *To be updated*
