@@ -21,7 +21,7 @@ import sys
 import time
 from pathlib import Path
 
-from terminal_utils import center_text, clear_screen, print_format, create_table, load_localization
+from terminal_utils import center_text, clear_screen, color_text, print_format, create_table, load_localization
 
 
 def display_instructions():
@@ -43,8 +43,9 @@ def display_levels():
     levels = sorted(str(level) for level in levels_dir.glob("*.in"))
 
     if not levels:
+        # Print error message
         print_format(loc["error_no_levels_found"], is_centered=True, args=["red"])
-        print_format(f"\n{loc["prompt_press_enter_to_return"]}", args=["yellow", None, "blink"])
+        print_format(f"\n{loc["prompt_press_enter_to_return"]}", is_centered=True, args=["yellow", None, "blink"])
         input()
         return None
 
@@ -60,7 +61,8 @@ def display_levels():
     print()         # Blank line to separate table
 
     # Ask the player for level to be played
-    choice = input(center_text(f"\n{loc["prompt_enter_level"]} (1-{len(levels)}): ", pad_right=False))
+    prompt = center_text(f"\n{loc["prompt_enter_level"]} (1–{len(levels)}): ", pad_right=False)
+    choice = input(color_text(prompt, ["yellow", None, ["blink"]]))
     try:
         level_index = int(choice) - 1
         if 0 <= level_index < len(levels):
@@ -104,7 +106,8 @@ def display_main_menu():
         print_format("\n" + menu + "\n ", True)
 
         # Prompt user to select from 1 to n = 5
-        choice = input(center_text(f"{loc["select_option"]} ".format(n = 5), pad_right = False))
+        prompt = center_text(f"{loc["select_option"]} ".format(n = 5), pad_right=False)
+        choice = input(color_text(prompt, ["yellow", None, ["blink"]]))
 
         # Load the game level
         if choice.strip() == '1':
@@ -129,6 +132,7 @@ def display_main_menu():
         # Show credits
         elif choice.strip() == '4':
             clear_screen()
+            print()     # Blank line
             print_format("Developed by Renz Jared G. Rolle.", is_centered=True, args=["green"])
             print_format("License: GPL-3.0", is_centered=True, args=["green"])
             print_format("https://github.com/renzjared/egg-roll", is_centered=True, args=["cyan"])

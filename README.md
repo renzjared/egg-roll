@@ -120,9 +120,7 @@ This Egg Roll game is specifically designed to be modular and easy to understand
 *To be updated*<br/>
 
 <h2>Bonus Points</h2>
-We have included the following bonus features:<br/>
-
- * **A Main Menu**
+ * **Main Menu**
     * The game launches on the main menu screen if no filename argument is provided by the player.
     * From the main menu, the player can (1) start the game, (2) read game instructions, (3) change language, (4) see game credits, and (5) terminate the game session.
  * **Level Selector**
