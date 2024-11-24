@@ -159,7 +159,7 @@ def display_final_state(max_moves, moves, points, filename):
     # Ask if player wants to play again
     prompt = True
     while prompt:      # Ask again until the player responds with a valid answer: [y,Y,n,N]
-        response = input("Play again? [Y/N] ")
+        response = input(center_text("Play again? [Y/N] ", pad_right=False))
         if response.upper() == 'Y':
             prompt = False
             main(filename)

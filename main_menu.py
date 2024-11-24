@@ -151,6 +151,7 @@ def display_main_menu():
             print_format("\nInvalid choice. Please try again.", True, args=["red"])
             time.sleep(1.5)
 
+
 def parse_level(level_path):
     """
     Parses the level file to extract the dimensions of the grid and the number of moves allowed.

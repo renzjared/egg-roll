@@ -104,3 +104,51 @@ def print_format(text, is_centered=False, args=None):
     if args:
         text = color_text(text, args)
     print(text)
+
+
+def create_table(data, headers=None, title=None):
+    """Creates a formatted table from arbitrary data.
+
+    Args:
+        data (list of lists): A 2D list representing the table data.
+        headers (list): A list of column headers.
+        title (str): Title of the table.
+
+    Returns:
+        str: The formatted table as a string.
+    """
+    _, cols = terminal_dimensions()
+    col_widths = [max(len(str(item)) for item in col) + 1 for col in zip(*data)]
+    if headers:
+        col_widths = [max(len(headers[i]) + 1, col_widths[i]) for i in range(len(headers))]
+
+    col_formats = [f"{{:<{w}}}" for w in col_widths]        # Save widths of table columns
+    header_sep = "┼".join("─" * (w + 1) for w in col_widths)
+    top_sep = "┬".join("─" * (w + 1) for w in col_widths)
+
+    table_lines = []
+    
+    if headers:
+        header_line = "│ ".join(fmt.format(hdr) for fmt, hdr in zip(col_formats, headers))
+        table_lines.append(f"┌{top_sep}┐")
+        table_lines.append(f"│ {header_line}│")
+        table_lines.append(f"├{header_sep}┤")
+
+    for row in data:
+        row_line = "│ ".join(fmt.format(item) for fmt, item in zip(col_formats, row))
+        table_lines.append(f"│ {row_line}│")
+
+    table_lines.append(f"└{'┴'.join('─' * (w + 1) for w in col_widths)}┘")
+    centered_table = center_text('\n'.join(table_lines))
+
+    if title:
+        title_lines = []
+        div = "═" * cols
+        title_lines.append(div)
+        title_lines.append(color_text(center_text(title), ['light_yellow']))
+        title_lines.append(div)
+        title_lines.append("")
+
+        titled_table = '\n'.join(title_lines) + centered_table
+        return titled_table
+    return centered_table

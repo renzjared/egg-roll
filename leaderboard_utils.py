@@ -17,7 +17,7 @@ You may obtain a copy of the License at
 """
 
 import json
-from terminal_utils import print_format
+from terminal_utils import print_format, terminal_dimensions, create_table
 
 from pathlib import Path
 
@@ -30,28 +30,30 @@ def read_leaderboard():
             return json.load(file)
     return {}
 
-def write_leaderboard(leaderboard):
+def write_leaderboard(leaderboards):
     """Writes the leaderboard to the JSON file."""
     with open(LEADERBOARD_FILE, "w") as file:
-        json.dump(leaderboard, file, indent=4)
+        json.dump(leaderboards, file, indent=4)
 
 def update_leaderboard(name, score, level_name):
     """Updates the leaderboard with a new score."""
-    leaderboard = read_leaderboard()
-    if level_name not in leaderboard:   # Initialize JSON Object if level is not yet stored
-        leaderboard[level_name] = []
-    leaderboard[level_name].append({"name": name, "score": score})
-    leaderboard[level_name] = sorted(leaderboard[level_name], key=lambda x: x["score"], reverse=True)[:10]  # Keep top 10 scores
-    write_leaderboard(leaderboard)
+    leaderboards = read_leaderboard()
+    if level_name not in leaderboards:   # Initialize JSON Object if level is not yet stored
+        leaderboards[level_name] = []
+    leaderboards[level_name].append({"name": name, "score": score})
+    leaderboards[level_name] = sorted(leaderboards[level_name], key=lambda x: x["score"], reverse=True)[:10]  # Keep top 10 scores
+    write_leaderboard(leaderboards)
 
 def display_leaderboard(level_name):
-    """Displays the leaderboard."""
-    leaderboard = read_leaderboard()
-    if level_name in leaderboard:
-        print_format(f"\nLeaderboard for Level: {level_name}")
-        for idx, entry in enumerate(leaderboard[level_name], 1):
-            print(f"{idx}. {entry['name']}: {entry['score']}")
-        print()
+    """Displays the leaderboard for a particular level."""
+    leaderboards = read_leaderboard()
+    if level_name in leaderboards:
+        data = [[idx + 1, entry['name'], entry['score']] for idx, entry in enumerate(leaderboards[level_name])]
+        headers = ["#", "Name", "Score"]
+        title = f"Leaderboard: {level_name}"
+
+        table = create_table(data, headers, title)
+        print(table)
+        print()         # Blank line to separate table
     else:
         print_format(f"\nNo leaderboard found for Level: {level_name}", is_centered=True, args=["red"])
-
