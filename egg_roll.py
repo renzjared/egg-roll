@@ -109,7 +109,7 @@ def display_grid(level_state, filename):
     """
     loc = load_localization()
     _, cols = terminal_dimensions()
-    div = "=" * cols
+    div = "═" * cols
     clear_screen()
     print_format(div, is_centered=True)
     print_format(f" {loc["game_level"]}: " + filename, is_centered=False, args=["green"])
