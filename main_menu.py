@@ -20,7 +20,7 @@ import sys
 import time
 from pathlib import Path
 
-from terminal_utils import center_text, clear_screen, print_format, terminal_dimensions
+from terminal_utils import center_text, clear_screen, print_format, create_table
 
 
 def display_instructions():
@@ -41,12 +41,6 @@ def display_levels():
     levels_dir = Path("")
     levels = sorted(str(level) for level in levels_dir.glob("*.in"))
 
-    _, cols = terminal_dimensions()
-    div = "=" * cols
-    print_format(div, is_centered=True)
-    print_format("Level Selector", is_centered=True, args=["light_yellow"])
-    print_format(div + "\n\n", is_centered=True)
-
     if not levels:
         print_format("No levels available. Please add level files (.in) to the directory.", is_centered=True, args=["red"])
         print_format("\nPress Enter to return to the main menu...", args=["yellow", None, "blink"])
@@ -54,33 +48,24 @@ def display_levels():
         return None
 
     # If levels are found:
-    col_widths = [4, 20, 22, 10] 
-    col_formats = [f"{{:<{w}}}" for w in col_widths]
-
-    table = []      # Add table rows to a list so that we can center the table properly
-    header = """
-┌─────┬─────────────────────┬───────────────────────┬───────────┐ 
-| #   | Level Name          | Size (Rows x Columns) | Max Moves |
-├─────┼─────────────────────┼───────────────────────┼───────────┤"""
-    footer = "└─────┴─────────────────────┴───────────────────────┴───────────┘"
-
-    table.append(header)
+    data = []
     for idx, level in enumerate(levels, 1):
         rows, columns, moves_allowed = parse_level(level)
-        table.append(
-        "| " + "| ".join(fmt.format(val) for fmt, val in zip(col_formats, [idx, Path(level).name, f"{rows} x {columns}", moves_allowed])) + "|"
-        ) # Formatted rows of table items (levels)
-    table.append(footer)
-    print_format('\n'.join(table), is_centered=True)
+        data.append([idx, Path(level).name, f"{rows} x {columns}", moves_allowed])
+    headers = ["#", "Level Name", "Size (Rows x Columns)", "Max Moves"]
+    title = "Level Selector"
+    table = create_table(data, headers, title)
+    print(table)
+    print()         # Blank line to separate table
 
-    choice = input(center_text("\nEnter level file name or number (1-{}): ".format(len(levels)), False))
-
+    # Ask the player for level to be played
+    choice = input(center_text("\nEnter level file name or number (1-{}): "
+        .format(len(levels)), pad_right=False))
     try:
         level_index = int(choice) - 1
         if 0 <= level_index < len(levels):
             return levels[level_index]
-        else:
-            raise ValueError
+        raise ValueError
     except ValueError:
         if choice in levels:    # Check if the player entered a valid level file name
             return choice
@@ -129,7 +114,7 @@ def display_main_menu():
         # Show game instructions
         elif choice.strip() == '2':
             display_instructions()
-    
+
         # Show credits
         elif choice.strip() == '3':
             clear_screen()

@@ -127,7 +127,7 @@ def create_table(data, headers=None, title=None):
     top_sep = "┬".join("─" * (w + 1) for w in col_widths)
 
     table_lines = []
-    
+
     if headers:
         header_line = "│ ".join(fmt.format(hdr) for fmt, hdr in zip(col_formats, headers))
         table_lines.append(f"┌{top_sep}┐")
@@ -141,9 +141,11 @@ def create_table(data, headers=None, title=None):
     table_lines.append(f"└{'┴'.join('─' * (w + 1) for w in col_widths)}┘")
     centered_table = center_text('\n'.join(table_lines))
 
+    # Add title lines to the centered table last.
+    # This allows the table below to be displayed in the center.
     if title:
         title_lines = []
-        div = "═" * cols
+        div = "═" * cols   # horizontal divider line
         title_lines.append(div)
         title_lines.append(color_text(center_text(title), ['light_yellow']))
         title_lines.append(div)

@@ -51,7 +51,6 @@ def display_leaderboard(level_name):
         data = [[idx + 1, entry['name'], entry['score']] for idx, entry in enumerate(leaderboards[level_name])]
         headers = ["#", "Name", "Score"]
         title = f"Leaderboard: {level_name}"
-
         table = create_table(data, headers, title)
         print(table)
         print()         # Blank line to separate table
