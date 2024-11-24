@@ -21,14 +21,20 @@ import sys
 import time
 from pathlib import Path
 
-from terminal_utils import center_text, clear_screen, color_text, print_format, create_table, load_localization
+from terminal_utils import center_text, clear_screen, color_text, print_format, create_table, load_localization, terminal_dimensions
 
 
 def display_instructions():
     """Displays the game instructions to the player."""
     loc = load_localization()
+
     clear_screen()
-    print(loc["instructions_title"])
+    _, cols = terminal_dimensions()
+    div = "═" * cols   # horizontal divider line
+    print(div)
+    print_format(loc["instructions_title"], is_centered=True, args=["light_yellow"])
+    print(div)
+
     for line in loc["instructions_content"]:
         print(line)
     print_format(f"\n{loc["prompt_press_enter_to_return"]}", False, ["yellow", None, ['blink']])

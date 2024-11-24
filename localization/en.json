@@ -2,7 +2,7 @@
   "language":  "en",
 
   "welcome_message": "Welcome to Egg Roll!",
-  "instructions_title": "Instructions:",
+  "instructions_title": "Instructions",
   "instructions_content": [
     "1. You will be asked to enter a series of moves.",
     "2. Valid moves are: F (forward), B (backward), L (left), R (right).",
