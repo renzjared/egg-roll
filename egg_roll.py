@@ -24,7 +24,7 @@ import time
 from enum import Enum
 from game_utils import move_to_arrow, is_present, roll
 from main_menu import display_main_menu
-from terminal_utils import center_text, clear_screen, terminal_dimensions, color_text, print_format
+from terminal_utils import center_text, clear_screen, terminal_dimensions, color_text, print_format, load_localization
 from leaderboard_utils import update_leaderboard, display_leaderboard
 
 
@@ -107,11 +107,12 @@ def display_grid(level_state, filename):
         level_state (list): A 2D list representing the current state of the grid.
         filename (str): The name of the level file being played.
     """
+    loc = load_localization()
     _, cols = terminal_dimensions()
     div = "=" * cols
     clear_screen()
     print_format(div, is_centered=True)
-    print_format(" Level: " + filename, is_centered=False, args=["green"])
+    print_format(f" {loc["game_level"]}: " + filename, is_centered=False, args=["green"])
     print_format(div + "\n\n", is_centered=True)
 
     grid = "\n".join(''.join(row) for row in level_state)
@@ -129,10 +130,11 @@ def display_state(max_moves, moves, points):
         moves (list): A list of moves made by the player.
         points (int): The total points earned by the player.
     """
+    loc = load_localization()
     remaining_moves = str(max_moves - len(moves))
-    print_format("Previous moves: " + ''.join(moves), is_centered=False, args=["light_yellow"])
-    print_format("Remaining moves: " + remaining_moves, is_centered=False, args=["light_yellow"])
-    print_format("Points: " + str(points), is_centered=False, args=["light_yellow"])
+    print_format(loc["game_previous_moves"] + ''.join(moves), is_centered=False, args=["light_yellow"])
+    print_format(loc["game_remaining_moves"] + remaining_moves, is_centered=False, args=["light_yellow"])
+    print_format(loc["game_points"] + str(points), is_centered=False, args=["light_yellow"])
 
 
 def display_final_state(max_moves, moves, points, filename):
@@ -146,10 +148,11 @@ def display_final_state(max_moves, moves, points, filename):
         points (int): The total points earned by the player.
         filename (str): The path to the level file.
     """
+    loc = load_localization()
     display_state(max_moves, moves, points)
 
     # Save points for the leaderboard
-    name = input(center_text("Enter your name for the leaderboard: ", pad_right=False))
+    name = input(center_text(loc["prompt_name_leaderboard"], pad_right=False))
     update_leaderboard(name, points, filename)
 
     # Display the leaderboard
@@ -158,8 +161,8 @@ def display_final_state(max_moves, moves, points, filename):
 
     # Ask if player wants to play again
     prompt = True
-    while prompt:      # Ask again until the player responds with a valid answer: [y,Y,n,N]
-        response = input(center_text("Play again? [Y/N] ", pad_right=False))
+    while prompt:  # Ask again until the player responds with a valid answer: [y,Y,n,N]
+        response = input(center_text(loc["prompt_play_again"], pad_right=False))
         if response.upper() == 'Y':
             prompt = False
             main(filename)
@@ -234,7 +237,8 @@ def validate_moves(moveset, remaining_moves):
 
 def take_moves(remaining_moves):
     """Prompts the player for moves or commands and passes it through the validator"""
-    moveset = input("Enter moves or command: ")      # Get player input
+    loc = load_localization()
+    moveset = input(loc["prompt_enter_moves_or_cmd"])      # Get player input
     return validate_moves(moveset, remaining_moves)
 
 if __name__ == "__main__":

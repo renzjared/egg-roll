@@ -16,11 +16,12 @@ You may obtain a copy of the License at
  @author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
+import json
 import os
-import re
-import shutil
 import subprocess
 import sys
+
+from pathlib import Path
 
 # Extend system path to access termcolor folder
 # Termcolor is installed locally due to importing issues (may be fixed later)
@@ -154,3 +155,16 @@ def create_table(data, headers=None, title=None):
         titled_table = '\n'.join(title_lines) + centered_table
         return titled_table
     return centered_table
+
+
+def load_localization(language_code=None):
+    """Loads the localization file."""
+
+    if not language_code:
+        settings_file = Path("localization") / "settings.json"
+        with open(settings_file, "r") as file:
+            language_code = json.load(file)["language"]
+
+    localization_file = Path("localization") / f"{language_code}.json"
+    with open(localization_file, "r") as file:
+        return json.load(file)

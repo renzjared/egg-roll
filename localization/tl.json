@@ -1,0 +1,43 @@
+{
+  "language": "tl",
+
+  "welcome_message": "Maligayang Pagdating sa Egg Roll!",
+  "instructions_title": "Gabay sa Paglalaro:",
+  "instructions_content": [
+    "1. Kailangan mong mag-type ng mga 'galaw' upang mapagulong ang mga itlog.",
+    "2. Ang mga maaaring galaw ay: F (forward/taas), B (backward/baba), L (left/kaliwa), R (right/kanan).",
+    "3. I-type ang 'restart' anumang oras upang magsimulang muli.",
+    "4. Subukang makamit ang pinakamataas na puntos na posible bago maubos ang iyong mga galaw."
+  ],
+  "exit_goodbye": "Isinasara ang laro. Sa susunod muli!",
+
+  "game_level": "Lebel",
+  "game_level_name": "Pangalan",
+  "game_max_moves": "Max Moves",
+  "game_name": "Pangalan",
+  "game_points": "Puntos: ",
+  "game_previous_moves": "Mga galaw: ",
+  "game_remaining_moves": "Natitirang galaw: ",
+  "game_size": "Laki (Taas x Lapad)",
+  "game_score": "Iskor",
+
+  "leaderboard_title": "Leaderboard",
+  "level_selector_title": "Pumili ng Level",
+
+  "menu_start": "Simulan ang Laro",
+  "menu_instructions": "Gabay sa Paglalaro",
+  "menu_change_language": "Gawing Ingles (English) ang Wika",
+  "menu_credits": "Credits",
+  "menu_exit": "Isara ang Laro",
+
+  "error_invalid_choice": "Hindi wastong pagpili ({choice}). Mangyaring sumubok muli.",
+  "error_no_leaderboard_found": "Walang nahanap na leaderboard para sa Lebel:",
+  "error_no_levels_found": "Walang nahanap na lebel. Mangyaring magdagdag ng mga level file (.in) sa directory.",
+
+  "prompt_enter_level": "Magbigay ng pangalan o bilang ng lebel",
+  "prompt_enter_moves_or_cmd": "Magbigay ng galaw o utos: ",
+  "prompt_name_leaderboard": "Ibigay ang iyong pangalan para sa leaderboard: ",
+  "prompt_play_again": "Maglaro muli? [Y/N] ",
+  "prompt_press_enter_to_return": "Pindutin ang Enter upang makabalik sa main menu...",
+  "select_option": "Pumili (1-{n}):"
+}

@@ -17,9 +17,10 @@ You may obtain a copy of the License at
 """
 
 import json
-from terminal_utils import print_format, terminal_dimensions, create_table
+from terminal_utils import print_format, terminal_dimensions, create_table, load_localization
 
 from pathlib import Path
+
 
 LEADERBOARD_FILE = "leaderboard.json"
 
@@ -46,13 +47,15 @@ def update_leaderboard(name, score, level_name):
 
 def display_leaderboard(level_name):
     """Displays the leaderboard for a particular level."""
+    loc = load_localization()
     leaderboards = read_leaderboard()
+  
     if level_name in leaderboards:
         data = [[idx + 1, entry['name'], entry['score']] for idx, entry in enumerate(leaderboards[level_name])]
-        headers = ["#", "Name", "Score"]
-        title = f"Leaderboard: {level_name}"
+        headers = ["#", loc["game_name"], loc["game_score"]]
+        title = f"{loc["leaderboard_title"]}: {level_name}"
         table = create_table(data, headers, title)
         print(table)
         print()         # Blank line to separate table
     else:
-        print_format(f"\nNo leaderboard found for Level: {level_name}", is_centered=True, args=["red"])
+        print_format(f"\n{loc["error_no_leaderboard_found"]} {level_name}", is_centered=True, args=["red"])
