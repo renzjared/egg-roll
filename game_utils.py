@@ -61,11 +61,13 @@ def roll(grid, moves, max_moves):
 
 def apply_move(grid, direction, max_moves, moves):
     """Apply a single move to all eggs on the grid."""
-    eggs = find_eggs(grid)
+    eggs = find_eggs(grid, direction)
     points_earned = 0
     moved = False
 
     clear_eggs(grid)
+    if not eggs:
+        return points_earned, moved
 
     for egg in eggs:
         outcome, new_pos = calculate_new_position(grid, egg, direction)
@@ -85,9 +87,22 @@ def apply_move(grid, direction, max_moves, moves):
     return points_earned, moved
 
 
-def find_eggs(grid):
+def find_eggs(grid, move_direction=None):
     """Find all egg positions in the grid."""
-    return [(r, c) for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == '🥚']
+    eggs = [(r, c) for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == '🥚']
+
+    # Sort eggs depending on move direction to maintain egg collision
+    if move_direction:
+        dr, dc = move_direction
+        if dr == -1:    # Forward
+            eggs.sort()
+        elif dr == 1:   # Backward
+            eggs.sort(reverse=True)
+        elif dc == -1:  # Left
+            eggs.sort(key=lambda x: (x[1], x[0]))
+        elif dc == 1:   # Right
+            eggs.sort(key=lambda x: (x[1], x[0]), reverse=True)
+    return eggs
 
 
 def clear_eggs(grid):
@@ -126,6 +141,7 @@ def calculate_new_position(grid, pos, direction):
         return "fry", pos
     if target in ['🪺', '🧱']:
         return "reset", pos
+    return "reset", pos
 
 
 def calculate_points(max_moves, moves):
