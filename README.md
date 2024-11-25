@@ -121,6 +121,16 @@ This Egg Roll game is specifically designed to be modular and easy to understand
 
 <h2>Bonus Points</h2>
 
+ * **Bonus Level Submissions**<br/>
+   `1.` **cs11.in** <br/>
+   Try not to _drop_! (the eggs)<br/>
+   
+   `2.` **labyrinth.in** <br/>
+   Navigate, dodge, and don't get lost!<br/>
+   
+   `3.` **sacrifice.in** <br/>
+   _"...He who would attain highly must sacrifice greatly."_ - James Allen<br/>
+
  * **Main Menu**
     * The game launches on the main menu screen if no filename argument is provided by the player.
     * From the main menu, the player can (1) start the game, (2) read game instructions, (3) change language, (4) see game credits, and (5) terminate the game session.
