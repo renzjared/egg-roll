@@ -83,7 +83,7 @@ def main(filename):
             for move in moveset:
                 moves.append(move_to_arrow(move))
                 snapshots, points_earned = roll(level_state, moves, max_moves)
-                for snapshot in snapshots:     # Print each snapshot with a 0.5s delay
+                for snapshot in snapshots:     # Print each snapshot with a 0.3s delay
                     display_grid(snapshot, filename)
                     time.sleep(0.3)
                 points += points_earned        # Update point counter

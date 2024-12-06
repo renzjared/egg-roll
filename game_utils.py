@@ -61,6 +61,9 @@ def roll(grid, moves, max_moves):
 
 def apply_move(grid, direction, max_moves, moves):
     """Apply a single move to all eggs on the grid."""
+
+    # Basically, 'apply_move' only records changes between snapshots
+    # while 'roll' keeps track of all snapshots for every directional move
     eggs = find_eggs(grid, direction)
     points_earned = 0
     moved = False
