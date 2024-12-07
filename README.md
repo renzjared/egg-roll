@@ -117,8 +117,7 @@ This Egg Roll game is specifically designed to be modular and easy to understand
 
 <h2>Running Tests</h2>
 
-**This implementation of **Egg Roll** uses [`pytest`](https://pytest.org) for running tests.<br/>**
-* The decision to use `pytest` instead of Python's `unittest` is primarily due to `pytest`'s more detailed output for failure causes, which makes debugging easier.<br/>
+**This implementation of **Egg Roll** uses [`unittest`](https://docs.python.org/3/library/unittest.html) for running tests.<br/>**
 
 To run the tests, simply execute the following command in the project directory:
 ```bash
@@ -126,7 +125,7 @@ python3.12 test_egg_roll.py
 ```
 This command will run all the test cases defined in `test_egg_roll.py`. The `test_egg_roll.py` file contains unit tests for **Egg Roll**. These tests ensure that the various functions and components of the game work correctly and as intended.
 * Each function test in the test function is designed to be independent of each other, meaning that the failure of one function does not affect the other tests.
-* In case of failures, `pytest` will display the count of discovered failed cases, as well as details about the individual errors
+* In case of failures, `unittest` will display the count of discovered failed cases, as well as details about the individual errors
 
 <h3>Thoroughness</h3>
 
@@ -138,11 +137,11 @@ This command will run all the test cases defined in `test_egg_roll.py`. The `tes
 New tests can be added to `test_egg_roll.py` by doing the following:
 
 `1.` **Definine a New Test Method**<br/>
-* IMPORTANT: The method name should begin with `test_` in order to be recognized by `pytest`. (Example: `test_roll`)
+* IMPORTANT: The method name should begin with `test_` in order to be recognized by `unittest`. (Example: `test_roll`)
 
 `2.` **Use Assertions**<br/>
-* `pytest` assertions such as `assertEqual`, `assertTrue`, and `assertFalse` may be added inside the method to check the correctness and validity of the outputs.
-* Please refer to the [official Pytest documentation](https://docs.pytest.org/en/stable/how-to/assert.html) for more information.
+* Assertions such as `assertEqual`, `assertTrue`, and `assertFalse` may be added inside the method to check the correctness and validity of the outputs.
+* Please refer to the [official unittest documentation](https://docs.python.org/3/library/unittest.html) for more information.
 
 `3.` **Run the Tests**<br/>
 * The newly-added tests can be similarly run by executing the following command in the project directory:
@@ -150,7 +149,7 @@ New tests can be added to `test_egg_roll.py` by doing the following:
 python3.12 test_egg_roll.py
 ```
 
-_Note:_ A separate `.py` file may also be created for the additional test cases. Simply do the steps above (making sure to import `pytest`) and run the new `.py` file instead of `test_egg_roll.py`.
+_Note:_ A separate `.py` file may also be created for the additional test cases. Simply do the steps above and run the new `.py` file instead of `test_egg_roll.py`.
 
 <h2>Bonus Points</h2>
 
