@@ -435,13 +435,13 @@ class TestEggRoll(unittest.TestCase):
         max_moves = 1
         moves = []
         direction = (0, -1)
-        self.grid1 = [
+        grid1 = [
             ['🧱', '🧱', '🧱', '🧱', '🧱'],
             ['🧱', '🟩', '🟩', '🟩', '🧱'],
             ['🧱', '🪹', '🥚', '🍳', '🧱'],
             ['🧱', '🧱', '🧱', '🧱', '🧱']
         ]
-        points, moved = game_utils.apply_move(self.grid1, direction, max_moves, moves)
+        points, moved = game_utils.apply_move(grid1, direction, max_moves, moves)
         # Verify that points were earned and movement occurred
         self.assertEqual(points, 11)  # Egg reached nest
         self.assertTrue(moved)
@@ -449,14 +449,14 @@ class TestEggRoll(unittest.TestCase):
         max_moves = 314
         moves = []
         direction = (1, 0)
-        self.grid2 = [
+        grid2 = [
             ['🧱', '🧱', '🧱', '🧱', '🧱'],
             ['🧱', '🥚', '🟩', '🥚', '🧱'],
             ['🧱', '🪹', '🍳', '🍳', '🧱'],
             ['🧱', '🪺', '🟩', '🍳', '🧱'],
             ['🧱', '🧱', '🧱', '🧱', '🧱']
         ]
-        points, moved = game_utils.apply_move(self.grid2, direction, max_moves, moves)
+        points, moved = game_utils.apply_move(grid2, direction, max_moves, moves)
         self.assertEqual(points, 319)  # One egg reached nest, another got cooked
         self.assertTrue(moved)
 
@@ -565,6 +565,39 @@ class TestEggRoll(unittest.TestCase):
         eggs = game_utils.find_eggs(self.empty_grid)
         self.assertEqual(eggs, [])
 
+        # Eggs in corners
+        grid1 = [
+            ['🥚', '🧱', '🧱', '🧱', '🥚'],
+            ['🧱', '🟩', '🟩', '🟩', '🧱'],
+            ['🧱', '🪹', '🥚', '🍳', '🧱'],
+            ['🥚', '🧱', '🧱', '🧱', '🥚']
+        ]
+        eggs = game_utils.find_eggs(grid1)
+        self.assertEqual(eggs, [(0, 0), (0, 4), (2, 2), (3, 0), (3, 4)])
+
+        grid2 = [
+            ['🥚', '🧱', '🧱', '🧱', '🥚'],
+            ['🧱', '🟩', '🟩', '🟩', '🧱'],
+            ['🧱', '🪹', '🟩', '🍳', '🧱'],
+            ['🥚', '🧱', '🧱', '🧱', '🥚']
+        ]
+        eggs = game_utils.find_eggs(grid2)
+        self.assertEqual(eggs, [(0, 0), (0, 4), (3, 0), (3, 4)])
+
+        # All eggs
+        grid3 = [
+            ['🥚', '🥚'],
+            ['🥚', '🥚'],
+        ]
+        eggs = game_utils.find_eggs(grid3)
+        self.assertEqual(eggs, [(0, 0), (0, 1), (1, 0), (1, 1)])
+
+        grid4 = [
+            ['🥚']*2**15,
+        ]
+        eggs = game_utils.find_eggs(grid4)
+        assertion_res = [(0, n) for n in range(2**15)]
+        self.assertEqual(eggs, assertion_res)
 
     def test_clear_eggs(self):
         # Test clearing eggs from the grid
@@ -691,6 +724,12 @@ class TestEggRoll(unittest.TestCase):
         self.assertFalse(game_utils.is_present(empty_grid, '🥚'))
         self.assertEqual(empty_grid, [])
 
+        grid_all_eggs = [
+            ['🥚']*2**15,
+        ]*2**5
+        game_utils.clear_eggs(grid_all_eggs)
+        self.assertFalse(game_utils.is_present(grid_all_eggs, '🥚'))
+
         # Create random levels (does not need to be valid) and see if the function `clear_eggs` works
         blocks = ['🧱', '🟩', '🥚', '🍳', '🪹', '🪺']
         for _ in range(10):
@@ -707,8 +746,132 @@ class TestEggRoll(unittest.TestCase):
 
 
     def test_calculate_new_position(self):
-        pass
+        # Note that like 'apply_move,' this function tests for egg movements in between snapshots.
 
+        grid1 = [
+            ['🧱', '🧱', '🧱', '🧱', '🧱'],
+            ['🧱', '🟩', '🟩', '🟩', '🧱'],
+            ['🧱', '🪹', '🥚', '🍳', '🧱'],
+            ['🧱', '🧱', '🧱', '🧱', '🧱']
+        ]
+        pos = (2, 2)
+        direction = (0, 1) # Tilt the grid rightward
+        outcome, new_pos = game_utils.calculate_new_position(grid1, pos, direction)
+        self.assertEqual(outcome, "fry")
+        self.assertEqual(new_pos, pos) # new_pos is not updated when an egg moves to a frying pan
+
+        pos = (2, 2)
+        direction = (-1, 0) # Tilt the grid forward
+        outcome, new_pos = game_utils.calculate_new_position(grid1, pos, direction)
+        self.assertEqual(outcome, "move")
+        self.assertEqual(new_pos, (1, 2))
+
+        pos = (2, 2)
+        direction = (1, 0) # Tilt the grid backward
+        outcome, new_pos = game_utils.calculate_new_position(grid1, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos) # new_pos is not updated when an egg encounters a barrier (such as a wall)
+
+        # Edge case: Egg moves outside the grid
+        pos = (0, 0) # Suppose there is an egg in (0, 0)
+        direction = (1, 0) # Tilt the grid backward
+        outcome, new_pos = game_utils.calculate_new_position(grid1, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos) # new_pos is not updated when an egg goes out of bounds
+
+        direction = (0, -1) # Tilt the grid leftward
+        pos = (1, 1)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (1, 2)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos) # new_pos is not updated when an egg moves to another egg
+
+        pos = (2, 1)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (11, 4)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        # Also test for random non-initial egg positions in the grid
+        direction = (0, 1) # Tilt the grid rightward
+        pos = (1, 10)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (5, 12)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "fill_nest")
+        self.assertEqual(new_pos, (5, 13))
+
+        direction = (0, -1) # Tilt the grid leftward
+        pos = (1, 4)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "move")
+        self.assertEqual(new_pos, (1, 3))
+
+        pos = (7, 7)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "move")
+        self.assertEqual(new_pos, (7, 6))
+
+        # Edge case: Egg moves outside the grid
+        direction = (-1, 0) # Tilt the grid forward
+        pos = (0, 10)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (0, 3)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (0, 1)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (0, 4)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        # Also check for non-negative out of bound cell positions
+        direction = (0, 1) # Tilt the grid rightward
+        pos = (3, 15)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (1, 15)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (4, 15)
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (1, 20) # Should not be possible
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+
+        pos = (5, 2**10) # Should not be possible
+        outcome, new_pos = game_utils.calculate_new_position(self.grid_labyrinth, pos, direction)
+        self.assertEqual(outcome, "reset")
+        self.assertEqual(new_pos, pos)
+        
 
     def test_calculate_points(self):
         test_cases = [
