@@ -128,35 +128,30 @@ class TestEggRoll(unittest.TestCase):
         self.empty_grid = deepcopy(self.initial_grids["empty_grid"])
 
     def test_validate_moves(self):
-        """Tests that valid moves are accepted"""
         self.assertEqual(egg_roll.validate_moves('f', 5), 'f')
         self.assertEqual(egg_roll.validate_moves('Bl', 3), 'Bl')
         self.assertEqual(egg_roll.validate_moves('l', 5), 'l')
         self.assertEqual(egg_roll.validate_moves('R', 1), 'R')
         self.assertEqual(egg_roll.validate_moves('lllll', 5), 'lllll')
 
-
-    def test_validate_moves_exactly_remaining_moves(self):
-        """Tests that valid moves equal to remaining moves are accepted."""
+        # Tests that valid moves equal to remaining moves are accepted.
         self.assertEqual(egg_roll.validate_moves('LRFB', 4), 'LRFB')
         self.assertEqual(egg_roll.validate_moves('lRrB', 4), 'lRrB')
         self.assertEqual(egg_roll.validate_moves('FB', 2), 'FB')
         self.assertEqual(egg_roll.validate_moves('Bb', 2), 'Bb')
         self.assertEqual(egg_roll.validate_moves('f', 1), 'f')
 
-
-    def test_validate_moves_empty_moveset(self):
-        """Tests sthat an empty moveset returns an empty string."""
+        # Tests that an empty moveset returns an empty string.
         self.assertEqual(egg_roll.validate_moves('', 5), '')
         self.assertEqual(egg_roll.validate_moves('', 0), '')
         self.assertEqual(egg_roll.validate_moves('', 2048), '')
         self.assertEqual(egg_roll.validate_moves('', 31415926535), '')
         self.assertEqual(egg_roll.validate_moves('', -11235813), '')
         self.assertEqual(egg_roll.validate_moves('', -31415926535), '')
+        self.assertEqual(egg_roll.validate_moves('', 2**50), '')
+        self.assertEqual(egg_roll.validate_moves('', 2**10000), '')
 
-
-    def test_validate_moves_exceeds_remaining_moves(self):
-        """Tests that moves exceeding remaining moves are truncated."""
+        # Tests that moves exceeding remaining moves are truncated.
         self.assertEqual(egg_roll.validate_moves('llllll', 5), 'lllll')
         self.assertEqual(egg_roll.validate_moves('FFFFF', 3), 'FFF')
         self.assertEqual(egg_roll.validate_moves('FFFFF', 3), 'FFF')
@@ -181,6 +176,8 @@ class TestEggRoll(unittest.TestCase):
         self.assertEqual(egg_roll.validate_moves('fgsdasdrhyRbadfadr@355345', 3), 'frR')
         self.assertEqual(egg_roll.validate_moves('lawsdas463@dasdasrds^#Q$adwda^#&&#slwadvh345253r', 4), 'lrlr')
         self.assertEqual(egg_roll.validate_moves('lawsdas463@dasdasrds^#Q$adwda^#&&#slwadvh345253r'*999, 4), 'lrlr')
+        self.assertEqual(egg_roll.validate_moves('a'*2**10, 10), '')
+        self.assertEqual(egg_roll.validate_moves('a'*2**10, 2*10), '')
         self.assertEqual(egg_roll.validate_moves('lr'*(10**8), 4), 'lrlr')
 
 
@@ -228,7 +225,8 @@ class TestEggRoll(unittest.TestCase):
 
 
     def test_is_present(self):
-        # Tests if an element is present in a grid
+        """Tests if an element is present in a grid"""
+        # Just for assurance, we also test for characters that are not part of the game. (Example: 🍅)
 
         # Tests for grid1
         self.assertTrue(game_utils.is_present(self.grid1, '🥚'))
@@ -237,6 +235,11 @@ class TestEggRoll(unittest.TestCase):
         self.assertTrue(game_utils.is_present(self.grid1, '🧱'))
         self.assertFalse(game_utils.is_present(self.grid1, '🪺'))
         self.assertFalse(game_utils.is_present(self.grid1, '🍅'))
+        self.assertFalse(game_utils.is_present(self.grid1, '.'))
+        self.assertFalse(game_utils.is_present(self.grid1, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid1, '5'))
+        self.assertFalse(game_utils.is_present(self.grid1, '/'))
+
 
         # Tests for grid2
         self.assertTrue(game_utils.is_present(self.grid2, '🥚'))
@@ -246,6 +249,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertTrue(game_utils.is_present(self.grid2, '🧱'))
         self.assertFalse(game_utils.is_present(self.grid2, '🟦'))
         self.assertFalse(game_utils.is_present(self.grid2, '🍅'))
+        self.assertFalse(game_utils.is_present(self.grid2, '.'))
+        self.assertFalse(game_utils.is_present(self.grid2, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid2, '5'))
+        self.assertFalse(game_utils.is_present(self.grid2, '/'))
 
         # Tests for grid3
         self.assertTrue(game_utils.is_present(self.grid3, '🍳'))
@@ -256,6 +263,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertFalse(game_utils.is_present(self.grid3, '🟦'))
         self.assertFalse(game_utils.is_present(self.grid3, '🍅'))
         self.assertFalse(game_utils.is_present(self.grid3, '🟩🟩'))
+        self.assertFalse(game_utils.is_present(self.grid3, '.'))
+        self.assertFalse(game_utils.is_present(self.grid3, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid3, '5'))
+        self.assertFalse(game_utils.is_present(self.grid3, '/'))
 
         # Tests for grid4
         self.assertTrue(game_utils.is_present(self.grid4, '🍳'))
@@ -265,6 +276,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertFalse(game_utils.is_present(self.grid4, '🟦'))
         self.assertFalse(game_utils.is_present(self.grid4, '🍅'))
         self.assertFalse(game_utils.is_present(self.grid4, '🟩🟩'))
+        self.assertFalse(game_utils.is_present(self.grid4, '.'))
+        self.assertFalse(game_utils.is_present(self.grid4, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid4, '5'))
+        self.assertFalse(game_utils.is_present(self.grid4, '/'))
 
         # Tests for grid5
         self.assertTrue(game_utils.is_present(self.grid5, '🍳'))
@@ -274,6 +289,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertFalse(game_utils.is_present(self.grid5, '🪺'))
         self.assertFalse(game_utils.is_present(self.grid5, '🍅'))
         self.assertFalse(game_utils.is_present(self.grid5, '🟩🟩'))
+        self.assertFalse(game_utils.is_present(self.grid5, '.'))
+        self.assertFalse(game_utils.is_present(self.grid5, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid5, '5'))
+        self.assertFalse(game_utils.is_present(self.grid5, '/'))
 
         # Tests for bonus level: CS 11
         self.assertTrue(game_utils.is_present(self.grid_cs11, '🍳'))
@@ -283,6 +302,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertTrue(game_utils.is_present(self.grid_cs11, '🪺'))
         self.assertFalse(game_utils.is_present(self.grid_cs11, '🍅'))
         self.assertFalse(game_utils.is_present(self.grid_cs11, '🟩🟩'))
+        self.assertFalse(game_utils.is_present(self.grid_cs11, '.'))
+        self.assertFalse(game_utils.is_present(self.grid_cs11, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid_cs11, '5'))
+        self.assertFalse(game_utils.is_present(self.grid_cs11, '/'))
 
         # Tests for bonus level: Labyrinth
         self.assertTrue(game_utils.is_present(self.grid_labyrinth, '🍳'))
@@ -292,6 +315,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertFalse(game_utils.is_present(self.grid_labyrinth, '🪺'))
         self.assertFalse(game_utils.is_present(self.grid_labyrinth, '🍅'))
         self.assertFalse(game_utils.is_present(self.grid_labyrinth, '🟩🟩'))
+        self.assertFalse(game_utils.is_present(self.grid_labyrinth, '.'))
+        self.assertFalse(game_utils.is_present(self.grid_labyrinth, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid_labyrinth, '_labyrinth'))
+        self.assertFalse(game_utils.is_present(self.grid_labyrinth, '/'))
 
         # Tests for bonus level: Sacrifice
         self.assertTrue(game_utils.is_present(self.grid_sacrifice, '🍳'))
@@ -301,6 +328,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertTrue(game_utils.is_present(self.grid_sacrifice, '🪺'))
         self.assertFalse(game_utils.is_present(self.grid_sacrifice, '🍅'))
         self.assertFalse(game_utils.is_present(self.grid_sacrifice, '🟩🟩'))
+        self.assertFalse(game_utils.is_present(self.grid_sacrifice, '.'))
+        self.assertFalse(game_utils.is_present(self.grid_sacrifice, 'A'))
+        self.assertFalse(game_utils.is_present(self.grid_sacrifice, '5'))
+        self.assertFalse(game_utils.is_present(self.grid_sacrifice, '/'))
 
         # Tests for an empty grid
         self.assertFalse(game_utils.is_present(self.empty_grid, '🧱'))
@@ -309,6 +340,10 @@ class TestEggRoll(unittest.TestCase):
         self.assertFalse(game_utils.is_present(self.empty_grid, '🪹'))
         self.assertFalse(game_utils.is_present(self.empty_grid, '🪺'))
         self.assertFalse(game_utils.is_present(self.empty_grid, '🍅'))
+        self.assertFalse(game_utils.is_present(self.empty_grid, '.'))
+        self.assertFalse(game_utils.is_present(self.empty_grid, 'A'))
+        self.assertFalse(game_utils.is_present(self.empty_grid, '5'))
+        self.assertFalse(game_utils.is_present(self.empty_grid, '/'))
 
 
     def test_roll(self):
@@ -347,7 +382,6 @@ class TestEggRoll(unittest.TestCase):
         self.assertEqual(points_earned, 20)
         self.assertTrue(game_utils.is_present(snapshots[last], '🥚'))
 
-        # Test if eggs do not merge into each other when colliding after being in motion
         grid_sacrifice = [
             ["🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱"],
             ["🧱", "🧱", "🧱", "🧱", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🧱", "🧱", "🧱", "🧱"],
@@ -365,6 +399,17 @@ class TestEggRoll(unittest.TestCase):
             ["🧱", "🟩", "🟩", "🟩", "🟩", "🟩", "🍳", "🧱", "🍳", "🟩", "🟩", "🟩", "🟩", "🟩", "🧱"],
             ["🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱"]
         ]
+        # Test for when all eggs are unable to move
+        moves = ['←', '↑', '→', '↑', '→', '↑']
+        snapshots, points_earned = game_utils.roll(grid_sacrifice, moves, 15)
+        last = len(snapshots)-1
+        self.assertEqual(len(snapshots), 1)
+        self.assertEqual(snapshots[last][2][11], '🥚') # Eggs stay in their current positions
+        self.assertEqual(snapshots[last][3][11], '🥚')
+        self.assertEqual(points_earned, 0)
+        self.assertTrue(game_utils.is_present(snapshots[last], '🥚'))
+
+        # Test if eggs do not merge into each other when colliding after being in motion
         moves = ['←', '↑', '→', '↑', '→', '↓']
         snapshots, points_earned = game_utils.roll(grid_sacrifice, moves, 15)
         last = len(snapshots)-1
@@ -420,6 +465,51 @@ class TestEggRoll(unittest.TestCase):
         direction = (1, 0)
         points, moved = game_utils.apply_move(self.grid_cs11, direction, max_moves, moves)
         self.assertEqual(points, 25) # 10 + 15 bonus points (note that 'apply_move' only tracks changes per snapshot)
+        self.assertTrue(moved)
+
+        max_moves = 15
+        moves = ['←']
+        direction = (0, -1)
+        grid_labyrinth = [
+                ["🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱"],
+                ["🧱", "🥚", "🥚", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🧱", "🟩", "🟩", "🧱"],
+                ["🧱", "🥚", "🧱", "🧱", "🟩", "🧱", "🧱", "🧱", "🟩", "🟩", "🧱", "🧱", "🟩", "🧱", "🧱"],
+                ["🧱", "🟩", "🧱", "🍳", "🟩", "🧱", "🧱", "🍳", "🟩", "🟩", "🧱", "🟩", "🟩", "🟩", "🧱"],
+                ["🧱", "🟩", "🧱", "🧱", "🟩", "🧱", "🟩", "🟩", "🟩", "🟩", "🧱", "🟩", "🧱", "🧱", "🧱"],
+                ["🧱", "🟩", "🟩", "🟩", "🟩", "🧱", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🪹", "🧱"],
+                ["🧱", "🟩", "🧱", "🧱", "🧱", "🧱", "🧱", "🟩", "🧱", "🧱", "🧱", "🟩", "🧱", "🧱", "🧱"],
+                ["🧱", "🟩", "🟩", "🟩", "🟩", "🍳", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🍳", "🧱"],
+                ["🧱", "🟩", "🧱", "🧱", "🟩", "🧱", "🧱", "🟩", "🧱", "🧱", "🧱", "🟩", "🧱", "🧱", "🧱"],
+                ["🧱", "🟩", "🟩", "🧱", "🟩", "🧱", "🟩", "🟩", "🟩", "🧱", "🟩", "🟩", "🟩", "🟩", "🧱"],
+                ["🧱", "🟩", "🟩", "🟩", "🟩", "🧱", "🧱", "🟩", "🟩", "🧱", "🟩", "🟩", "🧱", "🧱", "🧱"],
+                ["🧱", "🧱", "🧱", "🧱", "🥚", "🟩", "🟩", "🟩", "🟩", "🧱", "🧱", "🟩", "🧱", "🧱", "🧱"],
+                ["🧱", "🟩", "🟩", "🟩", "🟩", "🧱", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🟩", "🧱"],
+                ["🧱", "🍳", "🧱", "🟩", "🍳", "🧱", "🧱", "🟩", "🟩", "🍳", "🧱", "🍳", "🟩", "🪹", "🧱"],
+                ["🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱", "🧱"]
+            ]
+        points, moved = game_utils.apply_move(grid_labyrinth, direction, max_moves, moves)
+        self.assertEqual(points, 0)
+        self.assertFalse(moved)
+
+        # tilt the same grid rightwards
+        moves = ['←', '→']
+        direction = (0, 1)
+        points, moved = game_utils.apply_move(grid_labyrinth, direction, max_moves, moves)
+        self.assertEqual(points, 0)
+        self.assertTrue(moved)
+
+        # process next snapshot
+        moves = ['←', '→']
+        direction = (0, 1)
+        points, moved = game_utils.apply_move(grid_labyrinth, direction, max_moves, moves)
+        self.assertEqual(points, 0)
+        self.assertTrue(moved)
+
+        # process next snapshot
+        moves = ['←', '→']
+        direction = (0, 1)
+        points, moved = game_utils.apply_move(grid_labyrinth, direction, max_moves, moves)
+        self.assertEqual(points, 0)
         self.assertTrue(moved)
 
         max_moves = 15
@@ -601,6 +691,20 @@ class TestEggRoll(unittest.TestCase):
         self.assertFalse(game_utils.is_present(empty_grid, '🥚'))
         self.assertEqual(empty_grid, [])
 
+        # Create random levels (does not need to be valid) and see if the function `clear_eggs` works
+        blocks = ['🧱', '🟩', '🥚', '🍳', '🪹', '🪺']
+        for _ in range(10):
+            rows = choice(range(4, 21)) # Random grid dimensions: 4x4 (smallest) to 20x20 (largest)
+            cols = choice(range(4, 21))
+            grid = []
+            for _ in range(rows):
+                row = []
+                for _ in range(cols):
+                    row.append(choice(blocks))
+                grid.append(row)
+            game_utils.clear_eggs(grid)
+            self.assertFalse(game_utils.is_present(grid, '🥚'))
+
 
     def test_calculate_new_position(self):
         pass
@@ -629,7 +733,7 @@ class TestEggRoll(unittest.TestCase):
         grids = [self.grid1, self.grid2, self.grid3, self.grid4, self.grid5, self.grid_cs11, self.grid_labyrinth, self.grid_sacrifice]
 
         # This is actually not possible when playing a game level. (Eggs cannot pass through 'solid' objects such as walls)
-        # The objective of this test, therefore, is to verify that the function
+        # The objective of this test is to verify that the function
         # is able to properly change the value of a particular cell in the grid.
         for grid in grids:
             for r, row in enumerate(grid):
