@@ -111,8 +111,8 @@ This Egg Roll game is specifically designed to be modular and easy to understand
 
  * `egg_roll_basic.py` - The main entry point of the game. This is the script that is launched by the user to start the game. It initializes the game, processes user inputs, updates the game state, and displays the results.<br/>
  * **[Bonus]** `egg_roll.py` - Same as the above, but contains bonus feature implementations of the game (see **Bonus Points** section below).<br/>
- * `game_utils.py` - This script provides core game functionalities and algorithms, including functions for moving eggs, calculating egg positions, and checking game conditions.<br/>
- * `terminal_utils.py` - Contains utility functions for handling terminal operations such as clearing the screen, getting terminal dimensions, and text formatting.<br/>
+ * `game_utils.py` - Provides core game functionalities and algorithms, including functions for moving eggs, calculating egg positions, and checking game conditions.<br/>
+ * **[Bonus]** `terminal_utils.py` - Contains utility functions for handling terminal operations such as creating formattable tables, getting terminal dimensions, and text formatting.<br/>
  * **[Bonus]** `main_menu.py` - Manages the main menu screen, including the options displayed and handling user selections.<br/>
  * **[Bonus]** `leaderboard_utils.py` - Contains utility functions for reading and updating the leaderboards.<br/>
 
@@ -215,7 +215,7 @@ python3.12 new_test_script.py
     * At the end of each level (when a player runs out of moves or eggs to move), an option to replay the level is presented.
     * Replaying the level restarts the current game level, allowing the player to start over.
  * **Ability to Undo Moves**
-    * Aside from the four (4) directional moves, the player can also choose to undo a move When prompted for an input by entering `u` or `U`.
+    * Aside from the four (4) directional moves, the player can also choose to undo a move when prompted for an input by entering `u` or `U`.
     * By repeatedly entering `u` or `U`, the player can undo all performed moves.
  * **Tagalog Localization**
     * Egg-roll is now available in Filipino (Tagalog)!

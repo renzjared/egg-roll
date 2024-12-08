@@ -36,12 +36,11 @@ def main(filename):
     """
     # Read game level file, and take the number of rows and number of maximum moves 
     level = read_level(filename)
-    rows = int(level[0])
     max_moves = int(level[1])
     moves = []  # initialize move history
     points = 0  # initialize number of points
 
-    level_state = [list(l) for l in level[2:]] # Convert strings into a list of characters
+    level_state = [list(line) for line in level[2:]] # Convert strings into a list of characters
 
     # Display game prompt until the maximum number of moves is reached
     while len(moves) < max_moves:
@@ -103,7 +102,7 @@ def read_level(filename):
     """
     try:
         with open(filename, "r") as level:
-            level = [l.strip('\n\r') for l in level]  # Remove newlines
+            level = [line.strip('\n\r') for line in level]  # Remove newlines
             return level
     except Exception as e:
         print(e)
