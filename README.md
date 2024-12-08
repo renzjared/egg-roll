@@ -145,13 +145,42 @@ To run the tests, simply execute the following command in the project directory:
 python3.12 test_egg_roll.py
 ```
 This command will run all the test cases defined in `test_egg_roll.py`. The `test_egg_roll.py` file contains unit tests for **Egg Roll**. These tests ensure that the various functions and components of the game work correctly and as intended.
-* Each function test in the test function is designed to be independent of each other, meaning that the failure of one function does not affect the other tests.
 * In case of failures, `unittest` will display the count of discovered failed cases, as well as details about the individual errors.
 
-<h3>Thoroughness</h3>
+<h3>Setup</h3>
 
+**setUpClass()**<br/>
+
+* _A class method called before tests in an individual class are run. `setUpClass` is called with the class as the only argument and must be decorated as a classmethod()_ [[Documentation]](https://docs.python.org/3/library/unittest.html#unittest.TestCase.setUpClass) <br/>
+* This method initializes the various grid configurations to be tested. This ensures that each test starts with a consistent state, which is especially important for functions like `roll()` and `apply_move()`, which alter the state of the grid they are used on.
+
+**setUp()**<br/>
+* _Method called to prepare the test fixture. This is called immediately before calling the test method; other than AssertionError or SkipTest, any exception raised by this method will be considered an error rather than a test failure._
+* `deepcopy` is used to create fresh copies of the grids before each test. This ensures that modifications in one test do not affect others.
+
+<h3>Thoroughness</h3>
+* The `test_egg_roll.py` file is structured in a way such that each method within it corresponds to a function to be tested.
+* Each function test in the test function is designed to be independent of each other, meaning that the failure of one function does not affect the other tests.
+* Each function test covers basic cases as well as edge cases.
+
+**Edge Cases**
 * The unit tests defined in `test_egg_roll.py` are meant to cover a wide variety of scenarios, accounting for user errors, invalid inputs, and other edge cases.
 * These tests account for cases such as 'invalid' game levels (in terms of game design), various collision mechanics (egg-to-egg, egg-to-wall, etc..), as well as irregular and invalid user inputs (such as very large number of input moves).
+* Exponentiation is used to express large values of numbers. This is used in instances wherein it may be beneficial to test a particularly large volume of input.
+   * **Example 1:** In `test_validate_moves`, some input strings are multiplied to an exponentiated number in order to process a string with a very large number of characters.
+   * **Example 2:** In `test_find_eggs`, a grid with nothing but $2^15$ eggs was created. This ensures that `find_eggs` is able to find eggs even for grids (game levels) of bigger proportions.
+* Unconventional cases are also tested to ensure that they are handled properly, even if their occurence is unrealistic. This includes:
+   * A negative number of moves performed
+   * Moving an egg that is way outside of the grid's bounds
+   * Ensuring that characters unused by the game, such as `A` and `🍅` do not make it into the game somehow
+
+**Parametrization**
+* Some tests are parametrized to improve code readability and reduce the need for repetitive lines of tests.\
+* An example of this is the `test_calculate_points` method, which compiles the test cases as a list of tuples (`test_cases`) containing the parameters (`max_moves`, `moves`, `intended_result`).
+
+**Random Testing**
+* Random testing is used to ensure the reliability of the functions used in **Egg Roll**. It ensures comprehensive coverage and are intended to cover unpredictable scenarios.
+* For example, as is used in the `test_calculate_points` method, random moves are generated in order to simulate a wide range of possible user interactions. This ensures that the game can handle various scenarios gracefully.
 
 <h3>Adding New Tests</h3>
 

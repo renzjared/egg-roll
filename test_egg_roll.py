@@ -160,9 +160,7 @@ class TestEggRoll(unittest.TestCase):
         self.assertEqual(egg_roll.validate_moves('l', 0), '')       # These cases *should* not occur
         self.assertEqual(egg_roll.validate_moves('gfdsgsed694tseaAKfest4905wef0rtgw35%*@#$tskg5&@#$fdfgh', -3214124), '')
 
-
-    def test_validate_moves_invalid_characters(self):
-        """Tests that invalid characters are filtered out."""
+        # Tests that invalid characters are filtered out.
         self.assertEqual(egg_roll.validate_moves('a', 7), '')
         self.assertEqual(egg_roll.validate_moves('p', 9), '')
         self.assertEqual(egg_roll.validate_moves('@', 5645678), '')
