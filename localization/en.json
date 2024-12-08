@@ -1,5 +1,5 @@
 {
-  "language":  "en",
+  "language": "en",
 
   "welcome_message": "Welcome to Egg Roll!",
   "instructions_title": "Instructions",
@@ -9,29 +9,30 @@
     "3. Type 'restart' at any time to start over.",
     "4. Try to collect as many points as you can before your moves run out."
   ],
+  "exit": "Exiting the game...",
   "exit_goodbye": "Exiting the game. Goodbye!",
 
   "game_level": "Level",
   "game_level_name": "Level Name",
-  "game_max_moves":  "Max Moves",
-  "game_name":  "Name",
-  "game_points":  "Points: ",
+  "game_max_moves": "Max Moves",
+  "game_name": "Name",
+  "game_points": "Points: ",
   "game_previous_moves": "Previous moves: ",
   "game_remaining_moves": "Remaining moves: ",
-  "game_size":  "Size (Rows x Columns)",
-  "game_score":  "Score",
+  "game_size": "Size (Rows x Columns)",
+  "game_score": "Score",
 
   "leaderboard_title": "Leaderboard",
-  "level_selector_title":  "Choose a Level",
+  "level_selector_title": "Choose a Level",
 
   "menu_start": "Start Game",
   "menu_instructions": "Instructions",
   "menu_change_language": "Switch to Filipino (Tagalog)",
   "menu_credits": "Credits",
-  "menu_exit":  "Exit",
+  "menu_exit": "Exit",
 
   "error_invalid_choice": "Invalid choice ({choice}). Please try again.",
-  "error_no_leaderboard_found":  "No leaderboard found for Level:",
+  "error_no_leaderboard_found": "No leaderboard found for Level:",
   "error_no_levels_found": "No levels available. Please add level files (.in) to the directory.",
 
   "prompt_enter_level": "Enter level file name or number",

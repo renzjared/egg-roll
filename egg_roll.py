@@ -191,13 +191,15 @@ def read_level(filename):
     Raises:
         Exception: If the file cannot be opened or read.
     """
+    loc = load_localization()
     try:
         with open(filename, "r") as level:
             level = [line.strip('\n\r') for line in level]  # Remove newlines
             return level
     except Exception as e:
-        print(e)
-        return
+        print_format(f"Error: {e}", is_centered=True, args=["red"])
+        print_format(loc["exit"], is_centered=True, args=["light_yellow"])
+        sys.exit()
 
 
 def validate_moves(moveset, remaining_moves):
