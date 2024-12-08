@@ -220,11 +220,11 @@ def validate_moves(moveset, remaining_moves):
     more moves than can be accommodated within the remaining 
     available moves, the excess moves are truncated.
     """
-    if moveset.strip().lower() == 'restart':
+    if moveset.strip().lower() in ['restart', 'umulit']:
         return GameState.RESTART
-    if moveset.strip().lower() in ['menu', 'return']:
+    if moveset.strip().lower() in ['menu', 'return', 'bumalik']:
         return GameState.RETURN
-    if moveset.strip().lower() in ['exit', 'terminate']:
+    if moveset.strip().lower() in ['exit', 'terminate', 'isara']:
         return GameState.TERMINATE
     if moveset.strip().lower() in ['u', 'undo']:
         return "u"
