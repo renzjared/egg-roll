@@ -7,7 +7,10 @@
 A simple terminal-based game developed in Python for the course CS 11, University of the Philippines Diliman.
 
 <h2>Game Description</h2>
-Egg Roll is a 2D puzzle game where players tilt a grid to guide eggs into their nests. Navigate through walls, avoid frying pans, and use strategic moves to score points. Each level presents a unique challenge with a limited number of moves. The goal of the player is to score the most points.
+Egg Roll is a 2D puzzle game where players tilt a grid to guide eggs into their nests. Navigate through walls, avoid frying pans, and use strategic moves to score points. Each level presents a unique challenge with a limited number of moves. The goal of the player is to score the most points.<br/> 
+<br/>
+
+This implementation of **Egg Roll** includes bonus features, which are marked in this `README.md` file with **`[Bonus]`**.
 
 <h3>Blocks</h3>
 Throughout gameplay, players will encounter the following blocks:<br/>
@@ -46,12 +49,21 @@ The primary objective of the player is to earn the most points possible.<br/>
 cd path/to/extracted/egg-roll
 ```
  
+**IMPORTANT: The path above is a placeholder. Do replace it with your actual path to the directory.**<br/>
+
 *You may now proceed to the following step (Loading a Level)*
 
 <h2>How to Play</h2>
 <h3>Loading a Level</h3>
 
-To load a level, use the following terminal command: `python3.12 egg_roll.py [filename]`.
+To load a level, use the following terminal command:
+```sh
+python3.12 egg_roll_basic.py [filename]
+```
+or (with Bonus features)
+```sh
+python3.12 egg_roll.py [filename]
+```
 Make sure that the level file is located in the same directory as the Python file.<br/>
 
 **Example**<br/>
@@ -59,8 +71,14 @@ Make sure that the level file is located in the same directory as the Python fil
 To load `level1.in`, run:
 
 ```sh
+python3.12 egg_roll_basic.py level1.in
+```
+or (with Bonus features)
+```sh
 python3.12 egg_roll.py level1.in
 ```
+
+* **[Bonus]**: In the implementation of the game with **Bonus Features**, specifying a level filename argument is optional as doing so will simply open the game's main menu.
 
 <h3>Game Controls</h3>
 
@@ -72,14 +90,14 @@ The player can tilt the grid forward, backward, to the left, or to the right. Ea
  * `r` or `R`: Tilt the grid to the right.
  * `f` or `F`: Tilt the grid forwards (away from you).
  * `b` or `B`: Tilt the grid backwards (towards you).
+ * 
+Invalid moves are simply ignored by the program.<br/>
 
-Players also have the option to undo their previous move.<br/>
+**[Bonus]** Players also have the option to undo their previous move.<br/>
 
  * `u` or `U`: Undo the previous move.
 
- Invalid moves are simply ignored by the program.<br/>
-
-<h3>Game Commands</h3>
+<h3>[Bonus] Game Commands</h3>
 Players may also enter these commands at any point of the game.<br/>
 
  * `RESTART` - Restarts the current game level. All progress in the current level will be reset, allowing players to start over.
@@ -87,33 +105,36 @@ Players may also enter these commands at any point of the game.<br/>
  * `TERMINATE` - Ends the current game session and closes the game.
 
 <h2>How the Game Works</h2>
-This Egg Roll game is specifically designed to be modular and easy to understand. It consists of five (5) Python scripts (plus an additional script for tests). This also makes testing easier.<br>
+This Egg Roll game is specifically designed to be modular and easy to understand. It consists of six (6) Python scripts (plus an additional script for tests). This also makes testing easier.<br>
 
 <h3>Key Files</h3>
 
- * `egg_roll.py` - The main entry point of the game. This is the script that is launched by the user to start the game. It initializes the game, processes user inputs, updates the game state, and displays the results.<br/>
+ * `egg_roll_basic.py` - The main entry point of the game. This is the script that is launched by the user to start the game. It initializes the game, processes user inputs, updates the game state, and displays the results.<br/>
+ * **[Bonus]** `egg_roll.py` - Same as the above, but contains bonus feature implementations of the game (see **Bonus Points** section below).<br/>
  * `game_utils.py` - This script provides core game functionalities and algorithms, including functions for moving eggs, calculating egg positions, and checking game conditions.<br/>
- * `main_menu.py` - Manages the main menu screen, including the options displayed and handling user selections.<br/>
  * `terminal_utils.py` - Contains utility functions for handling terminal operations such as clearing the screen, getting terminal dimensions, and text formatting.<br/>
- * `leaderboard_utils.py` - Contains utility functions for reading and updating the leaderboards.<br/>
+ * **[Bonus]** `main_menu.py` - Manages the main menu screen, including the options displayed and handling user selections.<br/>
+ * **[Bonus]** `leaderboard_utils.py` - Contains utility functions for reading and updating the leaderboards.<br/>
 
 <h3>Game Flow</h3>
 
  `1.` **Initialization**<br/>
- The game starts when `egg_roll.py` is called by the user-player. There are two possible scenarios.<br/>
- * If a level filename argument (such as `level1.in`) is provided by the user, the level is launched.
- * If no level filename argument is provided, the game launches the main menu.
-   * From the main menu, the player can then launch a level by providing a level filename to play that particular level.
+ The game starts when `egg_roll_basic.py` or `egg_roll.py` is called by the user-player. This script first checks if there is a level filename argument thtat is passed by the player.<br/>
+ * If a level filename argument (such as `level1.in`) is provided by the user, the level is read by the function `read_level()` and launched.
+ * If no level filename argument is provided:
+   * [Basic]: An error message is displayed, prompting the player to enter a valid level filename argument. 
+   * **[Bonus]**: The main menu is displayed. From the main menu, the player can then launch a level by providing a level filename (or number) to play that particular level.
 
- `2.` **Main Game Loop**<br/>
- The game loop continues as long as there are eggs left in the grid **AND** there are still moves to be made.
+ `2.` **Main Game Loop**<br/> 
+ The main game loop is handled by the `main` function of `egg_roll_basic.py` (or `egg_roll.py`) Once the player has identified a level to play, the initial state of the level grid is displayed and the game loop begins. The game loop continues as long as there are eggs left in the grid **AND** there are still moves to be made.
  * At each loop, the game presents the current state of the level grid and prompts the player for moves.
- * `validate_moves(moveset, remaining_moves` sanitizes the player's input and removes excess moves.
+ * `validate_moves()` is a function that sanitizes the player's input and removes excess moves. It removes excess and invalid characters (such as emojis and numbers).
  * The `roll(grid, moves, max_moves)` function then processes each move *individually*, updates the grid and calculates the points gained or lost.
 
  `3.` **End of the Game**<br/>
- * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, the final state of the grid and final game statistics is presented to the player.
- * The player is then given the option to play again, return to the main menu, or exit the game.
+ * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, `display_final_state()` is run and the final game statistics is presented to the player.
+ * [Basic]: The game terminates immediately after displaying the final game statistics.
+ * **[Bonus]**: The player is then given the option to play again, return to the main menu, or exit the game.
 
 <h2>Running Tests</h2>
 
@@ -125,7 +146,7 @@ python3.12 test_egg_roll.py
 ```
 This command will run all the test cases defined in `test_egg_roll.py`. The `test_egg_roll.py` file contains unit tests for **Egg Roll**. These tests ensure that the various functions and components of the game work correctly and as intended.
 * Each function test in the test function is designed to be independent of each other, meaning that the failure of one function does not affect the other tests.
-* In case of failures, `unittest` will display the count of discovered failed cases, as well as details about the individual errors
+* In case of failures, `unittest` will display the count of discovered failed cases, as well as details about the individual errors.
 
 <h3>Thoroughness</h3>
 
@@ -137,19 +158,25 @@ This command will run all the test cases defined in `test_egg_roll.py`. The `tes
 New tests can be added to `test_egg_roll.py` by doing the following:
 
 `1.` **Definine a New Test Method**<br/>
+* Edit the `test_egg_roll.py` script using any text editor (such as **Sublime Text**) and write the new test methods.
+* For organization of code and convenience, it is encouraged that separate methods be written for tests that cover different scopes (example: testing the validation of user input and testing the points system).
 * IMPORTANT: The method name should begin with `test_` in order to be recognized by `unittest`. (Example: `test_roll`)
 
 `2.` **Use Assertions**<br/>
 * Assertions such as `assertEqual`, `assertTrue`, and `assertFalse` may be added inside the method to check the correctness and validity of the outputs.
+* Existing assertions in the `test_egg_roll.py` may be edited and templated for this purpose.
 * Please refer to the [official unittest documentation](https://docs.python.org/3/library/unittest.html) for more information.
 
 `3.` **Run the Tests**<br/>
 * The newly-added tests can be similarly run by executing the following command in the project directory:
-```bash
+```sh
 python3.12 test_egg_roll.py
 ```
 
 _Note:_ A separate `.py` file may also be created for the additional test cases. Simply do the steps above and run the new `.py` file instead of `test_egg_roll.py`.
+```sh
+python3.12 new_test_script.py
+```
 
 <h2>Bonus Points</h2>
 
@@ -175,6 +202,7 @@ _Note:_ A separate `.py` file may also be created for the additional test cases.
     * The Top 10 scores of each game level is stored in a JSON file. This allows for a persistent leaderboard, meaning that the high scores are still available for the next time the game is run.
  * **A Fancier User Interface**
     * The display interface of the game levels itself was also improved. For instance, the name of the game level is displayed on the header row. Horizontal dividers also separate different sections of the game screen.
+    * A separate function for creating tables (`terminal_utils/create_table`) was also developed to facilitate the creation of dynamic terminal-based tables.
  * **Formatted Text Displays**
     * Text coloring and styling is applied on various menus of the game using the [`termcolor`](https://github.com/termcolor/termcolor) library.
     * Some texts are also centered horizontally to enhance formatting and readability (makes use of terminal dimensions).
@@ -192,4 +220,3 @@ _Note:_ A separate `.py` file may also be created for the additional test cases.
  * **Tagalog Localization**
     * Egg-roll is now available in Filipino (Tagalog)!
     * The game language can be switched from English to Tagalog (and vice-versa) by selecting option `3` from the main menu.
-<br/>
