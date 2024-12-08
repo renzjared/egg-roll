@@ -90,7 +90,7 @@ The player can tilt the grid forward, backward, to the left, or to the right. Ea
  * `r` or `R`: Tilt the grid to the right.
  * `f` or `F`: Tilt the grid forwards (away from you).
  * `b` or `B`: Tilt the grid backwards (towards you).
- * 
+
 Invalid moves are simply ignored by the program.<br/>
 
 **[Bonus]** Players also have the option to undo their previous move.<br/>
@@ -208,9 +208,9 @@ python3.12 new_test_script.py
     * Some texts are also centered horizontally to enhance formatting and readability (makes use of terminal dimensions).
  * **Restart, Return, and Terminate Commands**
     * Players may enter these commands at any point of the game.
-    * `RESTART` - Restarts the current game level. All progress in the current level will be reset, allowing players to start over.
-    * `RETURN` - Exits the current game session and returns the player to the main menu.
-    * `TERMINATE` - Ends the current game session and closes the game.
+    * `RESTART` or `UMULIT` - Restarts the current game level. All progress in the current level will be reset, allowing players to start over.
+    * `RETURN` or `BUMALIK` - Exits the current game session and returns the player to the main menu.
+    * `TERMINATE` or `ISARA` - Ends the current game session and closes the game.
  * **Replayable Levels**
     * At the end of each level (when a player runs out of moves or eggs to move), an option to replay the level is presented.
     * Replaying the level restarts the current game level, allowing the player to start over.
