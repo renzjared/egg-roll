@@ -1,5 +1,5 @@
 """
-Copyright 2024 Renz Jared Rolle.
+Copyright 2025 Renz Jared Rolle.
 
 Licensed under the GNU General Public License, Version 3 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ from copy import deepcopy
 from random import choice, randint
 
 import egg_roll
+import egg_roll_basic
 import game_utils
 from egg_roll import GameState
 
@@ -219,6 +220,67 @@ class TestEggRoll(unittest.TestCase):
         self.assertEqual(egg_roll.validate_moves('a'*2**10, 10), '')
         self.assertEqual(egg_roll.validate_moves('a'*2**10, 2*10), '')
         self.assertEqual(egg_roll.validate_moves('lr'*(10**8), 4), 'lrlr')
+
+
+    def test_validate_moves_basic(self) -> None:
+        """
+        Tests the `validate_moves` function of the `egg_roll_basic` module.
+
+        This validates that single and multiple valid moves are accepted,
+        to which the function returns the valid moves up to the remaining moves.
+        Invalid characters are filtered out, and edge cases (such as
+        exponentially large inputs, and input of symbols) are handled gracefully.
+        """
+
+        self.assertEqual(egg_roll_basic.validate_moves('f', 5), 'f')
+        self.assertEqual(egg_roll_basic.validate_moves('Bl', 3), 'Bl')
+        self.assertEqual(egg_roll_basic.validate_moves('l', 5), 'l')
+        self.assertEqual(egg_roll_basic.validate_moves('R', 1), 'R')
+        self.assertEqual(egg_roll_basic.validate_moves('lllll', 5), 'lllll')
+
+        # Tests that valid moves equal to remaining moves are accepted.
+        self.assertEqual(egg_roll_basic.validate_moves('LRFB', 4), 'LRFB')
+        self.assertEqual(egg_roll_basic.validate_moves('lRrB', 4), 'lRrB')
+        self.assertEqual(egg_roll_basic.validate_moves('FB', 2), 'FB')
+        self.assertEqual(egg_roll_basic.validate_moves('Bb', 2), 'Bb')
+        self.assertEqual(egg_roll_basic.validate_moves('f', 1), 'f')
+
+        # Tests that an empty moveset returns an empty string.
+        self.assertEqual(egg_roll_basic.validate_moves('', 5), '')
+        self.assertEqual(egg_roll_basic.validate_moves('', 0), '')
+        self.assertEqual(egg_roll_basic.validate_moves('', 2048), '')
+        self.assertEqual(egg_roll_basic.validate_moves('', 31415926535), '')
+        self.assertEqual(egg_roll_basic.validate_moves('', -11235813), '')
+        self.assertEqual(egg_roll_basic.validate_moves('', -31415926535), '')
+        self.assertEqual(egg_roll_basic.validate_moves('', 2**50), '')
+        self.assertEqual(egg_roll_basic.validate_moves('', 2**10000), '')
+
+        # Tests that moves exceeding remaining moves are truncated.
+        self.assertEqual(egg_roll.validate_moves('llllll', 5), 'lllll')
+        self.assertEqual(egg_roll.validate_moves('FFFFF', 3), 'FFF')
+        self.assertEqual(egg_roll.validate_moves('FFFFF', 3), 'FFF')
+        self.assertEqual(egg_roll.validate_moves('llllll', 2), 'll')
+        self.assertEqual(egg_roll.validate_moves('FFFFF', 3), 'FFF')
+        self.assertEqual(egg_roll.validate_moves('l', 0), '')       # These cases *should* not occur
+        self.assertEqual(egg_roll.validate_moves('gfdsgsed694tseaAKfest4905wef0rtgw35%*@#$tskg5&@#$fdfgh', -3214124), '')
+
+        # Tests that invalid characters are filtered out.
+        self.assertEqual(egg_roll_basic.validate_moves('a', 7), '')
+        self.assertEqual(egg_roll_basic.validate_moves('p', 9), '')
+        self.assertEqual(egg_roll_basic.validate_moves('@', 5645678), '')
+        self.assertEqual(egg_roll_basic.validate_moves('#*U$@&*$*(&@%@%', 4), '')
+        self.assertEqual(egg_roll_basic.validate_moves('%L35w6r463%@apoe%', 4), 'Lr')
+        self.assertEqual(egg_roll_basic.validate_moves('asfhuiosedtwe', 99), 'f')
+        self.assertEqual(egg_roll_basic.validate_moves('9459156*23#$@B', 5), 'B')
+        self.assertEqual(egg_roll_basic.validate_moves('FFFFGHHH', 5), 'FFFF')
+        self.assertEqual(egg_roll_basic.validate_moves('LrFb!@#$%', 5), 'LrFb')
+        self.assertEqual(egg_roll_basic.validate_moves('LFRBxyz', 3), 'LFR')
+        self.assertEqual(egg_roll_basic.validate_moves('fgsdasdrhyRbadfadr@355345', 3), 'frR')
+        self.assertEqual(egg_roll_basic.validate_moves('lawsdas463@dasdasrds^#Q$adwda^#&&#slwadvh345253r', 4), 'lrlr')
+        self.assertEqual(egg_roll_basic.validate_moves('lawsdas463@dasdasrds^#Q$adwda^#&&#slwadvh345253r'*999, 4), 'lrlr')
+        self.assertEqual(egg_roll_basic.validate_moves('a'*2**10, 10), '')
+        self.assertEqual(egg_roll_basic.validate_moves('a'*2**10, 2*10), '')
+        self.assertEqual(egg_roll_basic.validate_moves('lr'*(10**8), 4), 'lrlr')
 
 
     def test_update_game_states(self) -> None:

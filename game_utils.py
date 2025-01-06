@@ -1,5 +1,5 @@
 """
-Copyright 2024 Renz Jared Rolle.
+Copyright 2025 Renz Jared Rolle.
 
 Licensed under the GNU General Public License, Version 3 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ limitations under the License.
 
 from copy import deepcopy
 from dataclasses import dataclass
-from sys import exit
+import sys
 
 from terminal_utils import print_format, load_localization
 
@@ -67,7 +67,11 @@ class Grid:
         level_states (list[tuple[EggRollGrid, int]]): A history of grid states and scores.
     """
 
-    def __init__(self, grid_data: tuple[list[str], int] | None = None,  filename: str = "Unnamed") -> None:
+    def __init__(
+            self,
+            grid_data: tuple[list[str], int] | None = None,
+            filename: str = "Unnamed"
+    ) -> None:
         """Initializes a Grid object with the given level file.
 
         Args:
@@ -109,11 +113,11 @@ class Grid:
         except FileNotFoundError as e:
             print_format(f"File not found: {e}", is_centered=True, args=["red"])
             print_format(str(loc["exit"]), is_centered=True, args=["light_yellow"])
-            exit()
+            sys.exit()
         except IOError as e:
             print_format(f"Error reading file: {e}", is_centered=True, args=["red"])
             print_format(str(loc["exit"]), is_centered=True, args=["light_yellow"])
-            exit()
+            sys.exit()
 
     def roll(self, moves: list[Move] | None = None) -> list[EggRollGrid]:
         """Simulate rolling eggs on the grid based on the provided move

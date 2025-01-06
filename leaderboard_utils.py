@@ -1,5 +1,5 @@
 """
-Copyright 2024 Renz Jared Rolle.
+Copyright 2025 Renz Jared Rolle.
 
 Licensed under the GNU General Public License, Version 3 (the "License");
 you may not use this file except in compliance with the License.

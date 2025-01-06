@@ -1,5 +1,5 @@
 """
-Copyright 2024 Renz Jared Rolle.
+Copyright 2025 Renz Jared Rolle.
 
 Licensed under the GNU General Public License, Version 3 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,20 +33,20 @@ EggRollLocalization = dict[str, str | list[str]]
 
 
 def clear_screen() -> None:
-    """Clear the terminal screen, if any"""
+    """Clears the terminal screen, if any"""
     if sys.stdout.isatty():
         clear_cmd = 'cls' if os.name == 'nt' else 'clear'
     subprocess.run([clear_cmd])
 
 
 def terminal_dimensions() -> tuple[int, int]:
-    """Return the terminal's current dimensions as (height, width)."""
+    """Returns the terminal's current dimensions as (height, width)."""
     terminal = os.get_terminal_size()
     return terminal.lines, terminal.columns
 
 
 def center_text(text: str, pad_right: bool = True) -> str:
-    """Center the given text horizontally within the terminal.
+    """Centers the given text horizontally within the terminal.
 
     Args:
         text (str): The text to be centered.
@@ -81,11 +81,11 @@ def color_text(
         text: str,
         args: Sequence[str | Sequence[str | None] | None]
 ) -> str:
-    """Apply color and styling to text using the termcolor library.
+    """Applies color and styling to text using the Termcolor library.
 
     Args:
         text (str): The text to format.
-        args (list): A list containing arguments for color and style (e.g., "green").
+        args Sequence[str | Sequence[str | None] | None]: A sequence of style arguments (e.g., "green").
 
     Returns:
         str: The colored and styled text.
@@ -125,12 +125,12 @@ def print_format(
         is_centered: bool = False,
         args: Sequence[str | Sequence[str | None] | None] | None = None
 ) -> None:
-    """Print text in a specified format, with optional centering and color.
+    """Prints text in a specified format, with optional centering and color.
 
     Args:
         text (str): The text to format and print.
         is_centered (bool): Whether to center the text horizontally.
-        args (list): A list containing arguments for color and style (e.g., "green").
+        args Sequence[str | Sequence[str | None] | None] | None: A sequence of style arguments (e.g., "green").
     """
     # Center the text horizontally first, if needed, because
     # using colors add ANSI escape sequences that offset the centering
@@ -151,9 +151,9 @@ def create_table(
     """Creates a formatted table from arbitrary data.
 
     Args:
-        data (list of lists): A 2D list representing the table data.
-        headers (list): A list of column headers.
-        title (str): Title of the table.
+        data (list[list[str | int]]): A 2D list representing the table data.
+        headers (list[str | list[str]] | None): A list of column headers (defaults to None).
+        title (str | None): The title of the table, displayed on the topmost row as a header.
 
     Returns:
         str: The formatted table as a string.
@@ -198,8 +198,20 @@ def create_table(
 
 
 def load_localization(language_code: str | None = None) -> EggRollLocalization:
-    """Loads the localization file."""
+    """
+    Loads the localization file based on the provided language code.
 
+    If no language code is provided, the function will read the set language
+    code from the "settings.json" file located in the "localization" directory.
+    The default language is "en" (English).
+
+    Args:
+        language_code (str | None): The language code for the localization file.
+                                    If None, the set language code will be used.
+    Returns:
+        EggRollLocalization: A dictionary containing the localization data.
+                             If the localization file structure is invalid, an empty dictionary is returned.
+    """ 
     if not language_code:
         settings_file = Path("localization") / "settings.json"
         with open(settings_file, "r", encoding="utf-8") as file:
