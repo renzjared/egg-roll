@@ -114,7 +114,7 @@ This Egg Roll game is specifically designed to be modular and easy to understand
  * `game_utils.py` - Provides core game functionalities and algorithms, including functions for moving eggs, calculating egg positions, and checking game conditions.<br/>
  * **[Bonus]** `terminal_utils.py` - Contains utility functions for handling terminal operations such as creating formattable tables, getting terminal dimensions, and text formatting.<br/>
  * **[Bonus]** `main_menu.py` - Manages the main menu screen, including the options displayed and handling user selections.<br/>
- * **[Bonus]** `leaderboard_utils.py` - Contains utility functions for reading and updating the leaderboards.<br/>
+ * `leaderboard_utils.py` - Contains utility functions for reading and updating the leaderboards.<br/>
 
 <h3>Game Flow</h3>
 
@@ -129,12 +129,19 @@ This Egg Roll game is specifically designed to be modular and easy to understand
  The main game loop is handled by the `main` function of `egg_roll_basic.py` (or `egg_roll.py`) Once the player has identified a level to play, the initial state of the level grid is displayed and the game loop begins. The game loop continues as long as there are eggs left in the grid **AND** there are still moves to be made.
  * At each loop, the game presents the current state of the level grid and prompts the player for moves.
  * `validate_moves()` is a function that sanitizes the player's input and removes excess moves. It removes excess and invalid characters (such as emojis and numbers).
- * The `roll(grid, moves, max_moves)` function then processes each move *individually*, updates the grid and calculates the points gained or lost.
+ * The `roll()` function then processes each move *individually*, updates the grid and calculates the points gained or lost. This function collects individual snapshots made from tilting the grid towards a particular direction.
+    * A 'snapshot' is a frame depicting the movement of eggs from one position to another. It is used to show to the player how the eggs move.
+ * `apply_move()` is responsible for tracking if points are made (or lost) for every snapshot, and more importantly, if the state of the grid has changed following an order to move.
+    * If the state of the grid did not change, then there must be a barrier (such as a wall) that is preventing the eggs from moving further. Hence, this marks the last frame or snapshot of a directional move. 
 
  `3.` **End of the Game**<br/>
  * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, `display_final_state()` is run and the final game statistics is presented to the player.
  * [Basic]: The game terminates immediately after displaying the final game statistics.
  * **[Bonus]**: The player is then given the option to play again, return to the main menu, or exit the game.
+
+ *  **Persistent Game Leaderboard**
+    * The player will be asked for their name after playing a game level. If their score is high enough, their score will be recorded in the leaderboard for that particular level.
+    * The Top 10 scores of each game level is stored in a JSON file. This allows for a persistent leaderboard, meaning that the high scores are still available for the next time the game is run.
 
 <h2>Running Tests</h2>
 
@@ -159,16 +166,18 @@ This command will run all the test cases defined in `test_egg_roll.py`. The `tes
 * `deepcopy` is used to create fresh copies of the grids before each test. This ensures that modifications in one test do not affect others.
 
 <h3>Thoroughness</h3>
+
 * The `test_egg_roll.py` file is structured in a way such that each method within it corresponds to a function to be tested.
 * Each function test in the test function is designed to be independent of each other, meaning that the failure of one function does not affect the other tests.
 * Each function test covers basic cases as well as edge cases.
+* Assertions are not simply made by stating individual assertions; instead, some tests use code to dynamically generate and test various scenarios. This approach enhances the thoroughness and flexibility of the tests.
 
 **Edge Cases**
 * The unit tests defined in `test_egg_roll.py` are meant to cover a wide variety of scenarios, accounting for user errors, invalid inputs, and other edge cases.
 * These tests account for cases such as 'invalid' game levels (in terms of game design), various collision mechanics (egg-to-egg, egg-to-wall, etc..), as well as irregular and invalid user inputs (such as very large number of input moves).
 * Exponentiation is used to express large values of numbers. This is used in instances wherein it may be beneficial to test a particularly large volume of input.
    * **Example 1:** In `test_validate_moves`, some input strings are multiplied to an exponentiated number in order to process a string with a very large number of characters.
-   * **Example 2:** In `test_find_eggs`, a grid with nothing but $2^15$ eggs was created. This ensures that `find_eggs` is able to find eggs even for grids (game levels) of bigger proportions.
+   * **Example 2:** In `test_find_eggs`, a grid with nothing but $2^{15}$ eggs was created. This ensures that `find_eggs` is able to find eggs even for grids (game levels) of bigger proportions.
 * Unconventional cases are also tested to ensure that they are handled properly, even if their occurence is unrealistic. This includes:
    * A negative number of moves performed
    * Moving an egg that is way outside of the grid's bounds
@@ -177,6 +186,9 @@ This command will run all the test cases defined in `test_egg_roll.py`. The `tes
 **Parametrization**
 * Some tests are parametrized to improve code readability and reduce the need for repetitive lines of tests.\
 * An example of this is the `test_calculate_points` method, which compiles the test cases as a list of tuples (`test_cases`) containing the parameters (`max_moves`, `moves`, `intended_result`).
+
+**Iterative Assertions**
+* As used in `test_set_position`, instead of writing individual assertions for each test case, the code is made to iterate over a list (of list) of test cases. This test method essentially attempts to manually set every position in a grid (game level) to an egg (then a filled nest) using the `set_position` function  and asserts that the appropriate changes have been made.
 
 **Random Testing**
 * Random testing is used to ensure the reliability of the functions used in **Egg Roll**. It ensures comprehensive coverage and are intended to cover unpredictable scenarios.
@@ -220,15 +232,13 @@ python3.12 new_test_script.py
    _"...He who would attain highly must sacrifice greatly."_ - James Allen<br/>
 
  * **Main Menu**
+    * [BONUS] A Unicode ASCII art of the text 'Egg Roll' is presented in the Main Menu. 
     * The game launches on the main menu screen if no filename argument is provided by the player.
     * From the main menu, the player can (1) start the game, (2) read game instructions, (3) change language, (4) see game credits, and (5) terminate the game session.
  * **Level Selector**
     * Upon selecting option `1` (Start Game) from the main menu, the level selector will be displayed.
     * In the main menu, the player is presented with a numbered table of game levels showing the level name, size (`rows` × `columns`), and maximum moves allowed.
     * The player can play a level by (any of the following): entering the number of the level or entering the name of the level
- * **Persistent Game Leaderboard**
-    * The player will be asked for their name after playing a game level. If their score is high enough, their score will be recorded in the leaderboard for that particular level.
-    * The Top 10 scores of each game level is stored in a JSON file. This allows for a persistent leaderboard, meaning that the high scores are still available for the next time the game is run.
  * **A Fancier User Interface**
     * The display interface of the game levels itself was also improved. For instance, the name of the game level is displayed on the header row. Horizontal dividers also separate different sections of the game screen.
     * A separate function for creating tables (`terminal_utils/create_table`) was also developed to facilitate the creation of dynamic terminal-based tables.

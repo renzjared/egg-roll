@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>game_utils &mdash; egg-roll 2.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=51b770b3"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            egg-roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">egg-roll</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">egg-roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">game_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for game_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright 2024 Renz Jared Rolle.</span>
+
+<span class="sd">Licensed under the GNU General Public License, Version 3 (the &quot;License&quot;);</span>
+<span class="sd">you may not use this file except in compliance with the License.</span>
+<span class="sd">You may obtain a copy of the License at</span>
+
+<span class="sd">    https://github.com/renzjared/egg-roll/blob/main/LICENSE</span>
+
+<span class="sd"> Unless required by applicable law or agreed to in writing, software</span>
+<span class="sd"> distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="sd"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="sd"> See the License for the specific language governing permissions and</span>
+<span class="sd"> limitations under the License.</span>
+
+<span class="sd"> @author Renz Jared Rolle &lt;rgrolle@up.edu.ph&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">exit</span>
+
+<span class="kn">from</span> <span class="nn">terminal_utils</span> <span class="kn">import</span> <span class="n">print_format</span><span class="p">,</span> <span class="n">load_localization</span>
+
+<span class="n">EggRollGrid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+<span class="n">EggRollLocalization</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+
+
+<div class="viewcode-block" id="Move">
+<a class="viewcode-back" href="../game_utils.html#game_utils.Move">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Move</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a player&#39;s move in the game.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        move_string (str):  A string indicating the direction of the move,</span>
+<span class="sd">                            valid options are &#39;f&#39;, &#39;b&#39;, &#39;l&#39;, &#39;r&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">move_string</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts the move direction to an arrow representation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: An arrow symbol representing the move direction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">arrows</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="s1">&#39;↑&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;↓&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="s1">&#39;←&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="s1">&#39;→&#39;</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">arrows</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">move_string</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+
+<div class="viewcode-block" id="Move.directions">
+<a class="viewcode-back" href="../game_utils.html#game_utils.Move.directions">[docs]</a>
+    <span class="k">def</span> <span class="nf">directions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts the move direction to a coordinate change.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[int, int]: A tuple representing row and column changes (dr, dc).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coord_change</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),}</span>
+        <span class="k">return</span> <span class="n">coord_change</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">move_string</span><span class="p">]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Grid">
+<a class="viewcode-back" href="../game_utils.html#game_utils.Grid">[docs]</a>
+<span class="k">class</span> <span class="nc">Grid</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the game grid and its operations.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The name of the level file.</span>
+<span class="sd">        level (list[str]): The level configuration read from the file.</span>
+<span class="sd">        max_moves (int): The maximum number of moves allowed for the level.</span>
+<span class="sd">        moves (list[Move]): The list of moves made by the player.</span>
+<span class="sd">        points (int): The player&#39;s current score.</span>
+<span class="sd">        level_state (EggRollGrid): The current state of the grid.</span>
+<span class="sd">        level_states (list[tuple[EggRollGrid, int]]): A history of grid states and scores.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes a Grid object with the given level file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): The path to the level file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_level</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_moves</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moves</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Move</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">:</span> <span class="n">EggRollGrid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level_states</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">EggRollGrid</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">copy_grid</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="Grid.read_level">
+<a class="viewcode-back" href="../game_utils.html#game_utils.Grid.read_level">[docs]</a>
+    <span class="k">def</span> <span class="nf">read_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reads the game level from a specified file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): The path to the level file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[str]: A list of strings representing the level configuration.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: If the file cannot be opened or read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loc</span><span class="p">:</span> <span class="n">EggRollLocalization</span> <span class="o">=</span> <span class="n">load_localization</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">game_level</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\r</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">]</span>  <span class="c1"># Remove newlines</span>
+                <span class="k">return</span> <span class="n">game_level</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">print_format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">is_centered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">])</span>
+            <span class="n">print_format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;exit&quot;</span><span class="p">]),</span> <span class="n">is_centered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;light_yellow&quot;</span><span class="p">])</span>
+            <span class="n">exit</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Grid.roll">
+<a class="viewcode-back" href="../game_utils.html#game_utils.Grid.roll">[docs]</a>
+    <span class="k">def</span> <span class="nf">roll</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EggRollGrid</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Simulate rolling eggs on the grid based on the provided move</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[EggRollGrid]: A list of snapshots of the grid after the move.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">move</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">moves</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>        <span class="c1"># The move to be performed is the last move added</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">move</span><span class="o">.</span><span class="n">directions</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">snapshots</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">])</span>  <span class="c1"># Capture the grid&#39;s state</span>
+            <span class="n">points_change</span><span class="p">,</span> <span class="n">moved</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_move</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">+=</span> <span class="n">points_change</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">moved</span><span class="p">:</span>
+                <span class="k">break</span>
+                
+        <span class="k">return</span> <span class="n">snapshots</span></div>
+
+
+<div class="viewcode-block" id="Grid.is_present">
+<a class="viewcode-back" href="../game_utils.html#game_utils.Grid.is_present">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_present</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if an element is present in the grid</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element (str): The element to search for in the grid.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the element is found, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">element</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grid.copy_grid">
+<a class="viewcode-back" href="../game_utils.html#game_utils.Grid.copy_grid">[docs]</a>
+    <span class="k">def</span> <span class="nf">copy_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EggRollGrid</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a deep copy of the current grid state.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EggRollGrid: A deep copy of the grid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets a specific position in the grid to a given value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pos (tuple[int, int]): The grid position to update (row, column).</span>
+<span class="sd">            value (str): The value to set at the given position.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_find_eggs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move_direction</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds all egg positions in the grid.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            move_direction (tuple[int, int] | None):    The direction of the previous move made.</span>
+<span class="sd">                                                        This is used to sort the eggs accordingly.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list[tuple[int, int]]: A list of egg positions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eggs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;🥚&#39;</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Sort eggs depending on move direction to maintain egg collision</span>
+        <span class="k">if</span> <span class="n">move_direction</span><span class="p">:</span>
+            <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="o">=</span> <span class="n">move_direction</span>
+            <span class="k">if</span> <span class="n">dr</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>    <span class="c1"># Forward</span>
+                <span class="n">eggs</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">dr</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>   <span class="c1"># Backward</span>
+                <span class="n">eggs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">dc</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>  <span class="c1"># Left</span>
+                <span class="n">eggs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">elif</span> <span class="n">dc</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>   <span class="c1"># Right</span>
+                <span class="n">eggs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">eggs</span>
+
+    <span class="k">def</span> <span class="nf">_clear_eggs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clears eggs from the grid by replacing them with grass.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">cell</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;🥚&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;🟩&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_apply_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Applies a single move to all eggs on the grid.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            direction (tuple[int, int]): The direction of the move (row_change, col_change).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[int, bool]: The change in points, and a bool representing whether any eggs moved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Basically, &#39;apply_move&#39; only records changes between snapshots</span>
+        <span class="c1"># while &#39;roll&#39; keeps track of all snapshots for every directional move</span>
+        <span class="n">eggs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_eggs</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+        <span class="n">current_points</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">moved</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_eggs</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">eggs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">current_points</span><span class="p">,</span> <span class="n">moved</span>
+
+        <span class="k">for</span> <span class="n">egg</span> <span class="ow">in</span> <span class="n">eggs</span><span class="p">:</span>
+            <span class="n">outcome</span><span class="p">,</span> <span class="n">new_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_new_position</span><span class="p">(</span><span class="n">egg</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">outcome</span> <span class="o">==</span> <span class="s2">&quot;move&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_set_position</span><span class="p">(</span><span class="n">new_pos</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">)</span>
+                <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">outcome</span> <span class="o">==</span> <span class="s2">&quot;fill_nest&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_set_position</span><span class="p">(</span><span class="n">new_pos</span><span class="p">,</span> <span class="s1">&#39;🪺&#39;</span><span class="p">)</span>
+                <span class="n">current_points</span> <span class="o">+=</span> <span class="n">calculate_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_moves</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">moves</span><span class="p">)</span>
+                <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">outcome</span> <span class="o">==</span> <span class="s2">&quot;fry&quot;</span><span class="p">:</span>
+                <span class="n">current_points</span> <span class="o">-=</span> <span class="mi">5</span>
+                <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">outcome</span> <span class="o">==</span> <span class="s2">&quot;reset&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_set_position</span><span class="p">(</span><span class="n">egg</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">current_points</span><span class="p">,</span> <span class="n">moved</span>
+
+    <span class="k">def</span> <span class="nf">_calculate_new_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the outcome of moving an egg in a specific direction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pos (tuple[int, int]): A tuple representing the position of the egg to be moved (row, column).</span>
+<span class="sd">            direction (tuple[int, int]): A tuple representing the change in coordinates (row_change, col_change).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[str, tuple[int, int]]: The outcome of the movement, and the new position (row, column).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="o">=</span> <span class="n">direction</span>
+        <span class="n">new_r</span><span class="p">,</span> <span class="n">new_c</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
+
+        <span class="c1"># Check grid boundaries</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">new_r</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">new_c</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+            <span class="k">return</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="n">pos</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_state</span><span class="p">[</span><span class="n">new_r</span><span class="p">][</span><span class="n">new_c</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s1">&#39;🪹&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;fill_nest&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">new_r</span><span class="p">,</span> <span class="n">new_c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s1">&#39;🟩&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;move&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">new_r</span><span class="p">,</span> <span class="n">new_c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s1">&#39;🍳&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;fry&quot;</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🧱&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="n">pos</span>
+        <span class="k">return</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="n">pos</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_points">
+<a class="viewcode-back" href="../game_utils.html#game_utils.calculate_points">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_points</span><span class="p">(</span><span class="n">max_moves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">moves</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Move</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates points based on moves left and other conditions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        max_moves (int): The maximum number of moves allowed for the level.</span>
+<span class="sd">        moves (list[Move]): The list of moves made by the player.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The points scored by the player.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">remaining_moves</span> <span class="o">=</span> <span class="n">max_moves</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">moves</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">return</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">remaining_moves</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Renz Jared G. Rolle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

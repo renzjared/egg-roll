@@ -7,13 +7,13 @@ You may obtain a copy of the License at
 
     https://github.com/renzjared/egg-roll/blob/main/LICENSE
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
- @author Renz Jared Rolle <rgrolle@up.edu.ph>
+@author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
 import json
@@ -22,27 +22,30 @@ import subprocess
 import sys
 
 from pathlib import Path
+from typing import Literal, Sequence, cast
 
 # Extend system path to access termcolor folder
 # Termcolor is installed locally due to importing issues (may be fixed later)
 sys.path.append("termcolor")
-from termcolor import colored
+from termcolor import colored, COLORS, HIGHLIGHTS, ATTRIBUTES
+
+EggRollLocalization = dict[str, str | list[str]]
 
 
-def clear_screen():
+def clear_screen() -> None:
     """Clear the terminal screen, if any"""
     if sys.stdout.isatty():
         clear_cmd = 'cls' if os.name == 'nt' else 'clear'
     subprocess.run([clear_cmd])
 
 
-def terminal_dimensions():
+def terminal_dimensions() -> tuple[int, int]:
     """Return the terminal's current dimensions as (height, width)."""
     terminal = os.get_terminal_size()
     return terminal.lines, terminal.columns
 
 
-def center_text(text, pad_right = True):
+def center_text(text: str, pad_right: bool = True) -> str:
     """Center the given text horizontally within the terminal.
 
     Args:
@@ -53,7 +56,6 @@ def center_text(text, pad_right = True):
         str: The horizontally-centered text.
     """
     _, terminal_width = terminal_dimensions()
-
 
     # Check if the text is purely composed of these emojis
     # Emojis are twice as wide as alphanumeric characters.
@@ -72,10 +74,13 @@ def center_text(text, pad_right = True):
 
     # Apply padding to each line of the text
     return '\n'.join(
-        f"{padding}{line}{rpadding}" for line in text.splitlines()) 
+        f"{padding}{line}{rpadding}" for line in text.splitlines())
 
 
-def color_text(text, args):
+def color_text(
+        text: str,
+        args: Sequence[str | Sequence[str | None] | None]
+) -> str:
     """Apply color and styling to text using the termcolor library.
 
     Args:
@@ -85,10 +90,41 @@ def color_text(text, args):
     Returns:
         str: The colored and styled text.
     """
-    return colored(text, *args)
+    # Cast values to the appropriate Literal types (for mypy strict type-checking)
+    color = cast(
+        Literal[
+            "black", "grey", "red", "green", "yellow", "blue", "magenta", "cyan",
+            "light_grey", "dark_grey", "light_red", "light_green", "light_yellow",
+            "light_blue", "light_magenta", "light_cyan", "white"
+        ] | None,
+        next((arg for arg in args if arg in COLORS), None)
+    )
+    highlight = cast(
+        Literal[
+            "on_black", "on_grey", "on_red", "on_green", "on_yellow", "on_blue",
+            "on_magenta", "on_cyan", "on_light_grey", "on_dark_grey", "on_light_red",
+            "on_light_green", "on_light_yellow", "on_light_blue", "on_light_magenta",
+            "on_light_cyan", "on_white"
+        ] | None,
+        next((arg for arg in args if arg in HIGHLIGHTS), None)
+    )
+    attrs = []
+    if len(args) > 2 and args[2]:
+        attrs = [
+            cast(
+                Literal["bold", "dark", "underline", "blink", "reverse", "concealed", "strike"],
+                arg
+            )
+            for arg in args[2] if arg in ATTRIBUTES
+        ]
+    return colored(text, color, highlight, attrs)
 
 
-def print_format(text, is_centered=False, args=None):
+def print_format(
+        text: str,
+        is_centered: bool = False,
+        args: Sequence[str | Sequence[str | None] | None] | None = None
+) -> None:
     """Print text in a specified format, with optional centering and color.
 
     Args:
@@ -107,7 +143,11 @@ def print_format(text, is_centered=False, args=None):
     print(text)
 
 
-def create_table(data, headers=None, title=None):
+def create_table(
+        data: list[list[str | int]],
+        headers: list[str | list[str]] | None = None,
+        title: str | None = None
+) -> str:
     """Creates a formatted table from arbitrary data.
 
     Args:
@@ -157,14 +197,17 @@ def create_table(data, headers=None, title=None):
     return centered_table
 
 
-def load_localization(language_code=None):
+def load_localization(language_code: str | None = None) -> EggRollLocalization:
     """Loads the localization file."""
 
     if not language_code:
         settings_file = Path("localization") / "settings.json"
-        with open(settings_file, "r") as file:
+        with open(settings_file, "r", encoding="utf-8") as file:
             language_code = json.load(file)["language"]
 
     localization_file = Path("localization") / f"{language_code}.json"
-    with open(localization_file, "r") as file:
-        return json.load(file)
+    with open(localization_file, "r", encoding="utf-8") as file:
+        locale = json.load(file)
+        if isinstance(locale, dict):
+            return locale
+        return {}  # Return an empty dictionary if the structure is invalid

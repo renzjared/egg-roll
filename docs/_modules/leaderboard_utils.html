@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>leaderboard_utils &mdash; egg-roll 2.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=51b770b3"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            egg-roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">egg-roll</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">egg-roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">leaderboard_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for leaderboard_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright 2024 Renz Jared Rolle.</span>
+
+<span class="sd">Licensed under the GNU General Public License, Version 3 (the &quot;License&quot;);</span>
+<span class="sd">you may not use this file except in compliance with the License.</span>
+<span class="sd">You may obtain a copy of the License at</span>
+
+<span class="sd">    https://github.com/renzjared/egg-roll/blob/main/LICENSE</span>
+
+<span class="sd"> Unless required by applicable law or agreed to in writing, software</span>
+<span class="sd"> distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="sd"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="sd"> See the License for the specific language governing permissions and</span>
+<span class="sd"> limitations under the License.</span>
+
+<span class="sd"> @author Renz Jared Rolle &lt;rgrolle@up.edu.ph&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">terminal_utils</span> <span class="kn">import</span> <span class="n">clear_screen</span><span class="p">,</span> <span class="n">print_format</span><span class="p">,</span> <span class="n">terminal_dimensions</span><span class="p">,</span> <span class="n">create_table</span><span class="p">,</span> <span class="n">load_localization</span>
+
+<span class="n">LEADERBOARD_FILE</span> <span class="o">=</span> <span class="s2">&quot;leaderboard.json&quot;</span>
+<span class="n">EggRollLeaderboards</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]]]</span>
+<span class="n">EggRollLocalization</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+
+
+<div class="viewcode-block" id="Leaderboard">
+<a class="viewcode-back" href="../leaderboard_utils.html#leaderboard_utils.Leaderboard">[docs]</a>
+<span class="k">class</span> <span class="nc">Leaderboard</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to manage and display game leaderboards.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        filename (str): A JSON file where all game leaderboards are stored.</span>
+<span class="sd">        level_name (str): The name of the game level associated with the leaderboard.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the Leaderboard instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            level_name (str): The name of the game level.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">LEADERBOARD_FILE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level_name</span> <span class="o">=</span> <span class="n">level_name</span>
+
+<div class="viewcode-block" id="Leaderboard.update">
+<a class="viewcode-back" href="../leaderboard_utils.html#leaderboard_utils.Leaderboard.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">player_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the leaderboard with a new score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            player_name (str): The name of the player to be added.</span>
+<span class="sd">            score (int): The player&#39;s score.</span>
+
+<span class="sd">        The leaderboard is sorted to only keep the top 10 scores.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">leaderboards</span> <span class="o">=</span> <span class="n">read_leaderboards</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">leaderboards</span><span class="p">:</span>   <span class="c1"># Initialize JSON Object if level is not yet stored</span>
+            <span class="n">leaderboards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">level_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">leaderboards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">level_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">player_name</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">})</span>
+        <span class="n">leaderboards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">level_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">leaderboards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">level_name</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>  <span class="c1"># Keep top 10 scores</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write</span><span class="p">(</span><span class="n">leaderboards</span><span class="p">)</span> </div>
+
+
+<div class="viewcode-block" id="Leaderboard.display">
+<a class="viewcode-back" href="../leaderboard_utils.html#leaderboard_utils.Leaderboard.display">[docs]</a>
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Displays the leaderboard for the current game level.</span>
+
+<span class="sd">        If no leaderboard exists for the current level, an error message is shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loc</span><span class="p">:</span> <span class="n">EggRollLocalization</span> <span class="o">=</span> <span class="n">load_localization</span><span class="p">()</span>
+        <span class="n">leaderboards</span><span class="p">:</span> <span class="n">EggRollLeaderboards</span> <span class="o">=</span> <span class="n">read_leaderboards</span><span class="p">()</span>
+      
+        <span class="n">clear_screen</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_name</span> <span class="ow">in</span> <span class="n">leaderboards</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">entry</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">leaderboards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">level_name</span><span class="p">])]</span>
+            <span class="n">headers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="p">[</span><span class="s1">&#39;game_name&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="p">[</span><span class="s1">&#39;game_score&#39;</span><span class="p">]]</span>
+            <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;leaderboard_title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">level_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">table</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">create_table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">()</span>         <span class="c1"># Blank line to separate table</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">print_format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;error_no_leaderboard_found&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">level_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">is_centered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">])</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaderboards</span><span class="p">:</span> <span class="n">EggRollLeaderboards</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Writes the leaderboard to the JSON file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            leaderboards (EggRollLeaderboards): A dictionary containing leaderboard data for all game levels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">LEADERBOARD_FILE</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">leaderboards</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_leaderboards">
+<a class="viewcode-back" href="../leaderboard_utils.html#leaderboard_utils.read_leaderboards">[docs]</a>
+<span class="k">def</span> <span class="nf">read_leaderboards</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">EggRollLeaderboards</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reads the leaderboard from the JSON file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        EggRollLeaderboards: A dictionary containing leaderboard data for all game levels,</span>
+<span class="sd">                             or an empty dictionary if the file does not exist or is invalid.</span>
+
+<span class="sd">    If the file exists but does not have a valid structure, an empty dictionary is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">LEADERBOARD_FILE</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">LEADERBOARD_FILE</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">leaderboard</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span> 
+                <span class="k">return</span> <span class="n">leaderboard</span> 
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">{}</span>  <span class="c1"># Return an empty dictionary if the structure is invalid</span>
+    <span class="k">return</span> <span class="p">{}</span> <span class="c1"># File does not exist</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Renz Jared G. Rolle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

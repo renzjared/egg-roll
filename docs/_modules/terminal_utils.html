@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>terminal_utils &mdash; egg-roll 2.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=51b770b3"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            egg-roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">egg-roll</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">egg-roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">terminal_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for terminal_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright 2024 Renz Jared Rolle.</span>
+
+<span class="sd">Licensed under the GNU General Public License, Version 3 (the &quot;License&quot;);</span>
+<span class="sd">you may not use this file except in compliance with the License.</span>
+<span class="sd">You may obtain a copy of the License at</span>
+
+<span class="sd">    https://github.com/renzjared/egg-roll/blob/main/LICENSE</span>
+
+<span class="sd"> Unless required by applicable law or agreed to in writing, software</span>
+<span class="sd"> distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="sd"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="sd"> See the License for the specific language governing permissions and</span>
+<span class="sd"> limitations under the License.</span>
+
+<span class="sd"> @author Renz Jared Rolle &lt;rgrolle@up.edu.ph&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="c1"># Extend system path to access termcolor folder</span>
+<span class="c1"># Termcolor is installed locally due to importing issues (may be fixed later)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;termcolor&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">termcolor</span> <span class="kn">import</span> <span class="n">colored</span><span class="p">,</span> <span class="n">COLORS</span><span class="p">,</span> <span class="n">HIGHLIGHTS</span><span class="p">,</span> <span class="n">ATTRIBUTES</span>
+
+<span class="n">EggRollLocalization</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+
+
+<div class="viewcode-block" id="clear_screen">
+<a class="viewcode-back" href="../terminal_utils.html#terminal_utils.clear_screen">[docs]</a>
+<span class="k">def</span> <span class="nf">clear_screen</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clear the terminal screen, if any&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">isatty</span><span class="p">():</span>
+        <span class="n">clear_cmd</span> <span class="o">=</span> <span class="s1">&#39;cls&#39;</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span> <span class="k">else</span> <span class="s1">&#39;clear&#39;</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">clear_cmd</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="terminal_dimensions">
+<a class="viewcode-back" href="../terminal_utils.html#terminal_utils.terminal_dimensions">[docs]</a>
+<span class="k">def</span> <span class="nf">terminal_dimensions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the terminal&#39;s current dimensions as (height, width).&quot;&quot;&quot;</span>
+    <span class="n">terminal</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">terminal</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="n">terminal</span><span class="o">.</span><span class="n">columns</span></div>
+
+
+
+<div class="viewcode-block" id="center_text">
+<a class="viewcode-back" href="../terminal_utils.html#terminal_utils.center_text">[docs]</a>
+<span class="k">def</span> <span class="nf">center_text</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pad_right</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Center the given text horizontally within the terminal.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The text to be centered.</span>
+<span class="sd">        pad_right (bool): Whether to pad on both sides or only on the left.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The horizontally-centered text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">terminal_width</span> <span class="o">=</span> <span class="n">terminal_dimensions</span><span class="p">()</span>
+
+    <span class="c1"># Check if the text is purely composed of these emojis</span>
+    <span class="c1"># Emojis are twice as wide as alphanumeric characters.</span>
+    <span class="c1"># This is considered so that emojis are centerede properly.</span>
+    <span class="n">emojis</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;🧱&quot;</span><span class="p">,</span><span class="s2">&quot;🥚&quot;</span><span class="p">,</span><span class="s2">&quot;🟩&quot;</span><span class="p">,</span><span class="s2">&quot;🪹&quot;</span><span class="p">,</span><span class="s2">&quot;🪺&quot;</span><span class="p">,</span><span class="s2">&quot;🍳&quot;</span><span class="p">}</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">emojis</span><span class="p">):</span>
+        <span class="n">text_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+        <span class="n">text_width</span> <span class="o">*=</span> <span class="mi">2</span> <span class="c1"># Doubled to account for emoji width</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">text_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+
+    <span class="n">padding_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">terminal_width</span> <span class="o">-</span> <span class="n">text_width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">padding_width</span>
+    <span class="n">rpadding</span> <span class="o">=</span> <span class="n">padding</span> <span class="k">if</span> <span class="n">pad_right</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span> <span class="c1"># Add padding to the right, if needed</span>
+
+    <span class="c1"># Apply padding to each line of the text</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">padding</span><span class="si">}{</span><span class="n">line</span><span class="si">}{</span><span class="n">rpadding</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span> </div>
+
+
+
+<div class="viewcode-block" id="color_text">
+<a class="viewcode-back" href="../terminal_utils.html#terminal_utils.color_text">[docs]</a>
+<span class="k">def</span> <span class="nf">color_text</span><span class="p">(</span>
+        <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply color and styling to text using the termcolor library.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The text to format.</span>
+<span class="sd">        args (list): A list containing arguments for color and style (e.g., &quot;green&quot;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The colored and styled text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Cast values to the appropriate Literal types (for mypy strict type-checking)</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+        <span class="n">Literal</span><span class="p">[</span>
+            <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;magenta&quot;</span><span class="p">,</span> <span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;light_grey&quot;</span><span class="p">,</span> <span class="s2">&quot;dark_grey&quot;</span><span class="p">,</span> <span class="s2">&quot;light_red&quot;</span><span class="p">,</span> <span class="s2">&quot;light_green&quot;</span><span class="p">,</span> <span class="s2">&quot;light_yellow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;light_blue&quot;</span><span class="p">,</span> <span class="s2">&quot;light_magenta&quot;</span><span class="p">,</span> <span class="s2">&quot;light_cyan&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span>
+        <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">next</span><span class="p">((</span><span class="n">arg</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">COLORS</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">highlight</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+        <span class="n">Literal</span><span class="p">[</span>
+            <span class="s2">&quot;on_black&quot;</span><span class="p">,</span> <span class="s2">&quot;on_grey&quot;</span><span class="p">,</span> <span class="s2">&quot;on_red&quot;</span><span class="p">,</span> <span class="s2">&quot;on_green&quot;</span><span class="p">,</span> <span class="s2">&quot;on_yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;on_blue&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;on_magenta&quot;</span><span class="p">,</span> <span class="s2">&quot;on_cyan&quot;</span><span class="p">,</span> <span class="s2">&quot;on_light_grey&quot;</span><span class="p">,</span> <span class="s2">&quot;on_dark_grey&quot;</span><span class="p">,</span> <span class="s2">&quot;on_light_red&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;on_light_green&quot;</span><span class="p">,</span> <span class="s2">&quot;on_light_yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;on_light_blue&quot;</span><span class="p">,</span> <span class="s2">&quot;on_light_magenta&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;on_light_cyan&quot;</span><span class="p">,</span> <span class="s2">&quot;on_white&quot;</span>
+        <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">next</span><span class="p">((</span><span class="n">arg</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">HIGHLIGHTS</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">cast</span><span class="p">(</span>
+                <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="s2">&quot;dark&quot;</span><span class="p">,</span> <span class="s2">&quot;underline&quot;</span><span class="p">,</span> <span class="s2">&quot;blink&quot;</span><span class="p">,</span> <span class="s2">&quot;reverse&quot;</span><span class="p">,</span> <span class="s2">&quot;concealed&quot;</span><span class="p">,</span> <span class="s2">&quot;strike&quot;</span><span class="p">],</span>
+                <span class="n">arg</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">ATTRIBUTES</span>
+        <span class="p">]</span>
+    <span class="k">return</span> <span class="n">colored</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">highlight</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="print_format">
+<a class="viewcode-back" href="../terminal_utils.html#terminal_utils.print_format">[docs]</a>
+<span class="k">def</span> <span class="nf">print_format</span><span class="p">(</span>
+        <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">is_centered</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print text in a specified format, with optional centering and color.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The text to format and print.</span>
+<span class="sd">        is_centered (bool): Whether to center the text horizontally.</span>
+<span class="sd">        args (list): A list containing arguments for color and style (e.g., &quot;green&quot;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Center the text horizontally first, if needed, because</span>
+    <span class="c1"># using colors add ANSI escape sequences that offset the centering</span>
+    <span class="k">if</span> <span class="n">is_centered</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">center_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># Apply color formatting if arguments are provided</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">color_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_table">
+<a class="viewcode-back" href="../terminal_utils.html#terminal_utils.create_table">[docs]</a>
+<span class="k">def</span> <span class="nf">create_table</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]],</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a formatted table from arbitrary data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (list of lists): A 2D list representing the table data.</span>
+<span class="sd">        headers (list): A list of column headers.</span>
+<span class="sd">        title (str): Title of the table.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The formatted table as a string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">terminal_dimensions</span><span class="p">()</span>
+    <span class="n">col_widths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">col</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">headers</span><span class="p">:</span>
+        <span class="n">col_widths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">headers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col_widths</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">headers</span><span class="p">))]</span>
+
+    <span class="n">col_formats</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2">:&lt;</span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">col_widths</span><span class="p">]</span>        <span class="c1"># Save widths of table columns</span>
+    <span class="n">header_sep</span> <span class="o">=</span> <span class="s2">&quot;┼&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;─&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">col_widths</span><span class="p">)</span>
+    <span class="n">top_sep</span> <span class="o">=</span> <span class="s2">&quot;┬&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;─&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">col_widths</span><span class="p">)</span>
+
+    <span class="n">table_lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">headers</span><span class="p">:</span>
+        <span class="n">header_line</span> <span class="o">=</span> <span class="s2">&quot;│ &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hdr</span><span class="p">)</span> <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">hdr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">col_formats</span><span class="p">,</span> <span class="n">headers</span><span class="p">))</span>
+        <span class="n">table_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;┌</span><span class="si">{</span><span class="n">top_sep</span><span class="si">}</span><span class="s2">┐&quot;</span><span class="p">)</span>
+        <span class="n">table_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;│ </span><span class="si">{</span><span class="n">header_line</span><span class="si">}</span><span class="s2">│&quot;</span><span class="p">)</span>
+        <span class="n">table_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;├</span><span class="si">{</span><span class="n">header_sep</span><span class="si">}</span><span class="s2">┤&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">row_line</span> <span class="o">=</span> <span class="s2">&quot;│ &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">col_formats</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+        <span class="n">table_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;│ </span><span class="si">{</span><span class="n">row_line</span><span class="si">}</span><span class="s2">│&quot;</span><span class="p">)</span>
+
+    <span class="n">table_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;└</span><span class="si">{</span><span class="s1">&#39;┴&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;─&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">col_widths</span><span class="p">)</span><span class="si">}</span><span class="s2">┘&quot;</span><span class="p">)</span>
+    <span class="n">centered_table</span> <span class="o">=</span> <span class="n">center_text</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">table_lines</span><span class="p">))</span>
+
+    <span class="c1"># Add title lines to the centered table last.</span>
+    <span class="c1"># This allows the table below to be displayed in the center.</span>
+    <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
+        <span class="n">title_lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">div</span> <span class="o">=</span> <span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="n">cols</span>   <span class="c1"># horizontal divider line</span>
+        <span class="n">title_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+        <span class="n">title_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">color_text</span><span class="p">(</span><span class="n">center_text</span><span class="p">(</span><span class="n">title</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;light_yellow&#39;</span><span class="p">]))</span>
+        <span class="n">title_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+        <span class="n">title_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="n">titled_table</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">title_lines</span><span class="p">)</span> <span class="o">+</span> <span class="n">centered_table</span>
+        <span class="k">return</span> <span class="n">titled_table</span>
+    <span class="k">return</span> <span class="n">centered_table</span></div>
+
+
+
+<div class="viewcode-block" id="load_localization">
+<a class="viewcode-back" href="../terminal_utils.html#terminal_utils.load_localization">[docs]</a>
+<span class="k">def</span> <span class="nf">load_localization</span><span class="p">(</span><span class="n">language_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EggRollLocalization</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads the localization file.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">language_code</span><span class="p">:</span>
+        <span class="n">settings_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;localization&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;settings.json&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">settings_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">language_code</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="s2">&quot;language&quot;</span><span class="p">]</span>
+
+    <span class="n">localization_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;localization&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">language_code</span><span class="si">}</span><span class="s2">.json&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">localization_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">locale</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">locale</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span> 
+            <span class="k">return</span> <span class="n">locale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span>  <span class="c1"># Return an empty dictionary if the structure is invalid</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Renz Jared G. Rolle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

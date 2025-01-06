@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>egg_roll module &mdash; egg-roll 2.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=51b770b3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="egg_roll_basic module" href="egg_roll_basic.html" />
+    <link rel="prev" title="egg-roll" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            egg-roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">egg-roll</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">egg_roll module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.GameState"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#egg_roll.GameState.RESTART"><code class="docutils literal notranslate"><span class="pre">GameState.RESTART</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#egg_roll.GameState.RETURN"><code class="docutils literal notranslate"><span class="pre">GameState.RETURN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#egg_roll.GameState.TERMINATE"><code class="docutils literal notranslate"><span class="pre">GameState.TERMINATE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.display_grid"><code class="docutils literal notranslate"><span class="pre">display_grid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.display_stats"><code class="docutils literal notranslate"><span class="pre">display_stats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.take_moves"><code class="docutils literal notranslate"><span class="pre">take_moves()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.undo_last_move"><code class="docutils literal notranslate"><span class="pre">undo_last_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.update_game"><code class="docutils literal notranslate"><span class="pre">update_game()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll.validate_moves"><code class="docutils literal notranslate"><span class="pre">validate_moves()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="egg_roll_basic.html">egg_roll_basic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="game_utils.html">game_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="leaderboard_utils.html">leaderboard_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main_menu.html">main_menu module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="termcolor.html">termcolor package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="terminal_utils.html">terminal_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_egg_roll.html">test_egg_roll module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">egg-roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">egg-roll</a></li>
+      <li class="breadcrumb-item active">egg_roll module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/egg_roll.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-egg_roll">
+<span id="egg-roll-module"></span><h1>egg_roll module<a class="headerlink" href="#module-egg_roll" title="Link to this heading"></a></h1>
+<p>Copyright 2024 Renz Jared Rolle.</p>
+<p>Licensed under the GNU General Public License, Version 3 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/renzjared/egg-roll/blob/main/LICENSE">https://github.com/renzjared/egg-roll/blob/main/LICENSE</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p>&#64;author Renz Jared Rolle &lt;<a class="reference external" href="mailto:rgrolle&#37;&#52;&#48;up&#46;edu&#46;ph">rgrolle<span>&#64;</span>up<span>&#46;</span>edu<span>&#46;</span>ph</a>&gt;</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="egg_roll.GameState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">GameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/egg_roll.html#GameState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.GameState" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enumeration for special game commands that control game flow.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>RESTART (str): Command to restart the game.
+RETURN (str): Command to return to the main menu.
+TERMINATE (str): Command to terminate the game session.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="egg_roll.GameState.RESTART">
+<span class="sig-name descname"><span class="pre">RESTART</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'restart'</span></em><a class="headerlink" href="#egg_roll.GameState.RESTART" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="egg_roll.GameState.RETURN">
+<span class="sig-name descname"><span class="pre">RETURN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'return'</span></em><a class="headerlink" href="#egg_roll.GameState.RETURN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="egg_roll.GameState.TERMINATE">
+<span class="sig-name descname"><span class="pre">TERMINATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'terminate'</span></em><a class="headerlink" href="#egg_roll.GameState.TERMINATE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll.display_grid">
+<span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">display_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/egg_roll.html#display_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.display_grid" title="Link to this definition"></a></dt>
+<dd><p>Displays the current state of the game grid on the terminal.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>level_state (list[list[str]]): A 2D list representing the current state of the grid.
+filename (str): The name of the level file being played.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll.display_stats">
+<span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">display_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><span class="pre">Grid</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_final</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/egg_roll.html#display_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.display_stats" title="Link to this definition"></a></dt>
+<dd><p>Displays the current game statistics.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>game (Grid): The current game grid object.
+is_final (bool): Indicates if the game has ended.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll.main">
+<span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/egg_roll.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.main" title="Link to this definition"></a></dt>
+<dd><p>Main function to run the egg roll game.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): The path to the file containing the game level.</p>
+</dd>
+</dl>
+<p>The function reads the level file, processes player moves,
+updates the game state, and displays the results until the maximum
+moves are reached or when there are no more eggs to roll.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll.take_moves">
+<span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">take_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState"><span class="pre">GameState</span></a></span></span><a class="reference internal" href="_modules/egg_roll.html#take_moves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.take_moves" title="Link to this definition"></a></dt>
+<dd><p>Prompts the player for moves or commands and validates the input.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>remaining_moves (int): The remaining number of moves allowed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>str | GameState: Either a string of valid moves or a game state command.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll.undo_last_move">
+<span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">undo_last_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><span class="pre">Grid</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/egg_roll.html#undo_last_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.undo_last_move" title="Link to this definition"></a></dt>
+<dd><p>Undoes the last move made by the player.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>game (Grid): The current game grid object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll.update_game">
+<span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">update_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamestate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState"><span class="pre">GameState</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/egg_roll.html#update_game"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.update_game" title="Link to this definition"></a></dt>
+<dd><p>Updates the game based on the player’s input.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>gamestate (GameState): The gamestate command to be made.
+filename (str): The name of the level being played.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll.validate_moves">
+<span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">validate_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">moveset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState"><span class="pre">GameState</span></a></span></span><a class="reference internal" href="_modules/egg_roll.html#validate_moves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#egg_roll.validate_moves" title="Link to this definition"></a></dt>
+<dd><p>Validates the player’s input for moves.</p>
+<p>Receives the input of the user, and checks if the player
+has initiated a game command or an undo move. If the player
+entered a move sequence, invalid moves are removed, then
+excess moves are trimmed (if any)</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>moveset (str): The string of moves entered by the player
+remaining_moves (int): The remaining number of moves allowed.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>str: A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
+</dd>
+<dt>GameState: A special case for when the player has called</dt><dd><p>for a game restart, termination, or return to main menu</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>The function ensures that besides ‘restart’, only valid move characters
+(‘F’, ‘f’, ‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted. If the user enters 
+more moves than can be accommodated within the remaining 
+available moves, the excess moves are truncated.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="egg-roll" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="egg_roll_basic.html" class="btn btn-neutral float-right" title="egg_roll_basic module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Renz Jared G. Rolle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

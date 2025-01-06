@@ -7,24 +7,27 @@ You may obtain a copy of the License at
 
     https://github.com/renzjared/egg-roll/blob/main/LICENSE
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
- @author Renz Jared Rolle <rgrolle@up.edu.ph>
+@author Renz Jared Rolle <rgrolle@up.edu.ph>
 """
 
+import copy
 import os
 import re
 import subprocess
 import sys
 import time
 
-from game_utils import move_to_arrow, is_present, roll
+from game_utils import Move, Grid
+from leaderboard_utils import Leaderboard
 
-def main(filename):
+
+def main(filename: str) -> None:
     """Main function to run the egg roll game.
 
     Args:
@@ -34,81 +37,84 @@ def main(filename):
     updates the game state, and displays the results until the maximum
     moves are reached or when there are no more eggs to roll.
     """
-    # Read game level file, and take the number of rows and number of maximum moves 
-    level = read_level(filename)
-    max_moves = int(level[1])
-    moves = []  # initialize move history
-    points = 0  # initialize number of points
-
-    level_state = [list(line) for line in level[2:]] # Convert strings into a list of characters
+    # Read game level file
+    game = Grid(filename=filename)
 
     # Display game prompt until the maximum number of moves is reached
-    while len(moves) < max_moves:
-        if len(moves) == 0:
-            clear_screen()
-            for row in level_state:
-                print(''.join(row))
+    while len(game.moves) < game.max_moves:
+        if not game.moves:
+            display_grid(game.level_state)
 
-        remaining_moves = max_moves - len(moves)
-        print("Previous moves:", ''.join(moves))
-        print("Remaining moves:", remaining_moves)
-        print("Points:", points)
+        display_stats(game)
+        remaining_moves: int = game.max_moves - len(game.moves)
+        moveset: str = take_moves(remaining_moves)
 
-        moveset = take_moves(remaining_moves)
-        for move in moveset:
-            moves.append(move_to_arrow(move))
-            snapshots, points_earned = roll(level_state, moves, max_moves)
-            for snapshot in snapshots:        # Print each snapshot with a 0.3s delay
-                clear_screen()                # Clear the screen in between snapshots
-                for row in snapshot:
-                    print(''.join(row))
+        for m in moveset:
+            move = Move(m)
+            game.moves.append(move)
+
+            snapshots = game.roll()
+            for snapshot in snapshots:     # Print each snapshot with a 0.3s delay
+                display_grid(snapshot)
                 time.sleep(0.3)
-            points += points_earned           # Update point counter
 
-        if not is_present(level_state[:], '🥚'):  # Check if there are eggs left
-            display_final_state(max_moves, moves, points)
-            return
+            # Keep track of level states and cumulative points per move played
+            game.level_states.append((copy.deepcopy(snapshots[-1]), game.points))
 
-    if len(moves) == max_moves:
-        display_final_state(max_moves, moves, points)
+            if not game.is_present('🥚'):  # Check if there are eggs left
+                display_stats(game, is_final=True)
+                return
 
-def clear_screen():
+    display_stats(game, is_final=True)
+
+
+def clear_screen() -> None:
     """Clears the terminal screen, if any"""
     if sys.stdout.isatty():
         clear_cmd = 'cls' if os.name == 'nt' else 'clear'
     subprocess.run([clear_cmd])
 
-def display_final_state(max_moves, moves, points):
-    """Displays the final game statistics after all moves are made or when there are no more eggs to roll.
+
+def display_grid(level_state: list[list[str]]) -> None:
+    """Displays the current state of the game grid on the terminal.
 
     Args:
-        max_moves (int): The maximum number of moves allowed.
-        moves (list): A list of moves made by the player.
-        points (int): The total points earned by the player.
+        level_state (list[list[str]]): A 2D list representing the current state of the grid.
     """
-    print("Played moves:", ''.join(moves))
-    print("Remaining moves:", max_moves - len(moves))
-    print("Points:", points)
+    clear_screen()
+    grid = "\n".join(''.join(row) for row in level_state)
+    print(grid)
 
-def read_level(filename):
-    """Reads the game level from a specified file.
+
+def display_stats(game: Grid, is_final: bool = False) -> None:
+    """Displays the current game statistics.
 
     Args:
-        filename (str): The path to the level file.
-    Returns:
-        list: A list of strings representing the level configuration.
-    Raises:
-        Exception: If the file cannot be opened or read.
+        game (Grid): The current game grid object.
+        is_final (bool): Indicates if the game has ended.
     """
-    try:
-        with open(filename, "r") as level:
-            level = [line.strip('\n\r') for line in level]  # Remove newlines
-            return level
-    except Exception as e:
-        print(e)
+    arrow_moves = [str(mv) for mv in game.moves]
+    print("Played moves:", ''.join(arrow_moves))
+    print("Remaining moves:", game.max_moves - len(game.moves))
+    print("Points:", game.points)
 
-def validate_moves(moveset, remaining_moves):
+    if is_final:
+        leaderboard = Leaderboard(game.name)
+        # Save points for the leaderboard
+        prompt: str = "Enter your name for the leaderboard: "
+        player_name: str = input(prompt)
+        leaderboard.update(player_name, game.points)
+
+        # Display the leaderboard
+        leaderboard.display()
+        sys.exit()
+
+
+def validate_moves(moveset: str, remaining_moves: int) -> str:
     """Validates the player's input for moves.
+
+    Receives the input of the user, removes invalid moves, 
+    then trims excess moves (if any)
 
     Args:
         moveset (str): The string of moves entered by the player
@@ -127,7 +133,8 @@ def validate_moves(moveset, remaining_moves):
         moveset = moveset[:remaining_moves]
     return moveset
 
-def take_moves(remaining_moves):
+
+def take_moves(remaining_moves: int) -> str:
     """Prompts the player for moves and passes it through the validator
 
     Args:
@@ -147,7 +154,7 @@ def take_moves(remaining_moves):
 if __name__ == "__main__":
     # Check first if the player included a level filename argument
     if len(sys.argv) > 1:
-        filename = str(sys.argv[1])
-        main(filename)
+        LEVEL_FILENAME: str = str(sys.argv[1])
+        main(LEVEL_FILENAME)
     else:
         print("[Error] Please include a filename argument for a game level.")

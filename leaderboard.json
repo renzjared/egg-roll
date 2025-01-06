@@ -1,1 +1,14 @@
-{}
+{
+    "level1.in": [
+        {
+            "name": "reasdas",
+            "score": 27
+        }
+    ],
+    "level2.in": [
+        {
+            "name": "awasdsas",
+            "score": 30
+        }
+    ]
+}
