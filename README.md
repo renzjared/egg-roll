@@ -92,7 +92,7 @@ or (with Bonus features)
 python3.12 egg_roll.py level1.in
 ```
 
-* **[Bonus]**: In the implementation of the game with **Bonus Features**, specifying a level filename argument is optional as doing so will simply open the game's main menu.
+* **[Bonus]**: In the implementation of the game with **Bonus Features**, specifying a level filename argument is optional as leaving it blank will simply open the game's main menu.
 
 <h3>Game Controls</h3>
 
@@ -120,6 +120,7 @@ Players may also enter these commands at any point of the game.<br/>
 
 <h2>How the Game Works</h2>
 This Egg Roll game is specifically designed to be modular and easy to understand. It consists of six (6) Python scripts (plus an additional script for tests). This also makes testing easier.<br>
+Please refer to the [official documentation](https://renzjared.github.io/egg-roll/) for more information.
 
 <h3>Key Files</h3>
 
@@ -129,6 +130,21 @@ This Egg Roll game is specifically designed to be modular and easy to understand
  * **[Bonus]** `terminal_utils.py` - Contains utility functions for handling terminal operations such as creating formattable tables, getting terminal dimensions, and text formatting.<br/>
  * **[Bonus]** `main_menu.py` - Manages the main menu screen, including the options displayed and handling user selections.<br/>
  * `leaderboard_utils.py` - Contains utility functions for reading and updating the leaderboards.<br/>
+ * `test_egg_roll.py` - Contains the test suite of Egg Roll.<br/>
+
+<h3>Classes, Dataclasses, Enums</h3>
+
+ * `Move` - A `dataclass` that represents a movement in an Egg Roll level. A move is defined by tilting the playing grid in one specific direction (either forward, backward, leftward, or rightward).
+ * `Grid` - A `class` represents a game grid and encapsulates various game level operations that can be performed. It is designed to manage the state of a game level, including the configuration of the grid, the maximum number of moves allowed, and the player's current score. It also handles the logic for applying moves to the grid, including moving eggs, filling nests, and handling collisions with obstacles. Additionally, it maintains a history of grid states and scores, allowing for tracking changes over time.
+    * The `Grid` class can be initialized with either level configuration data or a filename from which the level data can be read.
+ * `Leaderboard` - A `class` that is designed to manage and display game leaderboards. The `Leaderboard` class is initialized with a filename and a level name argument, specifying the game level it manages.
+ * `GameState` **[Bonus]** - An `Enum` that defines a set of named constants that represents special game commands that control the flow of a game.
+    * `GameState.RESTART` - Resets the state of the current game level and allows the player to start again.
+    * `GameState.RETURN` - Closes the current game level and returns to the main menu.
+    * `GameState.TERMINATE` - Terminates the Egg-Roll program altogether. 
+ * `EndReason` **[Bonus]** - An `Enum` that defines the reason why a game has ended. It has two possible values:
+    * `EndReason.RAN_OUT_OF_MOVES` - Indicates that the player ran out of moves.
+    * `EndReason.NO_MORE_EGGS` - Indicates that there are no more eggs left to roll.
 
 <h3>Game Flow</h3>
 

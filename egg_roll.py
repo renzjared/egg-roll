@@ -50,7 +50,7 @@ class EndReason(Enum):
     """Enumeration for reasons why a game ;eve; ended.
 
     Attributes:
-        RESTART (str): Indicates that the player ran out of moves.
+        RAN_OUT_OF_MOVES (str): Indicates that the player ran out of moves.
         NO_MORE_EGGS (str): Indicates that there are no more eggs left to roll.
     """
     RAN_OUT_OF_MOVES = "ran_out_of_moves"
