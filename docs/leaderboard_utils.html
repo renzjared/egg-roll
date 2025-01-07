@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>leaderboard_utils module &mdash; egg-roll 2.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>leaderboard_utils module &mdash; egg-roll 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=51b770b3"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -92,12 +92,11 @@
              
   <section id="module-leaderboard_utils">
 <span id="leaderboard-utils-module"></span><h1>leaderboard_utils module<a class="headerlink" href="#module-leaderboard_utils" title="Link to this heading"></a></h1>
-<p>Copyright 2024 Renz Jared Rolle.</p>
+<p>Copyright 2025 Renz Jared Rolle.</p>
 <p>Licensed under the GNU General Public License, Version 3 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
 <blockquote>
-<div><blockquote>
 <div><p><a class="reference external" href="https://github.com/renzjared/egg-roll/blob/main/LICENSE">https://github.com/renzjared/egg-roll/blob/main/LICENSE</a></p>
 </div></blockquote>
 <p>Unless required by applicable law or agreed to in writing, software
@@ -106,10 +105,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 <p>&#64;author Renz Jared Rolle &lt;<a class="reference external" href="mailto:rgrolle&#37;&#52;&#48;up&#46;edu&#46;ph">rgrolle<span>&#64;</span>up<span>&#46;</span>edu<span>&#46;</span>ph</a>&gt;</p>
-</div></blockquote>
 <dl class="py class">
 <dt class="sig sig-object py" id="leaderboard_utils.Leaderboard">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">leaderboard_utils.</span></span><span class="sig-name descname"><span class="pre">Leaderboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leaderboard_utils.html#Leaderboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#leaderboard_utils.Leaderboard" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">leaderboard_utils.</span></span><span class="sig-name descname"><span class="pre">Leaderboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#leaderboard_utils.Leaderboard" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to manage and display game leaderboards.</p>
 <dl class="simple">
@@ -119,14 +117,14 @@ level_name (str): The name of the game level associated with the leaderboard.</p
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.display">
-<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/leaderboard_utils.html#Leaderboard.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#leaderboard_utils.Leaderboard.display" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.display" title="Link to this definition"></a></dt>
 <dd><p>Displays the leaderboard for the current game level.</p>
 <p>If no leaderboard exists for the current level, an error message is shown.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/leaderboard_utils.html#Leaderboard.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#leaderboard_utils.Leaderboard.update" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.update" title="Link to this definition"></a></dt>
 <dd><p>Updates the leaderboard with a new score.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>player_name (str): The name of the player to be added.
@@ -140,7 +138,7 @@ score (int): The player’s score.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="leaderboard_utils.read_leaderboards">
-<span class="sig-prename descclassname"><span class="pre">leaderboard_utils.</span></span><span class="sig-name descname"><span class="pre">read_leaderboards</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/leaderboard_utils.html#read_leaderboards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#leaderboard_utils.read_leaderboards" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">leaderboard_utils.</span></span><span class="sig-name descname"><span class="pre">read_leaderboards</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#leaderboard_utils.read_leaderboards" title="Link to this definition"></a></dt>
 <dd><p>Reads the leaderboard from the JSON file.</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><dl class="simple">
@@ -165,7 +163,7 @@ score (int): The player’s score.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Renz Jared G. Rolle.</p>
+    <p>&#169; Copyright 2025, Renz Jared G. Rolle.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

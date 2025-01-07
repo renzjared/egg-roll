@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>game_utils module &mdash; egg-roll 2.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>game_utils module &mdash; egg-roll 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=51b770b3"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -99,12 +99,11 @@
              
   <section id="module-game_utils">
 <span id="game-utils-module"></span><h1>game_utils module<a class="headerlink" href="#module-game_utils" title="Link to this heading"></a></h1>
-<p>Copyright 2024 Renz Jared Rolle.</p>
+<p>Copyright 2025 Renz Jared Rolle.</p>
 <p>Licensed under the GNU General Public License, Version 3 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
 <blockquote>
-<div><blockquote>
 <div><p><a class="reference external" href="https://github.com/renzjared/egg-roll/blob/main/LICENSE">https://github.com/renzjared/egg-roll/blob/main/LICENSE</a></p>
 </div></blockquote>
 <p>Unless required by applicable law or agreed to in writing, software
@@ -113,10 +112,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 <p>&#64;author Renz Jared Rolle &lt;<a class="reference external" href="mailto:rgrolle&#37;&#52;&#48;up&#46;edu&#46;ph">rgrolle<span>&#64;</span>up<span>&#46;</span>edu<span>&#46;</span>ph</a>&gt;</p>
-</div></blockquote>
 <dl class="py class">
 <dt class="sig sig-object py" id="game_utils.Grid">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game_utils.</span></span><span class="sig-name descname"><span class="pre">Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game_utils.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.Grid" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game_utils.</span></span><span class="sig-name descname"><span class="pre">Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Unnamed'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_utils.Grid" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents the game grid and its operations.</p>
 <dl class="simple">
@@ -131,7 +129,7 @@ level_states (list[tuple[EggRollGrid, int]]): A history of grid states and score
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="game_utils.Grid.copy_grid">
-<span class="sig-name descname"><span class="pre">copy_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game_utils.html#Grid.copy_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.Grid.copy_grid" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">copy_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#game_utils.Grid.copy_grid" title="Link to this definition"></a></dt>
 <dd><p>Creates a deep copy of the current grid state.</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p>EggRollGrid: A deep copy of the grid.</p>
@@ -141,7 +139,7 @@ level_states (list[tuple[EggRollGrid, int]]): A history of grid states and score
 
 <dl class="py method">
 <dt class="sig sig-object py" id="game_utils.Grid.is_present">
-<span class="sig-name descname"><span class="pre">is_present</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/game_utils.html#Grid.is_present"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.Grid.is_present" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_present</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#game_utils.Grid.is_present" title="Link to this definition"></a></dt>
 <dd><p>Check if an element is present in the grid</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>element (str): The element to search for in the grid.</p>
@@ -153,7 +151,7 @@ level_states (list[tuple[EggRollGrid, int]]): A history of grid states and score
 
 <dl class="py method">
 <dt class="sig sig-object py" id="game_utils.Grid.read_level">
-<span class="sig-name descname"><span class="pre">read_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game_utils.html#Grid.read_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.Grid.read_level" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#game_utils.Grid.read_level" title="Link to this definition"></a></dt>
 <dd><p>Reads the game level from a specified file.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>filename (str): The path to the level file.</p>
@@ -167,9 +165,11 @@ level_states (list[tuple[EggRollGrid, int]]): A history of grid states and score
 
 <dl class="py method">
 <dt class="sig sig-object py" id="game_utils.Grid.roll">
-<span class="sig-name descname"><span class="pre">roll</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game_utils.html#Grid.roll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.Grid.roll" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game_utils.Move" title="game_utils.Move"><span class="pre">Move</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#game_utils.Grid.roll" title="Link to this definition"></a></dt>
 <dd><p>Simulate rolling eggs on the grid based on the provided move</p>
 <dl class="simple">
+<dt>Args:</dt><dd><p>moves (list[Move]): A list of moves to simulate on the grid.</p>
+</dd>
 <dt>Returns:</dt><dd><p>list[EggRollGrid]: A list of snapshots of the grid after the move.</p>
 </dd>
 </dl>
@@ -179,19 +179,16 @@ level_states (list[tuple[EggRollGrid, int]]): A history of grid states and score
 
 <dl class="py class">
 <dt class="sig sig-object py" id="game_utils.Move">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game_utils.</span></span><span class="sig-name descname"><span class="pre">Move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">move_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game_utils.html#Move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.Move" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game_utils.</span></span><span class="sig-name descname"><span class="pre">Move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">move_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_utils.Move" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a player’s move in the game.</p>
 <dl class="simple">
-<dt>Attributes:</dt><dd><dl class="simple">
-<dt>move_string (str):  A string indicating the direction of the move,</dt><dd><p>valid options are ‘f’, ‘b’, ‘l’, ‘r’.</p>
-</dd>
-</dl>
+<dt>Attributes:</dt><dd><p>move_string (str):  A string indicating the direction of the move (‘f’, ‘b’, ‘l’, ‘r’).</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="game_utils.Move.directions">
-<span class="sig-name descname"><span class="pre">directions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game_utils.html#Move.directions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.Move.directions" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">directions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#game_utils.Move.directions" title="Link to this definition"></a></dt>
 <dd><p>Converts the move direction to a coordinate change.</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p>tuple[int, int]: A tuple representing row and column changes (dr, dc).</p>
@@ -208,7 +205,7 @@ level_states (list[tuple[EggRollGrid, int]]): A history of grid states and score
 
 <dl class="py function">
 <dt class="sig sig-object py" id="game_utils.calculate_points">
-<span class="sig-prename descclassname"><span class="pre">game_utils.</span></span><span class="sig-name descname"><span class="pre">calculate_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game_utils.Move" title="game_utils.Move"><span class="pre">Move</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/game_utils.html#calculate_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_utils.calculate_points" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">game_utils.</span></span><span class="sig-name descname"><span class="pre">calculate_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game_utils.Move" title="game_utils.Move"><span class="pre">Move</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#game_utils.calculate_points" title="Link to this definition"></a></dt>
 <dd><p>Calculates points based on moves left and other conditions.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>max_moves (int): The maximum number of moves allowed for the level.
@@ -232,7 +229,7 @@ moves (list[Move]): The list of moves made by the player.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Renz Jared G. Rolle.</p>
+    <p>&#169; Copyright 2025, Renz Jared G. Rolle.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
