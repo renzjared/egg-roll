@@ -32,22 +32,6 @@ class TestEggRoll(unittest.TestCase):
 
     This test suite contains various test cases to validate the functionality of Egg Roll,
     including grid initialization, move validation, grid tilting, and egg movements.
-
-    Methods:
-        setUpClass(cls): Sets up the initial grid configurations for the test cases.
-        setUp(self): Initializes grid instances by deep copying predefined grid data.
-        test_validate_moves(self): Tests the `validate_moves` function of the `egg_roll` module.
-        test_update_game_states(self): Tests that the game state is correctly updated when a player inputs a command.
-        test_move_to_arrow(self): Tests that all possible inputs return the correct arrow symbol.
-        test_directions(self): Tests that all possible inputs return the correct positional change values.
-        test_roll(self): Tests the `roll` method of the grid class.
-        test_is_present(self): Tests the `is_present` method of the `Grid` class.
-        test_set_position(self): Tests the `_set_position` method of the grid objects.
-        test_find_eggs(self): Tests the `_find_eggs` method of the `Grid` class.
-        test_clear_eggs(self): Tests the `_clear_eggs` method of the `Grid` class.
-        test_apply_move(self): Tests applying moves to a grid.
-        test_calculate_new_position(self): Tests the `_calculate_new_position` method of the `Grid` class.
-        test_calculate_points(self): Tests the `calculate_points` function of the `game_utils` module.
     """
 
     initial_grids: dict[str, list[str]]

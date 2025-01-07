@@ -28,14 +28,14 @@ from leaderboard_utils import Leaderboard
 
 
 def main(filename: str) -> None:
-    """Main function to run the egg roll game.
-
-    Args:
-        filename (str): The path to the file containing the game level.
+    """Main function to run Egg Roll.
 
     The function reads the level file, processes player moves,
     updates the game state, and displays the results until the maximum
     moves are reached or when there are no more eggs to roll.
+
+    Args:
+        filename (str): The path to the file containing the game level.
     """
     # Read game level file
     game = Grid(filename=filename)
@@ -121,6 +121,7 @@ def validate_moves(moveset: str, remaining_moves: int) -> str:
     Args:
         moveset (str): The string of moves entered by the player
         remaining_moves (int): The remaining number of moves allowed.
+
     Returns:
         str: A string of valid moves entered by the user, truncated
         if it exceeds the allowed number of remaining moves.
@@ -140,6 +141,7 @@ def take_moves(remaining_moves: int) -> str:
 
     Args:
         remaining_moves (int): The remaining number of moves allowed.
+
     Returns:
         str: A string of valid moves entered by the user, truncated 
         if it exceeds the allowed number of remaining moves.

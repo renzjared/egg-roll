@@ -28,12 +28,8 @@ EggRollLocalization = dict[str, str | list[str]]
 
 @dataclass
 class Move:
-    """Represents a player's move in the game.
-
-    Attributes:
-        move_string (str):  A string indicating the direction of the move ('f', 'b', 'l', 'r').
-    """
-    move_string: str
+    """Represents an Egg Roll level movement (grid tilting)."""
+    move_string: str #: Direction of the move ('f', 'b', 'l', 'r')
 
     def __str__(self) -> str:
         """Converts the move direction to an arrow representation.

@@ -57,14 +57,14 @@ class EndReason(Enum):
     NO_MORE_EGGS = "no_more_eggs"
 
 def main(filename: str) -> None:
-    """Main function to run the egg roll game.
-
-    Args:
-        filename (str): The path to the file containing the game level.
+    """Main function to run Egg Roll.
 
     The function reads the level file, processes player moves,
     updates the game state, and displays the results until the maximum
     moves are reached or when there are no more eggs to roll.
+
+    Args:
+        filename (str): The path to the file containing the game level.
     """
     # Read game level file
     game = Grid(filename=filename)
@@ -215,11 +215,6 @@ def update_game(gamestate: GameState, filename: str) -> None:
 def validate_moves(moveset: str, remaining_moves: int) -> str | GameState:
     """Validates the player's input for moves.
 
-    Receives the input of the user, and checks if the player
-    has initiated a game command or an undo move. If the player
-    entered a move sequence, invalid moves are removed, then
-    excess moves are trimmed (if any)
-    
     The function ensures that besides 'restart', 'return', and 'exit' (and their aliases),
     only valid move characters ('F', 'f', 'B', 'b', 'L', 'l', 'R', 'r') are accepted.
     If the user enters more moves than can be accommodated within the remaining 

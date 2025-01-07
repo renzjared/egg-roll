@@ -219,15 +219,15 @@ limitations under the License.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="egg_roll.main">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll.main" title="Link to this definition"></a></dt>
-<dd><p>Main function to run the egg roll game.</p>
+<dd><p>Main function to run Egg Roll.</p>
+<p>The function reads the level file, processes player moves,
+updates the game state, and displays the results until the maximum
+moves are reached or when there are no more eggs to roll.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The path to the file containing the game level.</p>
 </dd>
 </dl>
-<p>The function reads the level file, processes player moves,
-updates the game state, and displays the results until the maximum
-moves are reached or when there are no more eggs to roll.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -287,10 +287,6 @@ moves are reached or when there are no more eggs to roll.</p>
 <dt class="sig sig-object py" id="egg_roll.validate_moves">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">validate_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">moveset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState"><span class="pre">GameState</span></a></span></span><a class="headerlink" href="#egg_roll.validate_moves" title="Link to this definition"></a></dt>
 <dd><p>Validates the player’s input for moves.</p>
-<p>Receives the input of the user, and checks if the player
-has initiated a game command or an undo move. If the player
-entered a move sequence, invalid moves are removed, then
-excess moves are trimmed (if any)</p>
 <p>The function ensures that besides ‘restart’, ‘return’, and ‘exit’ (and their aliases),
 only valid move characters (‘F’, ‘f’, ‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted.
 If the user enters more moves than can be accommodated within the remaining

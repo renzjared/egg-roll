@@ -52,7 +52,7 @@ def display_instructions() -> None:
 
 
 def display_levels() -> str | None:
-    """Displays the list of available levels and allows the player to select one."""
+    """Displays the list of available levels and prompts the player to select one."""
     loc: EggRollLocalization = load_localization()
     clear_screen()
     levels_dir = Path("")
@@ -98,8 +98,13 @@ def display_levels() -> str | None:
 
 
 def display_main_menu() -> None:
-    """Displays the main menu and processes user input to start the game, 
-    view instructions, or exit.
+    """Displays the main menu and processes user input.
+    
+    From the menu, the player can choose to start the game, view instructions,
+    change language, view credits, or exit the game.
+
+    If an invalid choice is made, an error message is displayed
+    and the user is prompted to select again.
     """
     loc: EggRollLocalization = load_localization()
     while True:
