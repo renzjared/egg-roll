@@ -191,7 +191,7 @@ def parse_level(level_path: str) -> tuple[int, int, int]:
         level_path (str): The path to the level file.
 
     Returns:
-        tuple: A tuple containing the dimensions (rows, columns) and the number of moves allowed.
+        tuple[int, int, int]: A tuple containing the dimensions, and the number of moves allowed.
     """
     with open(level_path, 'r', encoding="utf-8") as file:
         lines: list[str] = file.readlines()

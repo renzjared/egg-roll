@@ -6,6 +6,20 @@
 
 A simple terminal-based game developed in Python for the course CS 11, University of the Philippines Diliman.
 
+<h2>Documentation</h2>
+
+Full project documentation is available on [GitHub Pages](https://renzjared.github.io/egg-roll/)
+
+<h4>Note on GitHub Pages Hosting</h4>
+The documentation is hosted on the Pages site of my personal (separate) repository of egg-roll. This is because this present organization-managed repository has GitHub pages disabled.
+<br/>
+<br/>
+
+The documentation is also available locally, and is stored on the /docs/ folder. Open `index.html` to get started.
+```sh
+open /docs/index.html
+```
+
 <h2>Game Description</h2>
 Egg Roll is a 2D puzzle game where players tilt a grid to guide eggs into their nests. Navigate through walls, avoid frying pans, and use strategic moves to score points. Each level presents a unique challenge with a limited number of moves. The goal of the player is to score the most points.<br/> 
 <br/>

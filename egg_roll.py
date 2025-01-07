@@ -219,21 +219,19 @@ def validate_moves(moveset: str, remaining_moves: int) -> str | GameState:
     has initiated a game command or an undo move. If the player
     entered a move sequence, invalid moves are removed, then
     excess moves are trimmed (if any)
+    
+    The function ensures that besides 'restart', 'return', and 'exit' (and their aliases),
+    only valid move characters ('F', 'f', 'B', 'b', 'L', 'l', 'R', 'r') are accepted.
+    If the user enters more moves than can be accommodated within the remaining 
+    available moves, the excess moves are truncated.
 
     Args:
         moveset (str): The string of moves entered by the player
         remaining_moves (int): The remaining number of moves allowed.
 
     Returns:
-        str: A string of valid moves entered by the user, truncated
-             if it exceeds the allowed number of remaining moves.
-        GameState: A special case for when the player has called
-             for a game restart, termination, or return to main menu
-
-    The function ensures that besides 'restart', only valid move characters
-    ('F', 'f', 'B', 'b', 'L', 'l', 'R', 'r') are accepted. If the user enters 
-    more moves than can be accommodated within the remaining 
-    available moves, the excess moves are truncated.
+        Union[str, GameState]: A string of valid moves entered by the user, truncated if needed, or
+        a special GameState command for updating present game state.
     """
     if moveset.strip().lower() in ['restart', 'umulit']:
         return GameState.RESTART

@@ -47,12 +47,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">egg-roll</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="egg_roll.html">egg_roll module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">egg_roll_basic module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.clear_screen"><code class="docutils literal notranslate"><span class="pre">clear_screen()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.display_grid"><code class="docutils literal notranslate"><span class="pre">display_grid()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.display_stats"><code class="docutils literal notranslate"><span class="pre">display_stats()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.take_moves"><code class="docutils literal notranslate"><span class="pre">take_moves()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.validate_moves"><code class="docutils literal notranslate"><span class="pre">validate_moves()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg_roll_basic.take_moves"><code class="docutils literal notranslate"><span class="pre">take_moves()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="game_utils.html">game_utils module</a></li>
@@ -92,7 +92,7 @@
              
   <section id="module-egg_roll_basic">
 <span id="egg-roll-basic-module"></span><h1>egg_roll_basic module<a class="headerlink" href="#module-egg_roll_basic" title="Link to this heading"></a></h1>
-<p>Copyright 2025 Renz Jared Rolle.</p>
+<p>Copyright 2024 Renz Jared Rolle.</p>
 <p>Licensed under the GNU General Public License, Version 3 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -105,6 +105,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 <p>&#64;author Renz Jared Rolle &lt;<a class="reference external" href="mailto:rgrolle&#37;&#52;&#48;up&#46;edu&#46;ph">rgrolle<span>&#64;</span>up<span>&#46;</span>edu<span>&#46;</span>ph</a>&gt;</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll_basic.main">
+<span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll_basic.main" title="Link to this definition"></a></dt>
+<dd><p>Main function to run the egg roll game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The path to the file containing the game level.</p>
+</dd>
+</dl>
+<p>The function reads the level file, processes player moves,
+updates the game state, and displays the results until the maximum
+moves are reached or when there are no more eggs to roll.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="egg_roll_basic.clear_screen">
 <span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">clear_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll_basic.clear_screen" title="Link to this definition"></a></dt>
@@ -137,49 +151,13 @@ limitations under the License.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="egg_roll_basic.main">
-<span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll_basic.main" title="Link to this definition"></a></dt>
-<dd><p>Main function to run the egg roll game.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The path to the file containing the game level.</p>
-</dd>
-</dl>
-<p>The function reads the level file, processes player moves,
-updates the game state, and displays the results until the maximum
-moves are reached or when there are no more eggs to roll.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="egg_roll_basic.take_moves">
-<span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">take_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#egg_roll_basic.take_moves" title="Link to this definition"></a></dt>
-<dd><p>Prompts the player for moves and passes it through the validator</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>remaining_moves</strong> (<em>int</em>) – The remaining number of moves allowed.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-<p>The function prompts the player to enter their moves, then uses the <cite>validate_moves</cite>
-function to ensure that only valid characters are accepted and that the number of moves
-does not exceed the remaining allowed moves.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="egg_roll_basic.validate_moves">
 <span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">validate_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">moveset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#egg_roll_basic.validate_moves" title="Link to this definition"></a></dt>
 <dd><p>Validates the player’s input for moves.</p>
-<p>Receives the input of the user, removes invalid moves,
-then trims excess moves (if any)</p>
+<p>The function ensures that only valid move characters (‘F’, ‘f’,
+‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted. If the user enters
+more moves than can be accommodated within the remaining
+available moves, the excess moves are truncated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -188,20 +166,34 @@ then trims excess moves (if any)</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A string of valid moves entered by the user, truncated
+if it exceeds the allowed number of remaining moves.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
-<p>The function ensures that only valid move characters (‘F’, ‘f’,
-‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted. If the user enters
-more moves than can be accommodated within the remaining
-available moves, the excess moves are truncated.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="egg_roll_basic.take_moves">
+<span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">take_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#egg_roll_basic.take_moves" title="Link to this definition"></a></dt>
+<dd><p>Prompts the player for moves and passes it through the validator</p>
+<p>The function prompts the player to enter their moves, then uses the <cite>validate_moves</cite>
+function to ensure that only valid characters are accepted and that the number of moves
+does not exceed the remaining allowed moves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>remaining_moves</strong> (<em>int</em>) – The remaining number of moves allowed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string of valid moves entered by the user, truncated
+if it exceeds the allowed number of remaining moves.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

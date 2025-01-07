@@ -130,7 +130,7 @@ def print_format(
     Args:
         text (str): The text to format and print.
         is_centered (bool): Whether to center the text horizontally.
-        args Sequence[str | Sequence[str | None] | None] | None: A sequence of style arguments (e.g., "green").
+        args (Sequence[str | Sequence[str | None] | None] | None): A sequence of style arguments (e.g., "green").
     """
     # Center the text horizontally first, if needed, because
     # using colors add ANSI escape sequences that offset the centering
@@ -205,12 +205,13 @@ def load_localization(language_code: str | None = None) -> EggRollLocalization:
     code from the "settings.json" file located in the "localization" directory.
     The default language is "en" (English).
 
+    If the localization file structure is invalid, an empty dictionary is returned.
+
     Args:
         language_code (str | None): The language code for the localization file.
                                     If None, the set language code will be used.
     Returns:
         EggRollLocalization: A dictionary containing the localization data.
-                             If the localization file structure is invalid, an empty dictionary is returned.
     """ 
     if not language_code:
         settings_file = Path("localization") / "settings.json"

@@ -52,8 +52,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#leaderboard_utils.Leaderboard"><code class="docutils literal notranslate"><span class="pre">Leaderboard</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.filename"><code class="docutils literal notranslate"><span class="pre">Leaderboard.filename</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.level_name"><code class="docutils literal notranslate"><span class="pre">Leaderboard.level_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.display"><code class="docutils literal notranslate"><span class="pre">Leaderboard.display()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.update"><code class="docutils literal notranslate"><span class="pre">Leaderboard.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.display"><code class="docutils literal notranslate"><span class="pre">Leaderboard.display()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#leaderboard_utils.read_leaderboards"><code class="docutils literal notranslate"><span class="pre">read_leaderboards()</span></code></a></li>
@@ -135,16 +135,10 @@ limitations under the License.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.display">
-<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.display" title="Link to this definition"></a></dt>
-<dd><p>Displays the leaderboard for the current game level.</p>
-<p>If no leaderboard exists for the current level, an error message is shown.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.update" title="Link to this definition"></a></dt>
 <dd><p>Updates the leaderboard with a new score.</p>
+<p>The leaderboard is sorted to only keep the top 10 scores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -153,7 +147,13 @@ limitations under the License.</p>
 </ul>
 </dd>
 </dl>
-<p>The leaderboard is sorted to only keep the top 10 scores.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.display" title="Link to this definition"></a></dt>
+<dd><p>Displays the leaderboard for the current game level.</p>
+<p>If no leaderboard exists for the current level, an error message is shown.</p>
 </dd></dl>
 
 </dd></dl>
@@ -162,19 +162,16 @@ limitations under the License.</p>
 <dt class="sig sig-object py" id="leaderboard_utils.read_leaderboards">
 <span class="sig-prename descclassname"><span class="pre">leaderboard_utils.</span></span><span class="sig-name descname"><span class="pre">read_leaderboards</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#leaderboard_utils.read_leaderboards" title="Link to this definition"></a></dt>
 <dd><p>Reads the leaderboard from the JSON file.</p>
+<p>If the file exists but does not have a valid structure, an empty dictionary is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>A dictionary containing leaderboard data for all game levels,</dt><dd><p>or an empty dictionary if the file does not exist or is invalid.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-odd"><p>A dictionary containing leaderboard data for all game levels,
+or an empty dictionary if the file does not exist or is invalid.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>EggRollLeaderboards</p>
 </dd>
 </dl>
-<p>If the file exists but does not have a valid structure, an empty dictionary is returned.</p>
 </dd></dl>
 
 </section>

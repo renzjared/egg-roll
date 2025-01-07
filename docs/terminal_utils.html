@@ -52,13 +52,13 @@
 <li class="toctree-l2"><a class="reference internal" href="main_menu.html">main_menu module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="termcolor.html">termcolor package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">terminal_utils module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#terminal_utils.center_text"><code class="docutils literal notranslate"><span class="pre">center_text()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#terminal_utils.clear_screen"><code class="docutils literal notranslate"><span class="pre">clear_screen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminal_utils.terminal_dimensions"><code class="docutils literal notranslate"><span class="pre">terminal_dimensions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminal_utils.center_text"><code class="docutils literal notranslate"><span class="pre">center_text()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#terminal_utils.color_text"><code class="docutils literal notranslate"><span class="pre">color_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminal_utils.print_format"><code class="docutils literal notranslate"><span class="pre">print_format()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#terminal_utils.create_table"><code class="docutils literal notranslate"><span class="pre">create_table()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#terminal_utils.load_localization"><code class="docutils literal notranslate"><span class="pre">load_localization()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#terminal_utils.print_format"><code class="docutils literal notranslate"><span class="pre">print_format()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#terminal_utils.terminal_dimensions"><code class="docutils literal notranslate"><span class="pre">terminal_dimensions()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="test_egg_roll.html">test_egg_roll module</a></li>
@@ -107,6 +107,18 @@ See the License for the specific language governing permissions and
 limitations under the License.</p>
 <p>&#64;author Renz Jared Rolle &lt;<a class="reference external" href="mailto:rgrolle&#37;&#52;&#48;up&#46;edu&#46;ph">rgrolle<span>&#64;</span>up<span>&#46;</span>edu<span>&#46;</span>ph</a>&gt;</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="terminal_utils.clear_screen">
+<span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">clear_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#terminal_utils.clear_screen" title="Link to this definition"></a></dt>
+<dd><p>Clears the terminal screen, if any</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="terminal_utils.terminal_dimensions">
+<span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">terminal_dimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#terminal_utils.terminal_dimensions" title="Link to this definition"></a></dt>
+<dd><p>Returns the terminal’s current dimensions as (height, width).</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="terminal_utils.center_text">
 <span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">center_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#terminal_utils.center_text" title="Link to this definition"></a></dt>
 <dd><p>Centers the given text horizontally within the terminal.</p>
@@ -127,12 +139,6 @@ limitations under the License.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="terminal_utils.clear_screen">
-<span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">clear_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#terminal_utils.clear_screen" title="Link to this definition"></a></dt>
-<dd><p>Clears the terminal screen, if any</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="terminal_utils.color_text">
 <span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">color_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#terminal_utils.color_text" title="Link to this definition"></a></dt>
 <dd><p>Applies color and styling to text using the Termcolor library.</p>
@@ -148,6 +154,21 @@ limitations under the License.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="terminal_utils.print_format">
+<span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">print_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_centered</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#terminal_utils.print_format" title="Link to this definition"></a></dt>
+<dd><p>Prints text in a specified format, with optional centering and color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text to format and print.</p></li>
+<li><p><strong>is_centered</strong> (<em>bool</em>) – Whether to center the text horizontally.</p></li>
+<li><p><strong>args</strong> (<em>Sequence</em><em>[</em><em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>None</em><em>] </em><em>| </em><em>None</em><em>] </em><em>| </em><em>None</em>) – A sequence of style arguments (e.g., “green”).</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -180,43 +201,19 @@ limitations under the License.</p>
 <p>If no language code is provided, the function will read the set language
 code from the “settings.json” file located in the “localization” directory.
 The default language is “en” (English).</p>
+<p>If the localization file structure is invalid, an empty dictionary is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>language_code</strong> (<em>str</em><em> | </em><em>None</em>) – The language code for the localization file.
 If None, the set language code will be used.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A dictionary containing the localization data.</dt><dd><p>If the localization file structure is invalid, an empty dictionary is returned.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A dictionary containing the localization data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>EggRollLocalization</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="terminal_utils.print_format">
-<span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">print_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_centered</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#terminal_utils.print_format" title="Link to this definition"></a></dt>
-<dd><p>Prints text in a specified format, with optional centering and color.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> (<em>str</em>) – The text to format and print.</p></li>
-<li><p><strong>is_centered</strong> (<em>bool</em>) – Whether to center the text horizontally.</p></li>
-<li><p><strong>None</strong> (<em>args Sequence</em><em>[</em><em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>None</em><em>] </em><em>| </em><em>None</em><em>] </em><em>|</em>) – A sequence of style arguments (e.g., “green”).</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="terminal_utils.terminal_dimensions">
-<span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">terminal_dimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#terminal_utils.terminal_dimensions" title="Link to this definition"></a></dt>
-<dd><p>Returns the terminal’s current dimensions as (height, width).</p>
 </dd></dl>
 
 </section>

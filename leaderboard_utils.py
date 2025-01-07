@@ -46,11 +46,11 @@ class Leaderboard:
     def update(self, player_name: str, score: int) -> None:
         """Updates the leaderboard with a new score.
 
+        The leaderboard is sorted to only keep the top 10 scores.
+
         Args:
             player_name (str): The name of the player to be added.
             score (int): The player's score.
-
-        The leaderboard is sorted to only keep the top 10 scores.
         """
         leaderboards = read_leaderboards()
         if self.level_name not in leaderboards: # Initialize JSON Object if level is not yet stored
@@ -97,12 +97,12 @@ class Leaderboard:
 
 def read_leaderboards() -> EggRollLeaderboards:
     """Reads the leaderboard from the JSON file.
+    
+    If the file exists but does not have a valid structure, an empty dictionary is returned.
 
     Returns:
         EggRollLeaderboards: A dictionary containing leaderboard data for all game levels,
-                             or an empty dictionary if the file does not exist or is invalid.
-
-    If the file exists but does not have a valid structure, an empty dictionary is returned.
+        or an empty dictionary if the file does not exist or is invalid.
     """
     if Path(LEADERBOARD_FILE).is_file():
         with open(LEADERBOARD_FILE, "r", encoding="utf-8") as file:
