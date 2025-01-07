@@ -156,22 +156,23 @@ Please refer to the [official documentation](https://renzjared.github.io/egg-rol
    * **[Bonus]**: The main menu is displayed. From the main menu, the player can then launch a level by providing a level filename (or number) to play that particular level.
 
  `2.` **Main Game Loop**<br/> 
- The main game loop is handled by the `main` function of `egg_roll_basic.py` (or `egg_roll.py`) Once the player has identified a level to play, the initial state of the level grid is displayed and the game loop begins. The game loop continues as long as there are eggs left in the grid **AND** there are still moves to be made.
- * At each loop, the game presents the current state of the level grid and prompts the player for moves.
- * `validate_moves()` is a function that sanitizes the player's input and removes excess moves. It removes excess and invalid characters (such as emojis and numbers).
- * The `roll()` function then processes each move *individually*, updates the grid and calculates the points gained or lost. This function collects individual snapshots made from tilting the grid towards a particular direction.
+ The main game loop is handled by the `main` function of `egg_roll_basic.py` (or `egg_roll.py`) Once the player has identified a level to play, a `Grid` object that corresponds to the identified game level is initialized and the initial state of the level grid is displayed as the game loop begins. The game loop continues as long as there are eggs left in the grid **AND** there are still moves to be made.
+ * At each loop, the game presents the current state of the level grid and prompts the player for moves. Game statistics, showing the move history and number of remaining moves allowed, are also displayed after each move performed.
+ * The function `take_moves` is called to get the player's moves.
+    * **[Bonus]** This can also return a GameState object if the player has entered a valid command ('restart', 'return', 'exit', and their aliases). 
+ * `validate_moves()` is a function that sanitizes the player's input. It removes excess and invalid characters (such as emojis and numbers).
+ * The `roll()` method of `Grid` then processes each move *individually*, updates the grid, and calculates the points gained or lost as the player enters moves. This function collects individual snapshots made from tilting the grid towards a particular direction.
     * A 'snapshot' is a frame depicting the movement of eggs from one position to another. It is used to show to the player how the eggs move.
- * `apply_move()` is responsible for tracking if points are made (or lost) for every snapshot, and more importantly, if the state of the grid has changed following an order to move.
-    * If the state of the grid did not change, then there must be a barrier (such as a wall) that is preventing the eggs from moving further. Hence, this marks the last frame or snapshot of a directional move. 
+ * `_apply_move()` is a `Grid` method responsible for tracking if points are made (or lost) for every snapshot, and more importantly, if the state of the grid has changed following an order to move.
+    * If the state of the grid did not change, then there must be a barrier (such as a wall) that is preventing the eggs from moving further. Hence, this marks the last frame or snapshot of a directional move.
+ * The updated state of the game level is displayed, and the game loop repeats. 
 
  `3.` **End of the Game**<br/>
- * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, `display_final_state()` is run and the final game statistics is presented to the player.
- * [Basic]: The game terminates immediately after displaying the final game statistics.
- * **[Bonus]**: The player is then given the option to play again, return to the main menu, or exit the game.
-
+ * When the maximum number of moves is reached by the player **OR** there are no more eggs to move, `display_stats()` is run and the final game state statistics is presented to the player.
  *  **Persistent Game Leaderboard**
     * The player will be asked for their name after playing a game level. If their score is high enough, their score will be recorded in the leaderboard for that particular level.
     * The Top 10 scores of each game level is stored in a JSON file. This allows for a persistent leaderboard, meaning that the high scores are still available for the next time the game is run.
+ * **[Bonus]**: The player is then prompted for a replay.
 
 <h2>Running Tests</h2>
 
