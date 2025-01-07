@@ -47,7 +47,9 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">egg-roll</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">egg_roll module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#egg_roll.EndReason"><code class="docutils literal notranslate"><span class="pre">EndReason</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#egg_roll.EndReason.RESTART"><code class="docutils literal notranslate"><span class="pre">EndReason.RESTART</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#egg_roll.EndReason.NO_MORE_EGGS"><code class="docutils literal notranslate"><span class="pre">EndReason.NO_MORE_EGGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">EndReason.NO_MORE_EGGS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#egg_roll.EndReason.RAN_OUT_OF_MOVES"><code class="docutils literal notranslate"><span class="pre">EndReason.RAN_OUT_OF_MOVES</span></code></a></li>
 </ul>
 </li>
@@ -55,6 +57,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#egg_roll.GameState.RESTART"><code class="docutils literal notranslate"><span class="pre">GameState.RESTART</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#egg_roll.GameState.RETURN"><code class="docutils literal notranslate"><span class="pre">GameState.RETURN</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#egg_roll.GameState.TERMINATE"><code class="docutils literal notranslate"><span class="pre">GameState.TERMINATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">GameState.RESTART</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">GameState.RETURN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">GameState.TERMINATE</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#egg_roll.display_grid"><code class="docutils literal notranslate"><span class="pre">display_grid()</span></code></a></li>
@@ -122,14 +127,31 @@ limitations under the License.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">EndReason</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#egg_roll.EndReason" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <p>Enumeration for reasons why a game ;eve; ended.</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>RESTART (str): Indicates that the player ran out of moves.
-NO_MORE_EGGS (str): Indicates that there are no more eggs left to roll.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="egg_roll.EndReason.RESTART">
+<span class="sig-name descname"><span class="pre">RESTART</span></span><a class="headerlink" href="#egg_roll.EndReason.RESTART" title="Link to this definition"></a></dt>
+<dd><p>Indicates that the player ran out of moves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="egg_roll.EndReason.NO_MORE_EGGS">
-<span class="sig-name descname"><span class="pre">NO_MORE_EGGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'no_more_eggs'</span></em><a class="headerlink" href="#egg_roll.EndReason.NO_MORE_EGGS" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">NO_MORE_EGGS</span></span><a class="headerlink" href="#egg_roll.EndReason.NO_MORE_EGGS" title="Link to this definition"></a></dt>
+<dd><p>Indicates that there are no more eggs left to roll.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">NO_MORE_EGGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'no_more_eggs'</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -144,25 +166,52 @@ NO_MORE_EGGS (str): Indicates that there are no more eggs left to roll.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">GameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#egg_roll.GameState" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <p>Enumeration for special game commands that control game flow.</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>RESTART (str): Command to restart the game.
-RETURN (str): Command to return to the main menu.
-TERMINATE (str): Command to terminate the game session.</p>
-</dd>
-</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="egg_roll.GameState.RESTART">
-<span class="sig-name descname"><span class="pre">RESTART</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'restart'</span></em><a class="headerlink" href="#egg_roll.GameState.RESTART" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">RESTART</span></span><a class="headerlink" href="#egg_roll.GameState.RESTART" title="Link to this definition"></a></dt>
+<dd><p>Command to restart the game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="egg_roll.GameState.RETURN">
-<span class="sig-name descname"><span class="pre">RETURN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'return'</span></em><a class="headerlink" href="#egg_roll.GameState.RETURN" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">RETURN</span></span><a class="headerlink" href="#egg_roll.GameState.RETURN" title="Link to this definition"></a></dt>
+<dd><p>Command to return to the main menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="egg_roll.GameState.TERMINATE">
-<span class="sig-name descname"><span class="pre">TERMINATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'terminate'</span></em><a class="headerlink" href="#egg_roll.GameState.TERMINATE" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">TERMINATE</span></span><a class="headerlink" href="#egg_roll.GameState.TERMINATE" title="Link to this definition"></a></dt>
+<dd><p>Command to terminate the game session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">RESTART</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'restart'</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">RETURN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'return'</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">TERMINATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'terminate'</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -171,9 +220,12 @@ TERMINATE (str): Command to terminate the game session.</p>
 <dt class="sig sig-object py" id="egg_roll.display_grid">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">display_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll.display_grid" title="Link to this definition"></a></dt>
 <dd><p>Displays the current state of the game grid on the terminal.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>level_state (list[list[str]]): A 2D list representing the current state of the grid.
-filename (str): The name of the level file being played.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level_state</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>str</em><em>]</em><em>]</em>) – A 2D list representing the current state of the grid.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The name of the level file being played.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -182,9 +234,12 @@ filename (str): The name of the level file being played.</p>
 <dt class="sig sig-object py" id="egg_roll.display_stats">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">display_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><span class="pre">Grid</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#egg_roll.EndReason" title="egg_roll.EndReason"><span class="pre">EndReason</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll.display_stats" title="Link to this definition"></a></dt>
 <dd><p>Displays the current game statistics.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>game (Grid): The current game grid object.
-is_final (bool): Indicates if the game has ended.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>game</strong> (<a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><em>Grid</em></a>) – The current game grid object.</p></li>
+<li><p><strong>is_final</strong> (<em>bool</em>) – Indicates if the game has ended.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -193,8 +248,9 @@ is_final (bool): Indicates if the game has ended.</p>
 <dt class="sig sig-object py" id="egg_roll.main">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll.main" title="Link to this definition"></a></dt>
 <dd><p>Main function to run the egg roll game.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>filename (str): The path to the file containing the game level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The path to the file containing the game level.</p>
 </dd>
 </dl>
 <p>The function reads the level file, processes player moves,
@@ -206,10 +262,15 @@ moves are reached or when there are no more eggs to roll.</p>
 <dt class="sig sig-object py" id="egg_roll.take_moves">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">take_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState"><span class="pre">GameState</span></a></span></span><a class="headerlink" href="#egg_roll.take_moves" title="Link to this definition"></a></dt>
 <dd><p>Prompts the player for moves or commands and validates the input.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>remaining_moves (int): The remaining number of moves allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>remaining_moves</strong> (<em>int</em>) – The remaining number of moves allowed.</p>
 </dd>
-<dt>Returns:</dt><dd><p>str | GameState: Either a string of valid moves or a game state command.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Either a string of valid moves or a game state command.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | <a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState">GameState</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -218,8 +279,9 @@ moves are reached or when there are no more eggs to roll.</p>
 <dt class="sig sig-object py" id="egg_roll.undo_last_move">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">undo_last_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><span class="pre">Grid</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll.undo_last_move" title="Link to this definition"></a></dt>
 <dd><p>Undoes the last move made by the player.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>game (Grid): The current game grid object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>game</strong> (<a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><em>Grid</em></a>) – The current game grid object.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -228,9 +290,12 @@ moves are reached or when there are no more eggs to roll.</p>
 <dt class="sig sig-object py" id="egg_roll.update_game">
 <span class="sig-prename descclassname"><span class="pre">egg_roll.</span></span><span class="sig-name descname"><span class="pre">update_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamestate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState"><span class="pre">GameState</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll.update_game" title="Link to this definition"></a></dt>
 <dd><p>Updates the game based on the player’s input.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>gamestate (GameState): The gamestate command to be made.
-filename (str): The name of the level being played.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamestate</strong> (<a class="reference internal" href="#egg_roll.GameState" title="egg_roll.GameState"><em>GameState</em></a>) – The gamestate command to be made.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The name of the level being played.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -243,21 +308,29 @@ filename (str): The name of the level being played.</p>
 has initiated a game command or an undo move. If the player
 entered a move sequence, invalid moves are removed, then
 excess moves are trimmed (if any)</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>moveset (str): The string of moves entered by the player
-remaining_moves (int): The remaining number of moves allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>moveset</strong> (<em>str</em>) – The string of moves entered by the player</p></li>
+<li><p><strong>remaining_moves</strong> (<em>int</em>) – The remaining number of moves allowed.</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><dl class="simple">
-<dt>str: A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
 </dd>
 <dt>GameState: A special case for when the player has called</dt><dd><p>for a game restart, termination, or return to main menu</p>
 </dd>
 </dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 <p>The function ensures that besides ‘restart’, only valid move characters
-(‘F’, ‘f’, ‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted. If the user enters 
-more moves than can be accommodated within the remaining 
+(‘F’, ‘f’, ‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted. If the user enters
+more moves than can be accommodated within the remaining
 available moves, the excess moves are truncated.</p>
 </dd></dl>
 

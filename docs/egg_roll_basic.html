@@ -115,8 +115,9 @@ limitations under the License.</p>
 <dt class="sig sig-object py" id="egg_roll_basic.display_grid">
 <span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">display_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll_basic.display_grid" title="Link to this definition"></a></dt>
 <dd><p>Displays the current state of the game grid on the terminal.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>level_state (list[list[str]]): A 2D list representing the current state of the grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>level_state</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>str</em><em>]</em><em>]</em>) – A 2D list representing the current state of the grid.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -125,9 +126,12 @@ limitations under the License.</p>
 <dt class="sig sig-object py" id="egg_roll_basic.display_stats">
 <span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">display_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><span class="pre">Grid</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_final</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll_basic.display_stats" title="Link to this definition"></a></dt>
 <dd><p>Displays the current game statistics.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>game (Grid): The current game grid object.
-is_final (bool): Indicates if the game has ended.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>game</strong> (<a class="reference internal" href="game_utils.html#game_utils.Grid" title="game_utils.Grid"><em>Grid</em></a>) – The current game grid object.</p></li>
+<li><p><strong>is_final</strong> (<em>bool</em>) – Indicates if the game has ended.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -136,8 +140,9 @@ is_final (bool): Indicates if the game has ended.</p>
 <dt class="sig sig-object py" id="egg_roll_basic.main">
 <span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#egg_roll_basic.main" title="Link to this definition"></a></dt>
 <dd><p>Main function to run the egg roll game.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>filename (str): The path to the file containing the game level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The path to the file containing the game level.</p>
 </dd>
 </dl>
 <p>The function reads the level file, processes player moves,
@@ -149,13 +154,19 @@ moves are reached or when there are no more eggs to roll.</p>
 <dt class="sig sig-object py" id="egg_roll_basic.take_moves">
 <span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">take_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#egg_roll_basic.take_moves" title="Link to this definition"></a></dt>
 <dd><p>Prompts the player for moves and passes it through the validator</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>remaining_moves (int): The remaining number of moves allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>remaining_moves</strong> (<em>int</em>) – The remaining number of moves allowed.</p>
 </dd>
-<dt>Returns:</dt><dd><dl class="simple">
-<dt>str: A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
 </dd>
 </dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 <p>The function prompts the player to enter their moves, then uses the <cite>validate_moves</cite>
@@ -167,21 +178,29 @@ does not exceed the remaining allowed moves.</p>
 <dt class="sig sig-object py" id="egg_roll_basic.validate_moves">
 <span class="sig-prename descclassname"><span class="pre">egg_roll_basic.</span></span><span class="sig-name descname"><span class="pre">validate_moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">moveset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remaining_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#egg_roll_basic.validate_moves" title="Link to this definition"></a></dt>
 <dd><p>Validates the player’s input for moves.</p>
-<p>Receives the input of the user, removes invalid moves, 
+<p>Receives the input of the user, removes invalid moves,
 then trims excess moves (if any)</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>moveset (str): The string of moves entered by the player
-remaining_moves (int): The remaining number of moves allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>moveset</strong> (<em>str</em>) – The string of moves entered by the player</p></li>
+<li><p><strong>remaining_moves</strong> (<em>int</em>) – The remaining number of moves allowed.</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><dl class="simple">
-<dt>str: A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A string of valid moves entered by the user, truncated</dt><dd><p>if it exceeds the allowed number of remaining moves.</p>
 </dd>
 </dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
-<p>The function ensures that only valid move characters (‘F’, ‘f’, 
-‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted. If the user enters 
-more moves than can be accommodated within the remaining 
+<p>The function ensures that only valid move characters (‘F’, ‘f’,
+‘B’, ‘b’, ‘L’, ‘l’, ‘R’, ‘r’) are accepted. If the user enters
+more moves than can be accommodated within the remaining
 available moves, the excess moves are truncated.</p>
 </dd></dl>
 

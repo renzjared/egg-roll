@@ -110,11 +110,18 @@ limitations under the License.</p>
 <dt class="sig sig-object py" id="terminal_utils.center_text">
 <span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">center_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#terminal_utils.center_text" title="Link to this definition"></a></dt>
 <dd><p>Centers the given text horizontally within the terminal.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>text (str): The text to be centered.
-pad_right (bool): Whether to pad on both sides or only on the left.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text to be centered.</p></li>
+<li><p><strong>pad_right</strong> (<em>bool</em>) – Whether to pad on both sides or only on the left.</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><p>str: The horizontally-centered text.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The horizontally-centered text.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -129,11 +136,18 @@ pad_right (bool): Whether to pad on both sides or only on the left.</p>
 <dt class="sig sig-object py" id="terminal_utils.color_text">
 <span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">color_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#terminal_utils.color_text" title="Link to this definition"></a></dt>
 <dd><p>Applies color and styling to text using the Termcolor library.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>text (str): The text to format.
-args Sequence[str | Sequence[str | None] | None]: A sequence of style arguments (e.g., “green”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text to format.</p></li>
+<li><p><strong>None</strong><strong>]</strong> (<em>args Sequence</em><em>[</em><em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>None</em><em>] </em><em>|</em>) – A sequence of style arguments (e.g., “green”).</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><p>str: The colored and styled text.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The colored and styled text.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -142,12 +156,19 @@ args Sequence[str | Sequence[str | None] | None]: A sequence of style arguments 
 <dt class="sig sig-object py" id="terminal_utils.create_table">
 <span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">create_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#terminal_utils.create_table" title="Link to this definition"></a></dt>
 <dd><p>Creates a formatted table from arbitrary data.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>data (list[list[str | int]]): A 2D list representing the table data.
-headers (list[str | list[str]] | None): A list of column headers (defaults to None).
-title (str | None): The title of the table, displayed on the topmost row as a header.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>str</em><em> | </em><em>int</em><em>]</em><em>]</em>) – A 2D list representing the table data.</p></li>
+<li><p><strong>headers</strong> (<em>list</em><em>[</em><em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em><em>] </em><em>| </em><em>None</em>) – A list of column headers (defaults to None).</p></li>
+<li><p><strong>title</strong> (<em>str</em><em> | </em><em>None</em>) – The title of the table, displayed on the topmost row as a header.</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><p>str: The formatted table as a string.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The formatted table as a string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -159,16 +180,20 @@ title (str | None): The title of the table, displayed on the topmost row as a he
 <p>If no language code is provided, the function will read the set language
 code from the “settings.json” file located in the “localization” directory.
 The default language is “en” (English).</p>
-<dl class="simple">
-<dt>Args:</dt><dd><dl class="simple">
-<dt>language_code (str | None): The language code for the localization file.</dt><dd><p>If None, the set language code will be used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>language_code</strong> (<em>str</em><em> | </em><em>None</em>) – The language code for the localization file.
+If None, the set language code will be used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dictionary containing the localization data.</dt><dd><p>If the localization file structure is invalid, an empty dictionary is returned.</p>
 </dd>
 </dl>
+</p>
 </dd>
-<dt>Returns:</dt><dd><dl class="simple">
-<dt>EggRollLocalization: A dictionary containing the localization data.</dt><dd><p>If the localization file structure is invalid, an empty dictionary is returned.</p>
-</dd>
-</dl>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>EggRollLocalization</p>
 </dd>
 </dl>
 </dd></dl>
@@ -177,10 +202,13 @@ The default language is “en” (English).</p>
 <dt class="sig sig-object py" id="terminal_utils.print_format">
 <span class="sig-prename descclassname"><span class="pre">terminal_utils.</span></span><span class="sig-name descname"><span class="pre">print_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_centered</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#terminal_utils.print_format" title="Link to this definition"></a></dt>
 <dd><p>Prints text in a specified format, with optional centering and color.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>text (str): The text to format and print.
-is_centered (bool): Whether to center the text horizontally.
-args Sequence[str | Sequence[str | None] | None] | None: A sequence of style arguments (e.g., “green”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text to format and print.</p></li>
+<li><p><strong>is_centered</strong> (<em>bool</em>) – Whether to center the text horizontally.</p></li>
+<li><p><strong>None</strong> (<em>args Sequence</em><em>[</em><em>str</em><em> | </em><em>Sequence</em><em>[</em><em>str</em><em> | </em><em>None</em><em>] </em><em>| </em><em>None</em><em>] </em><em>|</em>) – A sequence of style arguments (e.g., “green”).</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

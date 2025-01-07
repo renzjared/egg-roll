@@ -50,6 +50,8 @@
 <li class="toctree-l2"><a class="reference internal" href="game_utils.html">game_utils module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">leaderboard_utils module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#leaderboard_utils.Leaderboard"><code class="docutils literal notranslate"><span class="pre">Leaderboard</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.filename"><code class="docutils literal notranslate"><span class="pre">Leaderboard.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.level_name"><code class="docutils literal notranslate"><span class="pre">Leaderboard.level_name</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.display"><code class="docutils literal notranslate"><span class="pre">Leaderboard.display()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#leaderboard_utils.Leaderboard.update"><code class="docutils literal notranslate"><span class="pre">Leaderboard.update()</span></code></a></li>
 </ul>
@@ -110,11 +112,28 @@ limitations under the License.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">leaderboard_utils.</span></span><span class="sig-name descname"><span class="pre">Leaderboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#leaderboard_utils.Leaderboard" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to manage and display game leaderboards.</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>filename (str): A JSON file where all game leaderboards are stored.
-level_name (str): The name of the game level associated with the leaderboard.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.filename" title="Link to this definition"></a></dt>
+<dd><p>A JSON file where all game leaderboards are stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.level_name">
+<span class="sig-name descname"><span class="pre">level_name</span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.level_name" title="Link to this definition"></a></dt>
+<dd><p>The name of the game level associated with the leaderboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.display">
 <span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.display" title="Link to this definition"></a></dt>
@@ -126,9 +145,12 @@ level_name (str): The name of the game level associated with the leaderboard.</p
 <dt class="sig sig-object py" id="leaderboard_utils.Leaderboard.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#leaderboard_utils.Leaderboard.update" title="Link to this definition"></a></dt>
 <dd><p>Updates the leaderboard with a new score.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>player_name (str): The name of the player to be added.
-score (int): The player’s score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>player_name</strong> (<em>str</em>) – The name of the player to be added.</p></li>
+<li><p><strong>score</strong> (<em>int</em>) – The player’s score.</p></li>
+</ul>
 </dd>
 </dl>
 <p>The leaderboard is sorted to only keep the top 10 scores.</p>
@@ -140,11 +162,16 @@ score (int): The player’s score.</p>
 <dt class="sig sig-object py" id="leaderboard_utils.read_leaderboards">
 <span class="sig-prename descclassname"><span class="pre">leaderboard_utils.</span></span><span class="sig-name descname"><span class="pre">read_leaderboards</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#leaderboard_utils.read_leaderboards" title="Link to this definition"></a></dt>
 <dd><p>Reads the leaderboard from the JSON file.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><dl class="simple">
-<dt>EggRollLeaderboards: A dictionary containing leaderboard data for all game levels,</dt><dd><p>or an empty dictionary if the file does not exist or is invalid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A dictionary containing leaderboard data for all game levels,</dt><dd><p>or an empty dictionary if the file does not exist or is invalid.</p>
 </dd>
 </dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>EggRollLeaderboards</p>
 </dd>
 </dl>
 <p>If the file exists but does not have a valid structure, an empty dictionary is returned.</p>
